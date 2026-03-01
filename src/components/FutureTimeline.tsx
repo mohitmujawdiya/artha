@@ -203,7 +203,7 @@ export function FutureTimeline() {
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
         >
-          Scroll to see your future
+          Swipe up to see your future
         </motion.p>
       </motion.section>
 
