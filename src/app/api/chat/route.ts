@@ -328,7 +328,7 @@ export async function POST(request: Request) {
       let response: string;
 
       if (userId) {
-        // Authenticated: use tool calling
+        // Authenticated: use tool calling with timeout
         const toolUserId = userId;
         response = await callWithTools(
           systemPrompt,
@@ -397,7 +397,8 @@ export async function POST(request: Request) {
       }
 
       return NextResponse.json(parsed);
-    } catch {
+    } catch (err) {
+      console.error("[chat] OpenAI call failed:", err instanceof Error ? err.message : err);
       return NextResponse.json({
         content: `I'm having a bit of trouble right now, but I'm still here for you! Try asking me about budgeting tips, saving strategies, or whether you can afford a specific purchase.`,
         quickReplies: [
@@ -407,7 +408,8 @@ export async function POST(request: Request) {
         ],
       });
     }
-  } catch {
+  } catch (err) {
+    console.error("[chat] Request processing failed:", err instanceof Error ? err.message : err);
     return NextResponse.json(
       { error: "Failed to process request" },
       { status: 500 }

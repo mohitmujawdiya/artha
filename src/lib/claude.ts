@@ -3,6 +3,7 @@ import type { ChatCompletionMessageParam, ChatCompletionTool } from "openai/reso
 
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  timeout: 25_000, // 25s timeout — fail fast rather than hang
 });
 
 export async function callClaude(

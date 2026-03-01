@@ -31,7 +31,6 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
   const dragStarted = useRef(false);
 
   const x = useMotionValue(0);
-  const rotate = useTransform(x, [-250, 0, 250], [-8, 0, 8]);
   const cardOpacity = useTransform(
     x,
     [-250, -120, 0, 120, 250],
@@ -189,7 +188,6 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
                 className="touch-pan-y rounded-3xl overflow-hidden"
                 style={{
                   x,
-                  rotate,
                   opacity: cardOpacity,
                   zIndex: 20,
                   position: "relative",

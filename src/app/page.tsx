@@ -7,7 +7,6 @@ import { useUser } from "@clerk/nextjs";
 import { SpendingDNA } from "@/components/SpendingDNA";
 import { useTransactions } from "@/hooks/useTransactions";
 import { getOnboardingData, setOnboardingData } from "@/lib/onboarding";
-import { derivePersonality } from "@/lib/dna";
 
 interface Particle {
   width: number;
@@ -233,7 +232,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              Your Financial DNA
+              Financial DNA
             </motion.p>
 
             <motion.h2
@@ -242,7 +241,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              This is how your money moves
+              See how your money moves
             </motion.h2>
 
             <SpendingDNA patterns={patterns} size={280} />
@@ -253,10 +252,10 @@ export default function LandingPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
             >
-              <p className="text-[10px] tracking-widest uppercase text-artha-muted">Your money personality</p>
-              <p className="text-lg font-semibold text-artha-accent mt-1">{derivePersonality(patterns)}</p>
+              <p className="text-[10px] tracking-widest uppercase text-artha-muted">Money personality</p>
+              <p className="text-lg font-semibold text-artha-accent mt-1">Discover yours</p>
               <p className="text-artha-muted text-sm mt-2 max-w-xs">
-                {patterns.length} behavioral patterns detected
+                We analyze your real transactions to find hidden patterns
               </p>
             </motion.div>
 

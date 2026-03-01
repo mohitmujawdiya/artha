@@ -127,6 +127,9 @@ export function ChatInterface() {
       setIsTyping(true);
 
       try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 30_000);
+
         const response = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -134,14 +137,16 @@ export function ChatInterface() {
             message: text.trim(),
             userName: getOnboardingData()?.name,
           }),
+          signal: controller.signal,
         });
 
+        clearTimeout(timeout);
         const data = await response.json();
 
         const assistantMessage: ChatMessageType = {
           id: `assistant-${Date.now()}`,
           role: "assistant",
-          content: data.content,
+          content: data.content || "I couldn't generate a response. Try again!",
           timestamp: Date.now(),
           dataCard: data.dataCard,
           quickReplies: data.quickReplies,
@@ -162,7 +167,8 @@ export function ChatInterface() {
         setIsTyping(false);
       }
     },
-    [isTyping, isAnalyzing, messages]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isTyping, isAnalyzing]
   );
 
   const handleSubmit = (e: React.FormEvent) => {

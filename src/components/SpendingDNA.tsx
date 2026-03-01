@@ -84,10 +84,9 @@ export function SpendingDNA({
             fill="url(#dna-fill)"
             stroke="#6c63ff"
             strokeWidth={2}
-            initial={{ opacity: 0, scale: 0.3 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-            style={{ transformOrigin: `${cx}px ${cy}px` }}
           />
         )}
 
@@ -162,16 +161,6 @@ export function SpendingDNA({
         </motion.div>
       )}
 
-      {/* Subtle ambient rotation */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-        style={{
-          background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(108,99,255,0.03) 60deg, transparent 120deg)`,
-          borderRadius: "50%",
-        }}
-      />
     </div>
   );
 }

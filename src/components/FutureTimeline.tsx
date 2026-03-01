@@ -155,9 +155,9 @@ export function FutureTimeline() {
 
         <motion.div
           className="mt-4"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <span className="font-display text-6xl font-bold text-artha-text">
             $
