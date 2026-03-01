@@ -1,0 +1,190 @@
+"use client";
+
+import { useState, useRef, useEffect, useCallback } from "react";
+import { Send } from "lucide-react";
+import { motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
+import { ChatMessage as ChatMessageType } from "@/types";
+import { ChatMessage, TypingIndicator } from "./ChatMessage";
+import { QuickReplyChip } from "./QuickReplyChip";
+import { AnalyzingIndicator } from "./AnalyzingIndicator";
+
+function getWelcomeMessage(context: string | null): ChatMessageType {
+  let content =
+    "Hey Maya! I've been looking at your spending patterns and I'm honestly impressed — 6 months of growing savings is no joke. Want to explore what's working, or dive into something specific?";
+
+  if (context === "moments") {
+    content =
+      "Hey Maya! I just saw those patterns we found — the Sunday deliveries, the savings streak, all of it. Pretty fascinating stuff. Want to dig deeper into any of those, or explore something new?";
+  } else if (context === "future") {
+    content =
+      "Hey Maya! Those projections are looking interesting — small tweaks, big future difference. Want to talk through the levers, or ask about something specific?";
+  }
+
+  return {
+    id: "welcome",
+    role: "assistant",
+    content,
+    timestamp: Date.now(),
+    quickReplies: [
+      "Can I afford AirPods?",
+      "How am I doing?",
+      "Help me save more",
+    ],
+  };
+}
+
+export function ChatInterface() {
+  const searchParams = useSearchParams();
+  const context = searchParams.get("from");
+  const welcomeMessage = getWelcomeMessage(context);
+
+  const [messages, setMessages] = useState<ChatMessageType[]>([welcomeMessage]);
+  const [input, setInput] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [quickReplies, setQuickReplies] = useState<string[]>(
+    welcomeMessage.quickReplies || []
+  );
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, isTyping, isAnalyzing]);
+
+  const sendMessage = useCallback(
+    async (text: string) => {
+      if (!text.trim() || isTyping || isAnalyzing) return;
+
+      const userMessage: ChatMessageType = {
+        id: `user-${Date.now()}`,
+        role: "user",
+        content: text.trim(),
+        timestamp: Date.now(),
+      };
+
+      setMessages((prev) => [...prev, userMessage]);
+      setInput("");
+      setQuickReplies([]);
+
+      // Phase 1: Analyzing animation (0.8s)
+      setIsAnalyzing(true);
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      setIsAnalyzing(false);
+
+      // Phase 2: Typing indicator while fetching
+      setIsTyping(true);
+
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text.trim(),
+            history: messages.map((m) => ({
+              role: m.role,
+              content: m.content,
+            })),
+          }),
+        });
+
+        const data = await response.json();
+
+        const assistantMessage: ChatMessageType = {
+          id: `assistant-${Date.now()}`,
+          role: "assistant",
+          content: data.content,
+          timestamp: Date.now(),
+          dataCard: data.dataCard,
+          quickReplies: data.quickReplies,
+        };
+
+        setMessages((prev) => [...prev, assistantMessage]);
+        setQuickReplies(data.quickReplies || []);
+      } catch {
+        const errorMessage: ChatMessageType = {
+          id: `error-${Date.now()}`,
+          role: "assistant",
+          content:
+            "Sorry, I'm having trouble connecting right now. Try again in a sec!",
+          timestamp: Date.now(),
+        };
+        setMessages((prev) => [...prev, errorMessage]);
+      } finally {
+        setIsTyping(false);
+      }
+    },
+    [isTyping, isAnalyzing, messages]
+  );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(input);
+  };
+
+  return (
+    <div className="flex flex-col h-[calc(100vh-5rem)]">
+      {/* Header */}
+      <div className="glass px-4 py-3 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-full bg-artha-accent/20 flex items-center justify-center">
+          <span className="font-display font-bold text-artha-accent">A</span>
+        </div>
+        <div>
+          <p className="font-semibold text-sm">Artha Coach</p>
+          <p className="text-xs text-artha-green">
+            {isAnalyzing ? "Analyzing..." : "Online"}
+          </p>
+        </div>
+      </div>
+
+      {/* Messages */}
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto px-4 py-4 no-scrollbar"
+      >
+        {messages.map((msg) => (
+          <ChatMessage key={msg.id} message={msg} />
+        ))}
+        {isAnalyzing && <AnalyzingIndicator />}
+        {isTyping && <TypingIndicator />}
+      </div>
+
+      {/* Quick replies */}
+      {quickReplies.length > 0 && !isTyping && !isAnalyzing && (
+        <div className="px-4 pb-2 flex gap-2 overflow-x-auto no-scrollbar">
+          {quickReplies.map((reply, i) => (
+            <QuickReplyChip
+              key={reply}
+              label={reply}
+              onClick={sendMessage}
+              index={i}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Input */}
+      <form onSubmit={handleSubmit} className="px-4 pb-4 pt-2">
+        <div className="glass rounded-full flex items-center px-4 py-2">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask me anything..."
+            className="flex-1 bg-transparent outline-none text-sm text-artha-text placeholder:text-artha-muted/50"
+          />
+          <motion.button
+            type="submit"
+            className="ml-2 text-artha-accent disabled:text-artha-muted/30"
+            disabled={!input.trim() || isTyping || isAnalyzing}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Send size={18} />
+          </motion.button>
+        </div>
+      </form>
+    </div>
+  );
+}

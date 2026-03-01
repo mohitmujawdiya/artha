@@ -1,0 +1,4715 @@
+{
+  "user": {
+    "id": "maya-chen",
+    "name": "Maya Chen",
+    "age": 23,
+    "monthlyIncome": 3200,
+    "currentSavings": 1840,
+    "goals": [
+      {
+        "id": "emergency",
+        "name": "Emergency Fund",
+        "targetAmount": 5000,
+        "currentAmount": 1840,
+        "emoji": "🛡️"
+      },
+      {
+        "id": "japan",
+        "name": "Japan Trip",
+        "targetAmount": 3000,
+        "currentAmount": 890,
+        "deadline": "2026-12-01",
+        "emoji": "🗾"
+      },
+      {
+        "id": "laptop",
+        "name": "New Laptop",
+        "targetAmount": 1500,
+        "currentAmount": 320,
+        "emoji": "💻"
+      }
+    ]
+  },
+  "transactions": [
+    {
+      "id": "txn-001",
+      "date": "2025-09-01T06:18:00",
+      "amount": -10.99,
+      "merchant": "Spotify Premium",
+      "category": "subscriptions",
+      "dayOfWeek": 1,
+      "hour": 6
+    },
+    {
+      "id": "txn-002",
+      "date": "2025-09-01T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-003",
+      "date": "2025-09-01T09:00:00",
+      "amount": -1100,
+      "merchant": "Rent - Parkview Apartments",
+      "category": "rent",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-004",
+      "date": "2025-09-01T12:20:00",
+      "amount": -60.39,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 12
+    },
+    {
+      "id": "txn-005",
+      "date": "2025-09-01T13:37:00",
+      "amount": -26.91,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 13
+    },
+    {
+      "id": "txn-006",
+      "date": "2025-09-01T17:28:00",
+      "amount": -40.4,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 17
+    },
+    {
+      "id": "txn-007",
+      "date": "2025-09-01T21:48:00",
+      "amount": -17.35,
+      "merchant": "Chipotle",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 21
+    },
+    {
+      "id": "txn-008",
+      "date": "2025-09-02T06:13:00",
+      "amount": -15.49,
+      "merchant": "Netflix",
+      "category": "subscriptions",
+      "dayOfWeek": 2,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-10-15"
+    },
+    {
+      "id": "txn-009",
+      "date": "2025-09-02T12:54:00",
+      "amount": -34.33,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 12
+    },
+    {
+      "id": "txn-010",
+      "date": "2025-09-02T15:10:00",
+      "amount": -39.84,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 15
+    },
+    {
+      "id": "txn-011",
+      "date": "2025-09-02T18:56:00",
+      "amount": -21.08,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 18
+    },
+    {
+      "id": "txn-012",
+      "date": "2025-09-03T06:20:00",
+      "amount": -2.99,
+      "merchant": "iCloud Storage",
+      "category": "subscriptions",
+      "dayOfWeek": 3,
+      "hour": 6
+    },
+    {
+      "id": "txn-013",
+      "date": "2025-09-03T06:26:00",
+      "amount": -10.99,
+      "merchant": "Adobe Creative Cloud",
+      "category": "subscriptions",
+      "dayOfWeek": 3,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-09-20"
+    },
+    {
+      "id": "txn-014",
+      "date": "2025-09-03T08:14:00",
+      "amount": -6.47,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-015",
+      "date": "2025-09-03T16:58:00",
+      "amount": -30.52,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 16
+    },
+    {
+      "id": "txn-016",
+      "date": "2025-09-03T19:05:00",
+      "amount": -46.38,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 19
+    },
+    {
+      "id": "txn-017",
+      "date": "2025-09-04T06:05:00",
+      "amount": -5.99,
+      "merchant": "Headspace",
+      "category": "subscriptions",
+      "dayOfWeek": 4,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-11-01"
+    },
+    {
+      "id": "txn-018",
+      "date": "2025-09-04T14:28:00",
+      "amount": -26.63,
+      "merchant": "Marshalls",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 14
+    },
+    {
+      "id": "txn-019",
+      "date": "2025-09-05T06:16:00",
+      "amount": -25,
+      "merchant": "Planet Fitness",
+      "category": "subscriptions",
+      "dayOfWeek": 5,
+      "hour": 6
+    },
+    {
+      "id": "txn-020",
+      "date": "2025-09-05T09:51:00",
+      "amount": -6.26,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-021",
+      "date": "2025-09-05T10:00:00",
+      "amount": -85,
+      "merchant": "PG&E Electric",
+      "category": "utilities",
+      "dayOfWeek": 5,
+      "hour": 10
+    },
+    {
+      "id": "txn-022",
+      "date": "2025-09-06T20:26:00",
+      "amount": -15.14,
+      "merchant": "Chili's",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 20
+    },
+    {
+      "id": "txn-023",
+      "date": "2025-09-07T15:02:00",
+      "amount": -39.73,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 15
+    },
+    {
+      "id": "txn-024",
+      "date": "2025-09-08T10:00:00",
+      "amount": -65,
+      "merchant": "Comcast Internet",
+      "category": "utilities",
+      "dayOfWeek": 1,
+      "hour": 10
+    },
+    {
+      "id": "txn-025",
+      "date": "2025-09-09T16:13:00",
+      "amount": -56.16,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 16
+    },
+    {
+      "id": "txn-026",
+      "date": "2025-09-09T20:48:00",
+      "amount": -39.6,
+      "merchant": "Topgolf",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 20
+    },
+    {
+      "id": "txn-027",
+      "date": "2025-09-10T09:41:00",
+      "amount": -6.89,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-028",
+      "date": "2025-09-10T11:11:00",
+      "amount": -62.73,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 3,
+      "hour": 11
+    },
+    {
+      "id": "txn-029",
+      "date": "2025-09-10T12:00:00",
+      "amount": 100,
+      "merchant": "Transfer to Savings",
+      "category": "savings",
+      "dayOfWeek": 3,
+      "hour": 12
+    },
+    {
+      "id": "txn-030",
+      "date": "2025-09-11T08:54:00",
+      "amount": -20.65,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-031",
+      "date": "2025-09-12T08:56:00",
+      "amount": -5.71,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 8
+    },
+    {
+      "id": "txn-032",
+      "date": "2025-09-12T09:03:00",
+      "amount": -20.77,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-033",
+      "date": "2025-09-12T14:48:00",
+      "amount": -17.56,
+      "merchant": "Shake Shack",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 14
+    },
+    {
+      "id": "txn-034",
+      "date": "2025-09-13T11:25:00",
+      "amount": -50.63,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 11
+    },
+    {
+      "id": "txn-035",
+      "date": "2025-09-14T21:55:00",
+      "amount": -17.37,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-036",
+      "date": "2025-09-14T22:28:00",
+      "amount": -21.81,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 22
+    },
+    {
+      "id": "txn-037",
+      "date": "2025-09-15T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-038",
+      "date": "2025-09-15T08:36:00",
+      "amount": -6.85,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-039",
+      "date": "2025-09-15T12:10:00",
+      "amount": -48.24,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 1,
+      "hour": 12
+    },
+    {
+      "id": "txn-040",
+      "date": "2025-09-15T15:19:00",
+      "amount": -27.44,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 15
+    },
+    {
+      "id": "txn-041",
+      "date": "2025-09-15T20:23:00",
+      "amount": -39.61,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 20
+    },
+    {
+      "id": "txn-042",
+      "date": "2025-09-15T20:30:00",
+      "amount": -30.74,
+      "merchant": "Sweetgreen",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 20
+    },
+    {
+      "id": "txn-043",
+      "date": "2025-09-15T20:53:00",
+      "amount": -21.76,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 20
+    },
+    {
+      "id": "txn-044",
+      "date": "2025-09-16T15:31:00",
+      "amount": -34.58,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 2,
+      "hour": 15
+    },
+    {
+      "id": "txn-045",
+      "date": "2025-09-16T19:52:00",
+      "amount": -18.57,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 19
+    },
+    {
+      "id": "txn-046",
+      "date": "2025-09-17T09:16:00",
+      "amount": -6.56,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-047",
+      "date": "2025-09-17T12:02:00",
+      "amount": -29.85,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 12
+    },
+    {
+      "id": "txn-048",
+      "date": "2025-09-17T18:31:00",
+      "amount": -31.29,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 18
+    },
+    {
+      "id": "txn-049",
+      "date": "2025-09-17T20:13:00",
+      "amount": -33.58,
+      "merchant": "The Cheesecake Factory",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 20
+    },
+    {
+      "id": "txn-050",
+      "date": "2025-09-19T09:07:00",
+      "amount": -6.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-051",
+      "date": "2025-09-19T13:38:00",
+      "amount": -32.69,
+      "merchant": "In-N-Out Burger",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 13
+    },
+    {
+      "id": "txn-052",
+      "date": "2025-09-20T13:15:00",
+      "amount": -29.73,
+      "merchant": "H&M",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 13
+    },
+    {
+      "id": "txn-053",
+      "date": "2025-09-20T14:37:00",
+      "amount": -13.61,
+      "merchant": "In-N-Out Burger",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-054",
+      "date": "2025-09-20T18:21:00",
+      "amount": -18.48,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 18
+    },
+    {
+      "id": "txn-055",
+      "date": "2025-09-21T08:34:00",
+      "amount": -6.01,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 8
+    },
+    {
+      "id": "txn-056",
+      "date": "2025-09-21T12:07:00",
+      "amount": -16.37,
+      "merchant": "Wingstop",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 12
+    },
+    {
+      "id": "txn-057",
+      "date": "2025-09-21T12:24:00",
+      "amount": -34.08,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 12
+    },
+    {
+      "id": "txn-058",
+      "date": "2025-09-21T14:00:00",
+      "amount": -51.1,
+      "merchant": "Marshalls",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-059",
+      "date": "2025-09-21T21:18:00",
+      "amount": -22.65,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-060",
+      "date": "2025-09-22T07:43:00",
+      "amount": -5.94,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 7
+    },
+    {
+      "id": "txn-061",
+      "date": "2025-09-22T12:44:00",
+      "amount": -22.22,
+      "merchant": "In-N-Out Burger",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 12
+    },
+    {
+      "id": "txn-062",
+      "date": "2025-09-22T15:49:00",
+      "amount": -38.48,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 1,
+      "hour": 15
+    },
+    {
+      "id": "txn-063",
+      "date": "2025-09-23T09:41:00",
+      "amount": -6.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-064",
+      "date": "2025-09-23T17:39:00",
+      "amount": -28.6,
+      "merchant": "Olive Garden",
+      "category": "dining",
+      "dayOfWeek": 2,
+      "hour": 17
+    },
+    {
+      "id": "txn-065",
+      "date": "2025-09-23T18:30:00",
+      "amount": -48.83,
+      "merchant": "Chevron",
+      "category": "transportation",
+      "dayOfWeek": 2,
+      "hour": 18
+    },
+    {
+      "id": "txn-066",
+      "date": "2025-09-24T08:32:00",
+      "amount": -5.94,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-067",
+      "date": "2025-09-24T09:02:00",
+      "amount": -21.08,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-068",
+      "date": "2025-09-25T11:30:00",
+      "amount": -60.49,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 4,
+      "hour": 11
+    },
+    {
+      "id": "txn-069",
+      "date": "2025-09-26T07:47:00",
+      "amount": -6.86,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-070",
+      "date": "2025-09-26T12:58:00",
+      "amount": -34.27,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 12
+    },
+    {
+      "id": "txn-071",
+      "date": "2025-09-26T19:02:00",
+      "amount": -21.62,
+      "merchant": "Thai Basil",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 19
+    },
+    {
+      "id": "txn-072",
+      "date": "2025-09-27T10:36:00",
+      "amount": -40.45,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 10
+    },
+    {
+      "id": "txn-073",
+      "date": "2025-09-27T10:52:00",
+      "amount": -40.25,
+      "merchant": "Chevron",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 10
+    },
+    {
+      "id": "txn-074",
+      "date": "2025-09-27T14:03:00",
+      "amount": -23.12,
+      "merchant": "Pho 99",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-075",
+      "date": "2025-09-28T09:07:00",
+      "amount": -6.96,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 9
+    },
+    {
+      "id": "txn-076",
+      "date": "2025-09-28T09:44:00",
+      "amount": -14.8,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 9
+    },
+    {
+      "id": "txn-077",
+      "date": "2025-09-28T19:19:00",
+      "amount": -34.6,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 19
+    },
+    {
+      "id": "txn-078",
+      "date": "2025-09-28T22:53:00",
+      "amount": -20.74,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 0,
+      "hour": 22
+    },
+    {
+      "id": "txn-079",
+      "date": "2025-09-30T09:13:00",
+      "amount": -6.12,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-080",
+      "date": "2025-09-30T10:02:00",
+      "amount": -32.76,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 10
+    },
+    {
+      "id": "txn-081",
+      "date": "2025-09-30T10:13:00",
+      "amount": -22.07,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 2,
+      "hour": 10
+    },
+    {
+      "id": "txn-082",
+      "date": "2025-10-01T06:08:00",
+      "amount": -10.99,
+      "merchant": "Spotify Premium",
+      "category": "subscriptions",
+      "dayOfWeek": 3,
+      "hour": 6
+    },
+    {
+      "id": "txn-083",
+      "date": "2025-10-01T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-084",
+      "date": "2025-10-01T09:00:00",
+      "amount": -1100,
+      "merchant": "Rent - Parkview Apartments",
+      "category": "rent",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-085",
+      "date": "2025-10-01T13:35:00",
+      "amount": -25.28,
+      "merchant": "Dave & Buster's",
+      "category": "entertainment",
+      "dayOfWeek": 3,
+      "hour": 13
+    },
+    {
+      "id": "txn-086",
+      "date": "2025-10-01T18:26:00",
+      "amount": -30.46,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 18
+    },
+    {
+      "id": "txn-087",
+      "date": "2025-10-01T19:03:00",
+      "amount": -42.15,
+      "merchant": "H&M",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 19
+    },
+    {
+      "id": "txn-088",
+      "date": "2025-10-02T06:19:00",
+      "amount": -15.49,
+      "merchant": "Netflix",
+      "category": "subscriptions",
+      "dayOfWeek": 4,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-10-15"
+    },
+    {
+      "id": "txn-089",
+      "date": "2025-10-02T08:12:00",
+      "amount": -6.44,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-090",
+      "date": "2025-10-02T14:07:00",
+      "amount": -58.45,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 14
+    },
+    {
+      "id": "txn-091",
+      "date": "2025-10-02T17:41:00",
+      "amount": -34.82,
+      "merchant": "Escape Room LA",
+      "category": "entertainment",
+      "dayOfWeek": 4,
+      "hour": 17
+    },
+    {
+      "id": "txn-092",
+      "date": "2025-10-02T18:34:00",
+      "amount": -27.62,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 18
+    },
+    {
+      "id": "txn-093",
+      "date": "2025-10-03T06:14:00",
+      "amount": -2.99,
+      "merchant": "iCloud Storage",
+      "category": "subscriptions",
+      "dayOfWeek": 5,
+      "hour": 6
+    },
+    {
+      "id": "txn-094",
+      "date": "2025-10-03T06:26:00",
+      "amount": -10.99,
+      "merchant": "Adobe Creative Cloud",
+      "category": "subscriptions",
+      "dayOfWeek": 5,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-09-20"
+    },
+    {
+      "id": "txn-095",
+      "date": "2025-10-03T07:47:00",
+      "amount": -6.09,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-096",
+      "date": "2025-10-03T11:22:00",
+      "amount": -32.05,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 11
+    },
+    {
+      "id": "txn-097",
+      "date": "2025-10-03T11:42:00",
+      "amount": -16.73,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 5,
+      "hour": 11
+    },
+    {
+      "id": "txn-098",
+      "date": "2025-10-03T12:50:00",
+      "amount": -36.59,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 12
+    },
+    {
+      "id": "txn-099",
+      "date": "2025-10-03T13:50:00",
+      "amount": -48.59,
+      "merchant": "Best Buy",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 13
+    },
+    {
+      "id": "txn-100",
+      "date": "2025-10-03T15:25:00",
+      "amount": -20.63,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 15
+    },
+    {
+      "id": "txn-101",
+      "date": "2025-10-03T21:37:00",
+      "amount": -15.47,
+      "merchant": "Taco Bell",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 21
+    },
+    {
+      "id": "txn-102",
+      "date": "2025-10-04T06:07:00",
+      "amount": -5.99,
+      "merchant": "Headspace",
+      "category": "subscriptions",
+      "dayOfWeek": 6,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-11-01"
+    },
+    {
+      "id": "txn-103",
+      "date": "2025-10-04T12:30:00",
+      "amount": -34.15,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 12
+    },
+    {
+      "id": "txn-104",
+      "date": "2025-10-05T06:27:00",
+      "amount": -25,
+      "merchant": "Planet Fitness",
+      "category": "subscriptions",
+      "dayOfWeek": 0,
+      "hour": 6
+    },
+    {
+      "id": "txn-105",
+      "date": "2025-10-05T08:00:00",
+      "amount": -6.61,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 8
+    },
+    {
+      "id": "txn-106",
+      "date": "2025-10-05T10:00:00",
+      "amount": -85,
+      "merchant": "PG&E Electric",
+      "category": "utilities",
+      "dayOfWeek": 0,
+      "hour": 10
+    },
+    {
+      "id": "txn-107",
+      "date": "2025-10-05T15:56:00",
+      "amount": -22.09,
+      "merchant": "Pizza Hut",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 15
+    },
+    {
+      "id": "txn-108",
+      "date": "2025-10-05T16:31:00",
+      "amount": -12.78,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 16
+    },
+    {
+      "id": "txn-109",
+      "date": "2025-10-05T18:22:00",
+      "amount": -27.37,
+      "merchant": "Escape Room LA",
+      "category": "entertainment",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-110",
+      "date": "2025-10-05T19:38:00",
+      "amount": -25.95,
+      "merchant": "DoorDash",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 19
+    },
+    {
+      "id": "txn-111",
+      "date": "2025-10-05T20:57:00",
+      "amount": -17.15,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 20
+    },
+    {
+      "id": "txn-112",
+      "date": "2025-10-06T09:54:00",
+      "amount": -5.81,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-113",
+      "date": "2025-10-06T19:51:00",
+      "amount": -24.96,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 1,
+      "hour": 19
+    },
+    {
+      "id": "txn-114",
+      "date": "2025-10-07T08:11:00",
+      "amount": -5.57,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 8
+    },
+    {
+      "id": "txn-115",
+      "date": "2025-10-08T09:17:00",
+      "amount": -5.91,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-116",
+      "date": "2025-10-08T10:00:00",
+      "amount": -65,
+      "merchant": "Comcast Internet",
+      "category": "utilities",
+      "dayOfWeek": 3,
+      "hour": 10
+    },
+    {
+      "id": "txn-117",
+      "date": "2025-10-09T07:13:00",
+      "amount": -6.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 7
+    },
+    {
+      "id": "txn-118",
+      "date": "2025-10-10T09:09:00",
+      "amount": -5.76,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-119",
+      "date": "2025-10-10T12:00:00",
+      "amount": 120,
+      "merchant": "Transfer to Savings",
+      "category": "savings",
+      "dayOfWeek": 5,
+      "hour": 12
+    },
+    {
+      "id": "txn-120",
+      "date": "2025-10-10T17:34:00",
+      "amount": -52.67,
+      "merchant": "Uniqlo",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 17
+    },
+    {
+      "id": "txn-121",
+      "date": "2025-10-10T18:30:00",
+      "amount": -51.07,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 5,
+      "hour": 18
+    },
+    {
+      "id": "txn-122",
+      "date": "2025-10-11T13:48:00",
+      "amount": -24.37,
+      "merchant": "Olive Garden",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 13
+    },
+    {
+      "id": "txn-123",
+      "date": "2025-10-11T14:58:00",
+      "amount": -38.05,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-124",
+      "date": "2025-10-12T14:24:00",
+      "amount": -38.59,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-125",
+      "date": "2025-10-13T08:25:00",
+      "amount": -6.53,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-126",
+      "date": "2025-10-14T08:53:00",
+      "amount": -5.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 8
+    },
+    {
+      "id": "txn-127",
+      "date": "2025-10-14T14:44:00",
+      "amount": -30.33,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 14
+    },
+    {
+      "id": "txn-128",
+      "date": "2025-10-15T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-129",
+      "date": "2025-10-15T08:32:00",
+      "amount": -6.38,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-130",
+      "date": "2025-10-15T12:26:00",
+      "amount": -61.82,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 3,
+      "hour": 12
+    },
+    {
+      "id": "txn-131",
+      "date": "2025-10-15T12:41:00",
+      "amount": -47.75,
+      "merchant": "H&M",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 12
+    },
+    {
+      "id": "txn-132",
+      "date": "2025-10-15T17:59:00",
+      "amount": -11.92,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 3,
+      "hour": 17
+    },
+    {
+      "id": "txn-133",
+      "date": "2025-10-15T20:45:00",
+      "amount": -34.19,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 20
+    },
+    {
+      "id": "txn-134",
+      "date": "2025-10-16T19:12:00",
+      "amount": -20.03,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 4,
+      "hour": 19
+    },
+    {
+      "id": "txn-135",
+      "date": "2025-10-16T19:14:00",
+      "amount": -51.19,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 19
+    },
+    {
+      "id": "txn-136",
+      "date": "2025-10-16T20:55:00",
+      "amount": -36.8,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 20
+    },
+    {
+      "id": "txn-137",
+      "date": "2025-10-17T07:19:00",
+      "amount": -6.5,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-138",
+      "date": "2025-10-17T13:21:00",
+      "amount": -19.33,
+      "merchant": "Sweetgreen",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 13
+    },
+    {
+      "id": "txn-139",
+      "date": "2025-10-17T17:41:00",
+      "amount": -56.75,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 17
+    },
+    {
+      "id": "txn-140",
+      "date": "2025-10-17T20:40:00",
+      "amount": -50.32,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 20
+    },
+    {
+      "id": "txn-141",
+      "date": "2025-10-19T18:11:00",
+      "amount": -52.88,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-142",
+      "date": "2025-10-19T20:15:00",
+      "amount": -13.01,
+      "merchant": "Pizza Hut",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 20
+    },
+    {
+      "id": "txn-143",
+      "date": "2025-10-19T21:50:00",
+      "amount": -21.92,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-144",
+      "date": "2025-10-20T07:07:00",
+      "amount": -5.97,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 7
+    },
+    {
+      "id": "txn-145",
+      "date": "2025-10-22T07:28:00",
+      "amount": -6.07,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 7
+    },
+    {
+      "id": "txn-146",
+      "date": "2025-10-23T09:48:00",
+      "amount": -6.16,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 9
+    },
+    {
+      "id": "txn-147",
+      "date": "2025-10-25T09:53:00",
+      "amount": -6.18,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 6,
+      "hour": 9
+    },
+    {
+      "id": "txn-148",
+      "date": "2025-10-25T14:13:00",
+      "amount": -39.85,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-149",
+      "date": "2025-10-25T16:23:00",
+      "amount": -18.18,
+      "merchant": "Wingstop",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 16
+    },
+    {
+      "id": "txn-150",
+      "date": "2025-10-26T14:20:00",
+      "amount": -34.56,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-151",
+      "date": "2025-10-26T15:43:00",
+      "amount": -13.14,
+      "merchant": "Sweetgreen",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 15
+    },
+    {
+      "id": "txn-152",
+      "date": "2025-10-26T18:43:00",
+      "amount": -38.53,
+      "merchant": "76 Gas",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-153",
+      "date": "2025-10-26T21:36:00",
+      "amount": -34.74,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-154",
+      "date": "2025-10-27T09:12:00",
+      "amount": -6.08,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-155",
+      "date": "2025-10-28T09:29:00",
+      "amount": -6.79,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-156",
+      "date": "2025-10-28T14:33:00",
+      "amount": -39.39,
+      "merchant": "Chevron",
+      "category": "transportation",
+      "dayOfWeek": 2,
+      "hour": 14
+    },
+    {
+      "id": "txn-157",
+      "date": "2025-10-28T17:02:00",
+      "amount": -42.27,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 17
+    },
+    {
+      "id": "txn-158",
+      "date": "2025-10-29T09:03:00",
+      "amount": -5.6,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-159",
+      "date": "2025-10-30T14:17:00",
+      "amount": -45.22,
+      "merchant": "Ross",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 14
+    },
+    {
+      "id": "txn-160",
+      "date": "2025-10-30T15:19:00",
+      "amount": -33.51,
+      "merchant": "Chili's",
+      "category": "dining",
+      "dayOfWeek": 4,
+      "hour": 15
+    },
+    {
+      "id": "txn-161",
+      "date": "2025-10-30T18:48:00",
+      "amount": -29.37,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 4,
+      "hour": 18
+    },
+    {
+      "id": "txn-162",
+      "date": "2025-10-31T09:45:00",
+      "amount": -6.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-163",
+      "date": "2025-10-31T15:07:00",
+      "amount": -32.43,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 5,
+      "hour": 15
+    },
+    {
+      "id": "txn-164",
+      "date": "2025-10-31T19:02:00",
+      "amount": -32.54,
+      "merchant": "Shake Shack",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 19
+    },
+    {
+      "id": "txn-165",
+      "date": "2025-10-31T19:37:00",
+      "amount": -59.83,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 19
+    },
+    {
+      "id": "txn-166",
+      "date": "2025-11-01T06:23:00",
+      "amount": -10.99,
+      "merchant": "Spotify Premium",
+      "category": "subscriptions",
+      "dayOfWeek": 6,
+      "hour": 6
+    },
+    {
+      "id": "txn-167",
+      "date": "2025-11-01T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 6,
+      "hour": 8
+    },
+    {
+      "id": "txn-168",
+      "date": "2025-11-01T09:00:00",
+      "amount": -1100,
+      "merchant": "Rent - Parkview Apartments",
+      "category": "rent",
+      "dayOfWeek": 6,
+      "hour": 9
+    },
+    {
+      "id": "txn-169",
+      "date": "2025-11-01T09:51:00",
+      "amount": -6.4,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 6,
+      "hour": 9
+    },
+    {
+      "id": "txn-170",
+      "date": "2025-11-01T11:57:00",
+      "amount": -16.07,
+      "merchant": "Chipotle",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 11
+    },
+    {
+      "id": "txn-171",
+      "date": "2025-11-01T13:31:00",
+      "amount": -41.08,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 13
+    },
+    {
+      "id": "txn-172",
+      "date": "2025-11-01T13:54:00",
+      "amount": -64.67,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 13
+    },
+    {
+      "id": "txn-173",
+      "date": "2025-11-01T15:24:00",
+      "amount": -55.76,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 15
+    },
+    {
+      "id": "txn-174",
+      "date": "2025-11-01T22:19:00",
+      "amount": -15.52,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 22
+    },
+    {
+      "id": "txn-175",
+      "date": "2025-11-02T06:09:00",
+      "amount": -15.49,
+      "merchant": "Netflix",
+      "category": "subscriptions",
+      "dayOfWeek": 0,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-10-15"
+    },
+    {
+      "id": "txn-176",
+      "date": "2025-11-02T08:52:00",
+      "amount": -6.52,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 8
+    },
+    {
+      "id": "txn-177",
+      "date": "2025-11-02T11:48:00",
+      "amount": -16.39,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 11
+    },
+    {
+      "id": "txn-178",
+      "date": "2025-11-02T12:21:00",
+      "amount": -25.65,
+      "merchant": "Dave & Buster's",
+      "category": "entertainment",
+      "dayOfWeek": 0,
+      "hour": 12
+    },
+    {
+      "id": "txn-179",
+      "date": "2025-11-02T12:23:00",
+      "amount": -11.17,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 12
+    },
+    {
+      "id": "txn-180",
+      "date": "2025-11-02T13:57:00",
+      "amount": -31.65,
+      "merchant": "Panda Express",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 13
+    },
+    {
+      "id": "txn-181",
+      "date": "2025-11-02T14:57:00",
+      "amount": -48.49,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-182",
+      "date": "2025-11-02T17:37:00",
+      "amount": -40.57,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 17
+    },
+    {
+      "id": "txn-183",
+      "date": "2025-11-02T22:46:00",
+      "amount": -18,
+      "merchant": "DoorDash",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 22
+    },
+    {
+      "id": "txn-184",
+      "date": "2025-11-03T06:06:00",
+      "amount": -10.99,
+      "merchant": "Adobe Creative Cloud",
+      "category": "subscriptions",
+      "dayOfWeek": 1,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-09-20"
+    },
+    {
+      "id": "txn-185",
+      "date": "2025-11-03T06:15:00",
+      "amount": -2.99,
+      "merchant": "iCloud Storage",
+      "category": "subscriptions",
+      "dayOfWeek": 1,
+      "hour": 6
+    },
+    {
+      "id": "txn-186",
+      "date": "2025-11-03T09:37:00",
+      "amount": -5.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-187",
+      "date": "2025-11-03T11:52:00",
+      "amount": -33.69,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 11
+    },
+    {
+      "id": "txn-188",
+      "date": "2025-11-03T11:59:00",
+      "amount": -29.02,
+      "merchant": "Taco Bell",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 11
+    },
+    {
+      "id": "txn-189",
+      "date": "2025-11-03T16:36:00",
+      "amount": -24.87,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 16
+    },
+    {
+      "id": "txn-190",
+      "date": "2025-11-04T06:21:00",
+      "amount": -5.99,
+      "merchant": "Headspace",
+      "category": "subscriptions",
+      "dayOfWeek": 2,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-11-01"
+    },
+    {
+      "id": "txn-191",
+      "date": "2025-11-04T07:21:00",
+      "amount": -5.53,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 7
+    },
+    {
+      "id": "txn-192",
+      "date": "2025-11-05T06:18:00",
+      "amount": -25,
+      "merchant": "Planet Fitness",
+      "category": "subscriptions",
+      "dayOfWeek": 3,
+      "hour": 6
+    },
+    {
+      "id": "txn-193",
+      "date": "2025-11-05T10:00:00",
+      "amount": -85,
+      "merchant": "PG&E Electric",
+      "category": "utilities",
+      "dayOfWeek": 3,
+      "hour": 10
+    },
+    {
+      "id": "txn-194",
+      "date": "2025-11-06T09:57:00",
+      "amount": -6.82,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 9
+    },
+    {
+      "id": "txn-195",
+      "date": "2025-11-07T09:08:00",
+      "amount": -5.91,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-196",
+      "date": "2025-11-08T10:00:00",
+      "amount": -65,
+      "merchant": "Comcast Internet",
+      "category": "utilities",
+      "dayOfWeek": 6,
+      "hour": 10
+    },
+    {
+      "id": "txn-197",
+      "date": "2025-11-08T13:47:00",
+      "amount": -13.57,
+      "merchant": "Pizza Hut",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 13
+    },
+    {
+      "id": "txn-198",
+      "date": "2025-11-09T11:07:00",
+      "amount": -61.47,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 11
+    },
+    {
+      "id": "txn-199",
+      "date": "2025-11-09T19:17:00",
+      "amount": -33.72,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 19
+    },
+    {
+      "id": "txn-200",
+      "date": "2025-11-10T12:00:00",
+      "amount": 140,
+      "merchant": "Transfer to Savings",
+      "category": "savings",
+      "dayOfWeek": 1,
+      "hour": 12
+    },
+    {
+      "id": "txn-201",
+      "date": "2025-11-10T19:44:00",
+      "amount": -34.42,
+      "merchant": "Ticketmaster",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 19
+    },
+    {
+      "id": "txn-202",
+      "date": "2025-11-11T08:42:00",
+      "amount": -6.69,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 8
+    },
+    {
+      "id": "txn-203",
+      "date": "2025-11-12T07:39:00",
+      "amount": -6.28,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 7
+    },
+    {
+      "id": "txn-204",
+      "date": "2025-11-12T15:52:00",
+      "amount": -37.59,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 3,
+      "hour": 15
+    },
+    {
+      "id": "txn-205",
+      "date": "2025-11-13T08:27:00",
+      "amount": -6.14,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-206",
+      "date": "2025-11-14T07:08:00",
+      "amount": -6.26,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-207",
+      "date": "2025-11-14T19:49:00",
+      "amount": -27.41,
+      "merchant": "Shake Shack",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 19
+    },
+    {
+      "id": "txn-208",
+      "date": "2025-11-15T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 6,
+      "hour": 8
+    },
+    {
+      "id": "txn-209",
+      "date": "2025-11-15T17:33:00",
+      "amount": -21.4,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 6,
+      "hour": 17
+    },
+    {
+      "id": "txn-210",
+      "date": "2025-11-15T17:33:00",
+      "amount": -24.76,
+      "merchant": "Panera Bread",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 17
+    },
+    {
+      "id": "txn-211",
+      "date": "2025-11-15T18:34:00",
+      "amount": -20.45,
+      "merchant": "Regal Cinemas",
+      "category": "entertainment",
+      "dayOfWeek": 6,
+      "hour": 18
+    },
+    {
+      "id": "txn-212",
+      "date": "2025-11-15T19:13:00",
+      "amount": -33.51,
+      "merchant": "The Cheesecake Factory",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 19
+    },
+    {
+      "id": "txn-213",
+      "date": "2025-11-15T19:32:00",
+      "amount": -47.28,
+      "merchant": "TJ Maxx",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 19
+    },
+    {
+      "id": "txn-214",
+      "date": "2025-11-15T20:11:00",
+      "amount": -28.08,
+      "merchant": "H&M",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 20
+    },
+    {
+      "id": "txn-215",
+      "date": "2025-11-16T08:38:00",
+      "amount": -6.16,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 8
+    },
+    {
+      "id": "txn-216",
+      "date": "2025-11-16T12:19:00",
+      "amount": -16.04,
+      "merchant": "Panda Express",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 12
+    },
+    {
+      "id": "txn-217",
+      "date": "2025-11-16T14:55:00",
+      "amount": -34.36,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-218",
+      "date": "2025-11-16T15:43:00",
+      "amount": -22.01,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 15
+    },
+    {
+      "id": "txn-219",
+      "date": "2025-11-16T16:08:00",
+      "amount": -44.9,
+      "merchant": "Shell",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 16
+    },
+    {
+      "id": "txn-220",
+      "date": "2025-11-16T17:38:00",
+      "amount": -28.17,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 0,
+      "hour": 17
+    },
+    {
+      "id": "txn-221",
+      "date": "2025-11-16T20:26:00",
+      "amount": -16.05,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 20
+    },
+    {
+      "id": "txn-222",
+      "date": "2025-11-17T10:59:00",
+      "amount": -15.13,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 1,
+      "hour": 10
+    },
+    {
+      "id": "txn-223",
+      "date": "2025-11-17T13:16:00",
+      "amount": -58.42,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 1,
+      "hour": 13
+    },
+    {
+      "id": "txn-224",
+      "date": "2025-11-17T15:11:00",
+      "amount": -29.68,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 15
+    },
+    {
+      "id": "txn-225",
+      "date": "2025-11-17T15:55:00",
+      "amount": -47.17,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 15
+    },
+    {
+      "id": "txn-226",
+      "date": "2025-11-17T18:08:00",
+      "amount": -34.18,
+      "merchant": "The Cheesecake Factory",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 18
+    },
+    {
+      "id": "txn-227",
+      "date": "2025-11-17T20:23:00",
+      "amount": -27.31,
+      "merchant": "Shake Shack",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 20
+    },
+    {
+      "id": "txn-228",
+      "date": "2025-11-19T18:20:00",
+      "amount": -49.38,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 3,
+      "hour": 18
+    },
+    {
+      "id": "txn-229",
+      "date": "2025-11-20T07:52:00",
+      "amount": -6.15,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 7
+    },
+    {
+      "id": "txn-230",
+      "date": "2025-11-21T07:49:00",
+      "amount": -5.59,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-231",
+      "date": "2025-11-21T21:56:00",
+      "amount": -31.47,
+      "merchant": "Olive Garden",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 21
+    },
+    {
+      "id": "txn-232",
+      "date": "2025-11-22T14:29:00",
+      "amount": -27.33,
+      "merchant": "Sushi Roku",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-233",
+      "date": "2025-11-22T20:34:00",
+      "amount": -23.61,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 20
+    },
+    {
+      "id": "txn-234",
+      "date": "2025-11-23T11:46:00",
+      "amount": -53.18,
+      "merchant": "IKEA",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 11
+    },
+    {
+      "id": "txn-235",
+      "date": "2025-11-23T18:23:00",
+      "amount": -22.32,
+      "merchant": "Olive Garden",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-236",
+      "date": "2025-11-23T19:54:00",
+      "amount": -18,
+      "merchant": "DoorDash",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 19
+    },
+    {
+      "id": "txn-237",
+      "date": "2025-11-23T21:18:00",
+      "amount": -23.74,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-238",
+      "date": "2025-11-23T22:17:00",
+      "amount": -18.27,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 22
+    },
+    {
+      "id": "txn-239",
+      "date": "2025-11-24T08:05:00",
+      "amount": -6.95,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-240",
+      "date": "2025-11-24T13:26:00",
+      "amount": -14.71,
+      "merchant": "Chili's",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 13
+    },
+    {
+      "id": "txn-241",
+      "date": "2025-11-25T08:47:00",
+      "amount": -6.32,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 8
+    },
+    {
+      "id": "txn-242",
+      "date": "2025-11-25T10:29:00",
+      "amount": -33.59,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 10
+    },
+    {
+      "id": "txn-243",
+      "date": "2025-11-26T08:10:00",
+      "amount": -5.62,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-244",
+      "date": "2025-11-26T18:01:00",
+      "amount": -46.02,
+      "merchant": "Shell",
+      "category": "transportation",
+      "dayOfWeek": 3,
+      "hour": 18
+    },
+    {
+      "id": "txn-245",
+      "date": "2025-11-28T12:20:00",
+      "amount": -44.07,
+      "merchant": "H&M",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 12
+    },
+    {
+      "id": "txn-246",
+      "date": "2025-11-28T18:08:00",
+      "amount": -15,
+      "merchant": "Panda Express",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 18
+    },
+    {
+      "id": "txn-247",
+      "date": "2025-11-29T14:15:00",
+      "amount": -50.73,
+      "merchant": "Best Buy",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-248",
+      "date": "2025-11-30T09:33:00",
+      "amount": -6.96,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 9
+    },
+    {
+      "id": "txn-249",
+      "date": "2025-11-30T21:34:00",
+      "amount": -23.47,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-250",
+      "date": "2025-12-01T06:00:00",
+      "amount": -10.99,
+      "merchant": "Spotify Premium",
+      "category": "subscriptions",
+      "dayOfWeek": 1,
+      "hour": 6
+    },
+    {
+      "id": "txn-251",
+      "date": "2025-12-01T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-252",
+      "date": "2025-12-01T09:00:00",
+      "amount": -1100,
+      "merchant": "Rent - Parkview Apartments",
+      "category": "rent",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-253",
+      "date": "2025-12-01T11:03:00",
+      "amount": -25.82,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 1,
+      "hour": 11
+    },
+    {
+      "id": "txn-254",
+      "date": "2025-12-01T14:43:00",
+      "amount": -27.11,
+      "merchant": "Dave & Buster's",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 14
+    },
+    {
+      "id": "txn-255",
+      "date": "2025-12-01T16:15:00",
+      "amount": -22.48,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 1,
+      "hour": 16
+    },
+    {
+      "id": "txn-256",
+      "date": "2025-12-01T19:16:00",
+      "amount": -34.86,
+      "merchant": "The Cheesecake Factory",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 19
+    },
+    {
+      "id": "txn-257",
+      "date": "2025-12-02T06:14:00",
+      "amount": -15.49,
+      "merchant": "Netflix",
+      "category": "subscriptions",
+      "dayOfWeek": 2,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-10-15"
+    },
+    {
+      "id": "txn-258",
+      "date": "2025-12-02T08:17:00",
+      "amount": -6.75,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 8
+    },
+    {
+      "id": "txn-259",
+      "date": "2025-12-02T10:04:00",
+      "amount": -36.51,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 10
+    },
+    {
+      "id": "txn-260",
+      "date": "2025-12-02T11:42:00",
+      "amount": -20.44,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 11
+    },
+    {
+      "id": "txn-261",
+      "date": "2025-12-02T13:22:00",
+      "amount": -24.44,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 13
+    },
+    {
+      "id": "txn-262",
+      "date": "2025-12-02T20:44:00",
+      "amount": -43.4,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 20
+    },
+    {
+      "id": "txn-263",
+      "date": "2025-12-03T06:01:00",
+      "amount": -2.99,
+      "merchant": "iCloud Storage",
+      "category": "subscriptions",
+      "dayOfWeek": 3,
+      "hour": 6
+    },
+    {
+      "id": "txn-264",
+      "date": "2025-12-03T06:25:00",
+      "amount": -10.99,
+      "merchant": "Adobe Creative Cloud",
+      "category": "subscriptions",
+      "dayOfWeek": 3,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-09-20"
+    },
+    {
+      "id": "txn-265",
+      "date": "2025-12-03T07:56:00",
+      "amount": -6.93,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 7
+    },
+    {
+      "id": "txn-266",
+      "date": "2025-12-03T15:20:00",
+      "amount": -32.86,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 15
+    },
+    {
+      "id": "txn-267",
+      "date": "2025-12-03T18:05:00",
+      "amount": -54.33,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 18
+    },
+    {
+      "id": "txn-268",
+      "date": "2025-12-04T06:18:00",
+      "amount": -5.99,
+      "merchant": "Headspace",
+      "category": "subscriptions",
+      "dayOfWeek": 4,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-11-01"
+    },
+    {
+      "id": "txn-269",
+      "date": "2025-12-04T16:57:00",
+      "amount": -44.19,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 4,
+      "hour": 16
+    },
+    {
+      "id": "txn-270",
+      "date": "2025-12-05T06:00:00",
+      "amount": -25,
+      "merchant": "Planet Fitness",
+      "category": "subscriptions",
+      "dayOfWeek": 5,
+      "hour": 6
+    },
+    {
+      "id": "txn-271",
+      "date": "2025-12-05T09:56:00",
+      "amount": -6.53,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-272",
+      "date": "2025-12-05T10:00:00",
+      "amount": -85,
+      "merchant": "PG&E Electric",
+      "category": "utilities",
+      "dayOfWeek": 5,
+      "hour": 10
+    },
+    {
+      "id": "txn-273",
+      "date": "2025-12-05T13:48:00",
+      "amount": -36.76,
+      "merchant": "Shell",
+      "category": "transportation",
+      "dayOfWeek": 5,
+      "hour": 13
+    },
+    {
+      "id": "txn-274",
+      "date": "2025-12-05T20:13:00",
+      "amount": -14.38,
+      "merchant": "Panera Bread",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 20
+    },
+    {
+      "id": "txn-275",
+      "date": "2025-12-06T12:07:00",
+      "amount": -25.66,
+      "merchant": "TJ Maxx",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 12
+    },
+    {
+      "id": "txn-276",
+      "date": "2025-12-06T14:34:00",
+      "amount": -28.47,
+      "merchant": "Panda Express",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-277",
+      "date": "2025-12-06T18:34:00",
+      "amount": -28.37,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 18
+    },
+    {
+      "id": "txn-278",
+      "date": "2025-12-07T07:29:00",
+      "amount": -6.63,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 7
+    },
+    {
+      "id": "txn-279",
+      "date": "2025-12-07T10:11:00",
+      "amount": -54.14,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 10
+    },
+    {
+      "id": "txn-280",
+      "date": "2025-12-07T14:16:00",
+      "amount": -32.94,
+      "merchant": "Thai Basil",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-281",
+      "date": "2025-12-07T21:00:00",
+      "amount": -22.06,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-282",
+      "date": "2025-12-07T21:17:00",
+      "amount": -35.64,
+      "merchant": "Topgolf",
+      "category": "entertainment",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-283",
+      "date": "2025-12-08T09:33:00",
+      "amount": -6.32,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-284",
+      "date": "2025-12-08T10:00:00",
+      "amount": -65,
+      "merchant": "Comcast Internet",
+      "category": "utilities",
+      "dayOfWeek": 1,
+      "hour": 10
+    },
+    {
+      "id": "txn-285",
+      "date": "2025-12-08T12:12:00",
+      "amount": -29.34,
+      "merchant": "In-N-Out Burger",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 12
+    },
+    {
+      "id": "txn-286",
+      "date": "2025-12-09T09:45:00",
+      "amount": -5.96,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-287",
+      "date": "2025-12-09T13:45:00",
+      "amount": -29.67,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 13
+    },
+    {
+      "id": "txn-288",
+      "date": "2025-12-10T09:51:00",
+      "amount": -6.08,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-289",
+      "date": "2025-12-10T12:00:00",
+      "amount": 160,
+      "merchant": "Transfer to Savings",
+      "category": "savings",
+      "dayOfWeek": 3,
+      "hour": 12
+    },
+    {
+      "id": "txn-290",
+      "date": "2025-12-10T15:50:00",
+      "amount": -27.68,
+      "merchant": "Five Guys",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 15
+    },
+    {
+      "id": "txn-291",
+      "date": "2025-12-10T17:51:00",
+      "amount": -20.19,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 3,
+      "hour": 17
+    },
+    {
+      "id": "txn-292",
+      "date": "2025-12-11T07:52:00",
+      "amount": -6.12,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 7
+    },
+    {
+      "id": "txn-293",
+      "date": "2025-12-11T20:58:00",
+      "amount": -32.11,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 4,
+      "hour": 20
+    },
+    {
+      "id": "txn-294",
+      "date": "2025-12-12T08:50:00",
+      "amount": -6.43,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 8
+    },
+    {
+      "id": "txn-295",
+      "date": "2025-12-13T07:17:00",
+      "amount": -6.94,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 6,
+      "hour": 7
+    },
+    {
+      "id": "txn-296",
+      "date": "2025-12-13T10:58:00",
+      "amount": -48.31,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 10
+    },
+    {
+      "id": "txn-297",
+      "date": "2025-12-13T14:17:00",
+      "amount": -20.08,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-298",
+      "date": "2025-12-13T18:36:00",
+      "amount": -27.89,
+      "merchant": "Chili's",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 18
+    },
+    {
+      "id": "txn-299",
+      "date": "2025-12-14T07:37:00",
+      "amount": -6.66,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 7
+    },
+    {
+      "id": "txn-300",
+      "date": "2025-12-14T13:24:00",
+      "amount": -29.09,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 13
+    },
+    {
+      "id": "txn-301",
+      "date": "2025-12-14T22:26:00",
+      "amount": -26.51,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 22
+    },
+    {
+      "id": "txn-302",
+      "date": "2025-12-15T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-303",
+      "date": "2025-12-15T09:11:00",
+      "amount": -6.77,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-304",
+      "date": "2025-12-15T13:24:00",
+      "amount": -32.33,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 13
+    },
+    {
+      "id": "txn-305",
+      "date": "2025-12-15T15:22:00",
+      "amount": -23.98,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 15
+    },
+    {
+      "id": "txn-306",
+      "date": "2025-12-15T18:52:00",
+      "amount": -38.49,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 18
+    },
+    {
+      "id": "txn-307",
+      "date": "2025-12-16T08:28:00",
+      "amount": -5.61,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 8
+    },
+    {
+      "id": "txn-308",
+      "date": "2025-12-16T14:11:00",
+      "amount": -24.67,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 14
+    },
+    {
+      "id": "txn-309",
+      "date": "2025-12-16T14:23:00",
+      "amount": -17.72,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 2,
+      "hour": 14
+    },
+    {
+      "id": "txn-310",
+      "date": "2025-12-16T16:59:00",
+      "amount": -37.41,
+      "merchant": "Dave & Buster's",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 16
+    },
+    {
+      "id": "txn-311",
+      "date": "2025-12-16T18:56:00",
+      "amount": -49.31,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 18
+    },
+    {
+      "id": "txn-312",
+      "date": "2025-12-17T09:40:00",
+      "amount": -6.13,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-313",
+      "date": "2025-12-17T11:36:00",
+      "amount": -15.66,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 11
+    },
+    {
+      "id": "txn-314",
+      "date": "2025-12-17T16:12:00",
+      "amount": -32.41,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 3,
+      "hour": 16
+    },
+    {
+      "id": "txn-315",
+      "date": "2025-12-17T16:23:00",
+      "amount": -37.1,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 16
+    },
+    {
+      "id": "txn-316",
+      "date": "2025-12-17T18:10:00",
+      "amount": -28.33,
+      "merchant": "H&M",
+      "category": "shopping",
+      "dayOfWeek": 3,
+      "hour": 18
+    },
+    {
+      "id": "txn-317",
+      "date": "2025-12-18T08:43:00",
+      "amount": -6.28,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-318",
+      "date": "2025-12-19T11:41:00",
+      "amount": -15.26,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 5,
+      "hour": 11
+    },
+    {
+      "id": "txn-319",
+      "date": "2025-12-19T13:04:00",
+      "amount": -34.55,
+      "merchant": "Sushi Roku",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 13
+    },
+    {
+      "id": "txn-320",
+      "date": "2025-12-20T11:06:00",
+      "amount": -36.28,
+      "merchant": "Shell",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 11
+    },
+    {
+      "id": "txn-321",
+      "date": "2025-12-20T18:26:00",
+      "amount": -16.67,
+      "merchant": "Wingstop",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 18
+    },
+    {
+      "id": "txn-322",
+      "date": "2025-12-21T14:18:00",
+      "amount": -33.76,
+      "merchant": "Best Buy",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-323",
+      "date": "2025-12-21T18:21:00",
+      "amount": -40.95,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-324",
+      "date": "2025-12-22T20:52:00",
+      "amount": -23.06,
+      "merchant": "Pizza Hut",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 20
+    },
+    {
+      "id": "txn-325",
+      "date": "2025-12-23T09:50:00",
+      "amount": -6.53,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-326",
+      "date": "2025-12-24T12:27:00",
+      "amount": -13.96,
+      "merchant": "Pizza Hut",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 12
+    },
+    {
+      "id": "txn-327",
+      "date": "2025-12-26T18:18:00",
+      "amount": -14.88,
+      "merchant": "Taco Bell",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 18
+    },
+    {
+      "id": "txn-328",
+      "date": "2025-12-27T11:05:00",
+      "amount": -57.01,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 11
+    },
+    {
+      "id": "txn-329",
+      "date": "2025-12-27T12:02:00",
+      "amount": -18.26,
+      "merchant": "Ross",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 12
+    },
+    {
+      "id": "txn-330",
+      "date": "2025-12-27T13:03:00",
+      "amount": -24.95,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 13
+    },
+    {
+      "id": "txn-331",
+      "date": "2025-12-27T13:07:00",
+      "amount": -18.15,
+      "merchant": "Sweetgreen",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 13
+    },
+    {
+      "id": "txn-332",
+      "date": "2025-12-28T08:54:00",
+      "amount": -6.83,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 8
+    },
+    {
+      "id": "txn-333",
+      "date": "2025-12-28T16:44:00",
+      "amount": -54.56,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 16
+    },
+    {
+      "id": "txn-334",
+      "date": "2025-12-28T18:55:00",
+      "amount": -33.92,
+      "merchant": "Pizza Hut",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-335",
+      "date": "2025-12-28T20:11:00",
+      "amount": -25.43,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 20
+    },
+    {
+      "id": "txn-336",
+      "date": "2025-12-28T21:53:00",
+      "amount": -25.51,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-337",
+      "date": "2025-12-29T07:37:00",
+      "amount": -5.86,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 7
+    },
+    {
+      "id": "txn-338",
+      "date": "2025-12-29T20:49:00",
+      "amount": -26.13,
+      "merchant": "Bowlero",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 20
+    },
+    {
+      "id": "txn-339",
+      "date": "2025-12-30T07:15:00",
+      "amount": -6.58,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 7
+    },
+    {
+      "id": "txn-340",
+      "date": "2025-12-30T21:58:00",
+      "amount": -16.76,
+      "merchant": "Bowlero",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 21
+    },
+    {
+      "id": "txn-341",
+      "date": "2025-12-31T08:35:00",
+      "amount": -5.66,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-342",
+      "date": "2026-01-01T06:08:00",
+      "amount": -10.99,
+      "merchant": "Spotify Premium",
+      "category": "subscriptions",
+      "dayOfWeek": 4,
+      "hour": 6
+    },
+    {
+      "id": "txn-343",
+      "date": "2026-01-01T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-344",
+      "date": "2026-01-01T09:00:00",
+      "amount": -1100,
+      "merchant": "Rent - Parkview Apartments",
+      "category": "rent",
+      "dayOfWeek": 4,
+      "hour": 9
+    },
+    {
+      "id": "txn-345",
+      "date": "2026-01-01T09:55:00",
+      "amount": -5.67,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 9
+    },
+    {
+      "id": "txn-346",
+      "date": "2026-01-01T10:55:00",
+      "amount": -35.66,
+      "merchant": "76 Gas",
+      "category": "transportation",
+      "dayOfWeek": 4,
+      "hour": 10
+    },
+    {
+      "id": "txn-347",
+      "date": "2026-01-01T17:25:00",
+      "amount": -45.47,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 4,
+      "hour": 17
+    },
+    {
+      "id": "txn-348",
+      "date": "2026-01-01T19:15:00",
+      "amount": -54.74,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 19
+    },
+    {
+      "id": "txn-349",
+      "date": "2026-01-01T20:28:00",
+      "amount": -37.92,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 20
+    },
+    {
+      "id": "txn-350",
+      "date": "2026-01-02T06:01:00",
+      "amount": -15.49,
+      "merchant": "Netflix",
+      "category": "subscriptions",
+      "dayOfWeek": 5,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-10-15"
+    },
+    {
+      "id": "txn-351",
+      "date": "2026-01-02T11:43:00",
+      "amount": -41.33,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 11
+    },
+    {
+      "id": "txn-352",
+      "date": "2026-01-02T13:24:00",
+      "amount": -29.21,
+      "merchant": "Chili's",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 13
+    },
+    {
+      "id": "txn-353",
+      "date": "2026-01-02T15:15:00",
+      "amount": -48.49,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 15
+    },
+    {
+      "id": "txn-354",
+      "date": "2026-01-03T06:05:00",
+      "amount": -10.99,
+      "merchant": "Adobe Creative Cloud",
+      "category": "subscriptions",
+      "dayOfWeek": 6,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-09-20"
+    },
+    {
+      "id": "txn-355",
+      "date": "2026-01-03T06:24:00",
+      "amount": -2.99,
+      "merchant": "iCloud Storage",
+      "category": "subscriptions",
+      "dayOfWeek": 6,
+      "hour": 6
+    },
+    {
+      "id": "txn-356",
+      "date": "2026-01-03T16:49:00",
+      "amount": -13.57,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 16
+    },
+    {
+      "id": "txn-357",
+      "date": "2026-01-03T16:54:00",
+      "amount": -21.11,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 6,
+      "hour": 16
+    },
+    {
+      "id": "txn-358",
+      "date": "2026-01-03T17:08:00",
+      "amount": -14.27,
+      "merchant": "Five Guys",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 17
+    },
+    {
+      "id": "txn-359",
+      "date": "2026-01-03T19:05:00",
+      "amount": -46.28,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 19
+    },
+    {
+      "id": "txn-360",
+      "date": "2026-01-03T19:47:00",
+      "amount": -36.95,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 19
+    },
+    {
+      "id": "txn-361",
+      "date": "2026-01-04T06:16:00",
+      "amount": -5.99,
+      "merchant": "Headspace",
+      "category": "subscriptions",
+      "dayOfWeek": 0,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-11-01"
+    },
+    {
+      "id": "txn-362",
+      "date": "2026-01-04T07:13:00",
+      "amount": -6.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 7
+    },
+    {
+      "id": "txn-363",
+      "date": "2026-01-04T11:52:00",
+      "amount": -20.8,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 11
+    },
+    {
+      "id": "txn-364",
+      "date": "2026-01-04T14:09:00",
+      "amount": -60.35,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-365",
+      "date": "2026-01-04T17:00:00",
+      "amount": -28.2,
+      "merchant": "Pho 99",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 17
+    },
+    {
+      "id": "txn-366",
+      "date": "2026-01-05T06:00:00",
+      "amount": -25,
+      "merchant": "Planet Fitness",
+      "category": "subscriptions",
+      "dayOfWeek": 1,
+      "hour": 6
+    },
+    {
+      "id": "txn-367",
+      "date": "2026-01-05T09:20:00",
+      "amount": -6.47,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-368",
+      "date": "2026-01-05T10:00:00",
+      "amount": -85,
+      "merchant": "PG&E Electric",
+      "category": "utilities",
+      "dayOfWeek": 1,
+      "hour": 10
+    },
+    {
+      "id": "txn-369",
+      "date": "2026-01-07T09:22:00",
+      "amount": -5.81,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 9
+    },
+    {
+      "id": "txn-370",
+      "date": "2026-01-07T11:43:00",
+      "amount": -47.4,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 3,
+      "hour": 11
+    },
+    {
+      "id": "txn-371",
+      "date": "2026-01-08T08:08:00",
+      "amount": -5.62,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-372",
+      "date": "2026-01-08T10:00:00",
+      "amount": -65,
+      "merchant": "Comcast Internet",
+      "category": "utilities",
+      "dayOfWeek": 4,
+      "hour": 10
+    },
+    {
+      "id": "txn-373",
+      "date": "2026-01-08T12:15:00",
+      "amount": -43.29,
+      "merchant": "Shell",
+      "category": "transportation",
+      "dayOfWeek": 4,
+      "hour": 12
+    },
+    {
+      "id": "txn-374",
+      "date": "2026-01-08T14:08:00",
+      "amount": -64.81,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 4,
+      "hour": 14
+    },
+    {
+      "id": "txn-375",
+      "date": "2026-01-09T08:52:00",
+      "amount": -6.69,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 8
+    },
+    {
+      "id": "txn-376",
+      "date": "2026-01-09T13:52:00",
+      "amount": -30.44,
+      "merchant": "Thai Basil",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 13
+    },
+    {
+      "id": "txn-377",
+      "date": "2026-01-09T14:49:00",
+      "amount": -41.51,
+      "merchant": "Ross",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 14
+    },
+    {
+      "id": "txn-378",
+      "date": "2026-01-10T12:00:00",
+      "amount": 200,
+      "merchant": "Transfer to Savings",
+      "category": "savings",
+      "dayOfWeek": 6,
+      "hour": 12
+    },
+    {
+      "id": "txn-379",
+      "date": "2026-01-10T14:27:00",
+      "amount": -35.03,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 14
+    },
+    {
+      "id": "txn-380",
+      "date": "2026-01-10T17:19:00",
+      "amount": -18.14,
+      "merchant": "Sushi Roku",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 17
+    },
+    {
+      "id": "txn-381",
+      "date": "2026-01-11T07:08:00",
+      "amount": -6.33,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 7
+    },
+    {
+      "id": "txn-382",
+      "date": "2026-01-11T10:59:00",
+      "amount": -30.42,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 10
+    },
+    {
+      "id": "txn-383",
+      "date": "2026-01-11T19:42:00",
+      "amount": -20.79,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 19
+    },
+    {
+      "id": "txn-384",
+      "date": "2026-01-11T20:35:00",
+      "amount": -19.95,
+      "merchant": "DoorDash",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 20
+    },
+    {
+      "id": "txn-385",
+      "date": "2026-01-12T07:46:00",
+      "amount": -5.86,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 7
+    },
+    {
+      "id": "txn-386",
+      "date": "2026-01-12T11:55:00",
+      "amount": -42.14,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 1,
+      "hour": 11
+    },
+    {
+      "id": "txn-387",
+      "date": "2026-01-12T22:51:00",
+      "amount": -30.99,
+      "merchant": "Escape Room LA",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 22
+    },
+    {
+      "id": "txn-388",
+      "date": "2026-01-13T12:22:00",
+      "amount": -27.88,
+      "merchant": "Uniqlo",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 12
+    },
+    {
+      "id": "txn-389",
+      "date": "2026-01-14T08:33:00",
+      "amount": -5.81,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-390",
+      "date": "2026-01-15T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-391",
+      "date": "2026-01-15T08:44:00",
+      "amount": -5.57,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-392",
+      "date": "2026-01-15T13:07:00",
+      "amount": -55.17,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 13
+    },
+    {
+      "id": "txn-393",
+      "date": "2026-01-15T16:02:00",
+      "amount": -27.19,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 16
+    },
+    {
+      "id": "txn-394",
+      "date": "2026-01-15T16:51:00",
+      "amount": -30.24,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 4,
+      "hour": 16
+    },
+    {
+      "id": "txn-395",
+      "date": "2026-01-16T08:17:00",
+      "amount": -5.57,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 8
+    },
+    {
+      "id": "txn-396",
+      "date": "2026-01-16T11:11:00",
+      "amount": -12.91,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 5,
+      "hour": 11
+    },
+    {
+      "id": "txn-397",
+      "date": "2026-01-16T12:01:00",
+      "amount": -15.32,
+      "merchant": "Taco Bell",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 12
+    },
+    {
+      "id": "txn-398",
+      "date": "2026-01-16T16:31:00",
+      "amount": -25.89,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 16
+    },
+    {
+      "id": "txn-399",
+      "date": "2026-01-16T17:14:00",
+      "amount": -29.14,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 17
+    },
+    {
+      "id": "txn-400",
+      "date": "2026-01-16T19:17:00",
+      "amount": -36.51,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 19
+    },
+    {
+      "id": "txn-401",
+      "date": "2026-01-17T18:10:00",
+      "amount": -34.42,
+      "merchant": "Sephora",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 18
+    },
+    {
+      "id": "txn-402",
+      "date": "2026-01-17T19:59:00",
+      "amount": -37.49,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 19
+    },
+    {
+      "id": "txn-403",
+      "date": "2026-01-17T20:23:00",
+      "amount": -17.25,
+      "merchant": "Sweetgreen",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 20
+    },
+    {
+      "id": "txn-404",
+      "date": "2026-01-18T09:15:00",
+      "amount": -6.79,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 9
+    },
+    {
+      "id": "txn-405",
+      "date": "2026-01-18T10:17:00",
+      "amount": -29.71,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 10
+    },
+    {
+      "id": "txn-406",
+      "date": "2026-01-18T15:17:00",
+      "amount": -30.62,
+      "merchant": "Sushi Roku",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 15
+    },
+    {
+      "id": "txn-407",
+      "date": "2026-01-18T21:24:00",
+      "amount": -15.98,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-408",
+      "date": "2026-01-18T22:34:00",
+      "amount": -22.15,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 22
+    },
+    {
+      "id": "txn-409",
+      "date": "2026-01-19T07:38:00",
+      "amount": -6.26,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 7
+    },
+    {
+      "id": "txn-410",
+      "date": "2026-01-19T17:28:00",
+      "amount": -18.05,
+      "merchant": "Olive Garden",
+      "category": "dining",
+      "dayOfWeek": 1,
+      "hour": 17
+    },
+    {
+      "id": "txn-411",
+      "date": "2026-01-21T07:08:00",
+      "amount": -6.99,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 7
+    },
+    {
+      "id": "txn-412",
+      "date": "2026-01-21T22:05:00",
+      "amount": -22.59,
+      "merchant": "Escape Room LA",
+      "category": "entertainment",
+      "dayOfWeek": 3,
+      "hour": 22
+    },
+    {
+      "id": "txn-413",
+      "date": "2026-01-22T12:34:00",
+      "amount": -54.98,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 4,
+      "hour": 12
+    },
+    {
+      "id": "txn-414",
+      "date": "2026-01-22T17:21:00",
+      "amount": -39.73,
+      "merchant": "Topgolf",
+      "category": "entertainment",
+      "dayOfWeek": 4,
+      "hour": 17
+    },
+    {
+      "id": "txn-415",
+      "date": "2026-01-22T21:31:00",
+      "amount": -21.55,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 4,
+      "hour": 21
+    },
+    {
+      "id": "txn-416",
+      "date": "2026-01-23T08:37:00",
+      "amount": -6.23,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 8
+    },
+    {
+      "id": "txn-417",
+      "date": "2026-01-24T20:00:00",
+      "amount": -29.15,
+      "merchant": "Chipotle",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 20
+    },
+    {
+      "id": "txn-418",
+      "date": "2026-01-25T13:52:00",
+      "amount": -46.61,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 13
+    },
+    {
+      "id": "txn-419",
+      "date": "2026-01-25T15:58:00",
+      "amount": -10.96,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 15
+    },
+    {
+      "id": "txn-420",
+      "date": "2026-01-26T09:20:00",
+      "amount": -5.81,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-421",
+      "date": "2026-01-26T17:57:00",
+      "amount": -55.43,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 1,
+      "hour": 17
+    },
+    {
+      "id": "txn-422",
+      "date": "2026-01-27T09:26:00",
+      "amount": -6.23,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-423",
+      "date": "2026-01-27T19:33:00",
+      "amount": -19.49,
+      "merchant": "Taco Bell",
+      "category": "dining",
+      "dayOfWeek": 2,
+      "hour": 19
+    },
+    {
+      "id": "txn-424",
+      "date": "2026-01-29T07:51:00",
+      "amount": -6.05,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 7
+    },
+    {
+      "id": "txn-425",
+      "date": "2026-01-29T12:59:00",
+      "amount": -28.82,
+      "merchant": "Whole Foods",
+      "category": "groceries",
+      "dayOfWeek": 4,
+      "hour": 12
+    },
+    {
+      "id": "txn-426",
+      "date": "2026-01-30T07:30:00",
+      "amount": -5.56,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-427",
+      "date": "2026-01-30T11:11:00",
+      "amount": -34.52,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 5,
+      "hour": 11
+    },
+    {
+      "id": "txn-428",
+      "date": "2026-01-31T11:39:00",
+      "amount": -12.36,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 11
+    },
+    {
+      "id": "txn-429",
+      "date": "2026-01-31T12:43:00",
+      "amount": -33.35,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 12
+    },
+    {
+      "id": "txn-430",
+      "date": "2026-01-31T17:36:00",
+      "amount": -15.91,
+      "merchant": "Sushi Roku",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 17
+    },
+    {
+      "id": "txn-431",
+      "date": "2026-01-31T18:11:00",
+      "amount": -36.57,
+      "merchant": "TJ Maxx",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 18
+    },
+    {
+      "id": "txn-432",
+      "date": "2026-02-01T06:05:00",
+      "amount": -10.99,
+      "merchant": "Spotify Premium",
+      "category": "subscriptions",
+      "dayOfWeek": 0,
+      "hour": 6
+    },
+    {
+      "id": "txn-433",
+      "date": "2026-02-01T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 0,
+      "hour": 8
+    },
+    {
+      "id": "txn-434",
+      "date": "2026-02-01T09:00:00",
+      "amount": -1100,
+      "merchant": "Rent - Parkview Apartments",
+      "category": "rent",
+      "dayOfWeek": 0,
+      "hour": 9
+    },
+    {
+      "id": "txn-435",
+      "date": "2026-02-01T11:40:00",
+      "amount": -34.24,
+      "merchant": "Chipotle",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 11
+    },
+    {
+      "id": "txn-436",
+      "date": "2026-02-01T14:29:00",
+      "amount": -29.51,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-437",
+      "date": "2026-02-01T17:13:00",
+      "amount": -38.68,
+      "merchant": "The Cheesecake Factory",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 17
+    },
+    {
+      "id": "txn-438",
+      "date": "2026-02-01T20:39:00",
+      "amount": -27.79,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 20
+    },
+    {
+      "id": "txn-439",
+      "date": "2026-02-01T21:16:00",
+      "amount": -12.99,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-440",
+      "date": "2026-02-01T21:51:00",
+      "amount": -39.3,
+      "merchant": "Ticketmaster",
+      "category": "entertainment",
+      "dayOfWeek": 0,
+      "hour": 21
+    },
+    {
+      "id": "txn-441",
+      "date": "2026-02-02T06:26:00",
+      "amount": -15.49,
+      "merchant": "Netflix",
+      "category": "subscriptions",
+      "dayOfWeek": 1,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-10-15"
+    },
+    {
+      "id": "txn-442",
+      "date": "2026-02-02T09:39:00",
+      "amount": -6.72,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 9
+    },
+    {
+      "id": "txn-443",
+      "date": "2026-02-02T11:29:00",
+      "amount": -17.45,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 11
+    },
+    {
+      "id": "txn-444",
+      "date": "2026-02-02T11:31:00",
+      "amount": -52.68,
+      "merchant": "Nordstrom Rack",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 11
+    },
+    {
+      "id": "txn-445",
+      "date": "2026-02-02T12:19:00",
+      "amount": -17.61,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 12
+    },
+    {
+      "id": "txn-446",
+      "date": "2026-02-03T06:15:00",
+      "amount": -10.99,
+      "merchant": "Adobe Creative Cloud",
+      "category": "subscriptions",
+      "dayOfWeek": 2,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-09-20"
+    },
+    {
+      "id": "txn-447",
+      "date": "2026-02-03T06:25:00",
+      "amount": -2.99,
+      "merchant": "iCloud Storage",
+      "category": "subscriptions",
+      "dayOfWeek": 2,
+      "hour": 6
+    },
+    {
+      "id": "txn-448",
+      "date": "2026-02-03T13:37:00",
+      "amount": -36.21,
+      "merchant": "The Cheesecake Factory",
+      "category": "dining",
+      "dayOfWeek": 2,
+      "hour": 13
+    },
+    {
+      "id": "txn-449",
+      "date": "2026-02-03T18:30:00",
+      "amount": -31.13,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 18
+    },
+    {
+      "id": "txn-450",
+      "date": "2026-02-03T19:47:00",
+      "amount": -45.93,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 19
+    },
+    {
+      "id": "txn-451",
+      "date": "2026-02-03T19:58:00",
+      "amount": -23.41,
+      "merchant": "Yard House",
+      "category": "dining",
+      "dayOfWeek": 2,
+      "hour": 19
+    },
+    {
+      "id": "txn-452",
+      "date": "2026-02-03T21:56:00",
+      "amount": -11.63,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 2,
+      "hour": 21
+    },
+    {
+      "id": "txn-453",
+      "date": "2026-02-03T22:31:00",
+      "amount": -23.76,
+      "merchant": "Escape Room LA",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 22
+    },
+    {
+      "id": "txn-454",
+      "date": "2026-02-04T06:09:00",
+      "amount": -5.99,
+      "merchant": "Headspace",
+      "category": "subscriptions",
+      "dayOfWeek": 3,
+      "hour": 6,
+      "isSubscription": true,
+      "lastUsed": "2025-11-01"
+    },
+    {
+      "id": "txn-455",
+      "date": "2026-02-04T08:28:00",
+      "amount": -6.27,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 3,
+      "hour": 8
+    },
+    {
+      "id": "txn-456",
+      "date": "2026-02-04T21:49:00",
+      "amount": -20.76,
+      "merchant": "Panda Express",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 21
+    },
+    {
+      "id": "txn-457",
+      "date": "2026-02-05T06:13:00",
+      "amount": -25,
+      "merchant": "Planet Fitness",
+      "category": "subscriptions",
+      "dayOfWeek": 4,
+      "hour": 6
+    },
+    {
+      "id": "txn-458",
+      "date": "2026-02-05T08:34:00",
+      "amount": -5.52,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-459",
+      "date": "2026-02-05T10:00:00",
+      "amount": -85,
+      "merchant": "PG&E Electric",
+      "category": "utilities",
+      "dayOfWeek": 4,
+      "hour": 10
+    },
+    {
+      "id": "txn-460",
+      "date": "2026-02-05T10:05:00",
+      "amount": -64.77,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 4,
+      "hour": 10
+    },
+    {
+      "id": "txn-461",
+      "date": "2026-02-05T13:47:00",
+      "amount": -22.28,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 4,
+      "hour": 13
+    },
+    {
+      "id": "txn-462",
+      "date": "2026-02-06T07:41:00",
+      "amount": -5.77,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-463",
+      "date": "2026-02-06T15:03:00",
+      "amount": -28.96,
+      "merchant": "Ross",
+      "category": "shopping",
+      "dayOfWeek": 5,
+      "hour": 15
+    },
+    {
+      "id": "txn-464",
+      "date": "2026-02-06T21:02:00",
+      "amount": -19.63,
+      "merchant": "Olive Garden",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 21
+    },
+    {
+      "id": "txn-465",
+      "date": "2026-02-07T11:53:00",
+      "amount": -24.78,
+      "merchant": "Sushi Roku",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 11
+    },
+    {
+      "id": "txn-466",
+      "date": "2026-02-07T17:43:00",
+      "amount": -24.47,
+      "merchant": "IKEA",
+      "category": "shopping",
+      "dayOfWeek": 6,
+      "hour": 17
+    },
+    {
+      "id": "txn-467",
+      "date": "2026-02-08T09:16:00",
+      "amount": -6.43,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 9
+    },
+    {
+      "id": "txn-468",
+      "date": "2026-02-08T10:00:00",
+      "amount": -65,
+      "merchant": "Comcast Internet",
+      "category": "utilities",
+      "dayOfWeek": 0,
+      "hour": 10
+    },
+    {
+      "id": "txn-469",
+      "date": "2026-02-08T12:07:00",
+      "amount": -58.37,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 0,
+      "hour": 12
+    },
+    {
+      "id": "txn-470",
+      "date": "2026-02-08T18:32:00",
+      "amount": -32.13,
+      "merchant": "Shake Shack",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-471",
+      "date": "2026-02-08T20:41:00",
+      "amount": -15.14,
+      "merchant": "Amazon",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 20
+    },
+    {
+      "id": "txn-472",
+      "date": "2026-02-09T08:02:00",
+      "amount": -6.35,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-473",
+      "date": "2026-02-10T08:28:00",
+      "amount": -6.63,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 8
+    },
+    {
+      "id": "txn-474",
+      "date": "2026-02-10T11:58:00",
+      "amount": -23.95,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 2,
+      "hour": 11
+    },
+    {
+      "id": "txn-475",
+      "date": "2026-02-10T12:00:00",
+      "amount": 240,
+      "merchant": "Transfer to Savings",
+      "category": "savings",
+      "dayOfWeek": 2,
+      "hour": 12
+    },
+    {
+      "id": "txn-476",
+      "date": "2026-02-10T16:31:00",
+      "amount": -12.2,
+      "merchant": "Uber",
+      "category": "transportation",
+      "dayOfWeek": 2,
+      "hour": 16
+    },
+    {
+      "id": "txn-477",
+      "date": "2026-02-12T08:56:00",
+      "amount": -6.75,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-478",
+      "date": "2026-02-12T16:42:00",
+      "amount": -24.6,
+      "merchant": "Chili's",
+      "category": "dining",
+      "dayOfWeek": 4,
+      "hour": 16
+    },
+    {
+      "id": "txn-479",
+      "date": "2026-02-13T07:54:00",
+      "amount": -5.59,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-480",
+      "date": "2026-02-13T15:36:00",
+      "amount": -53.45,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 5,
+      "hour": 15
+    },
+    {
+      "id": "txn-481",
+      "date": "2026-02-14T10:37:00",
+      "amount": -49.23,
+      "merchant": "Chevron",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 10
+    },
+    {
+      "id": "txn-482",
+      "date": "2026-02-14T12:28:00",
+      "amount": -52.7,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 12
+    },
+    {
+      "id": "txn-483",
+      "date": "2026-02-14T20:43:00",
+      "amount": -31.44,
+      "merchant": "Chipotle",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 20
+    },
+    {
+      "id": "txn-484",
+      "date": "2026-02-15T08:00:00",
+      "amount": 1600,
+      "merchant": "Direct Deposit - TechCorp",
+      "category": "income",
+      "dayOfWeek": 0,
+      "hour": 8
+    },
+    {
+      "id": "txn-485",
+      "date": "2026-02-15T09:33:00",
+      "amount": -6.42,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 9
+    },
+    {
+      "id": "txn-486",
+      "date": "2026-02-15T13:37:00",
+      "amount": -45.56,
+      "merchant": "H&M",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 13
+    },
+    {
+      "id": "txn-487",
+      "date": "2026-02-15T13:48:00",
+      "amount": -31.19,
+      "merchant": "Target",
+      "category": "shopping",
+      "dayOfWeek": 0,
+      "hour": 13
+    },
+    {
+      "id": "txn-488",
+      "date": "2026-02-15T18:32:00",
+      "amount": -27.93,
+      "merchant": "Pho 99",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 18
+    },
+    {
+      "id": "txn-489",
+      "date": "2026-02-15T22:56:00",
+      "amount": -22.31,
+      "merchant": "UberEats",
+      "category": "food_delivery",
+      "dayOfWeek": 0,
+      "hour": 22
+    },
+    {
+      "id": "txn-490",
+      "date": "2026-02-16T08:59:00",
+      "amount": -6.97,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-491",
+      "date": "2026-02-16T15:51:00",
+      "amount": -47.36,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 15
+    },
+    {
+      "id": "txn-492",
+      "date": "2026-02-16T16:37:00",
+      "amount": -36.11,
+      "merchant": "Zara",
+      "category": "shopping",
+      "dayOfWeek": 1,
+      "hour": 16
+    },
+    {
+      "id": "txn-493",
+      "date": "2026-02-16T19:21:00",
+      "amount": -23.9,
+      "merchant": "Dave & Buster's",
+      "category": "entertainment",
+      "dayOfWeek": 1,
+      "hour": 19
+    },
+    {
+      "id": "txn-494",
+      "date": "2026-02-17T09:57:00",
+      "amount": -6.72,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-495",
+      "date": "2026-02-17T11:18:00",
+      "amount": -30.32,
+      "merchant": "Dave & Buster's",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 11
+    },
+    {
+      "id": "txn-496",
+      "date": "2026-02-17T14:27:00",
+      "amount": -37.63,
+      "merchant": "Best Buy",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 14
+    },
+    {
+      "id": "txn-497",
+      "date": "2026-02-17T18:58:00",
+      "amount": -27.28,
+      "merchant": "Apple Store",
+      "category": "shopping",
+      "dayOfWeek": 2,
+      "hour": 18
+    },
+    {
+      "id": "txn-498",
+      "date": "2026-02-17T20:45:00",
+      "amount": -26.22,
+      "merchant": "AMC Theatres",
+      "category": "entertainment",
+      "dayOfWeek": 2,
+      "hour": 20
+    },
+    {
+      "id": "txn-499",
+      "date": "2026-02-18T15:11:00",
+      "amount": -34.52,
+      "merchant": "Chipotle",
+      "category": "dining",
+      "dayOfWeek": 3,
+      "hour": 15
+    },
+    {
+      "id": "txn-500",
+      "date": "2026-02-20T07:29:00",
+      "amount": -6.81,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 7
+    },
+    {
+      "id": "txn-501",
+      "date": "2026-02-21T10:43:00",
+      "amount": -29.52,
+      "merchant": "Safeway",
+      "category": "groceries",
+      "dayOfWeek": 6,
+      "hour": 10
+    },
+    {
+      "id": "txn-502",
+      "date": "2026-02-21T20:28:00",
+      "amount": -18.6,
+      "merchant": "Panda Express",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 20
+    },
+    {
+      "id": "txn-503",
+      "date": "2026-02-22T07:50:00",
+      "amount": -6.18,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 0,
+      "hour": 7
+    },
+    {
+      "id": "txn-504",
+      "date": "2026-02-22T14:05:00",
+      "amount": -17.26,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 0,
+      "hour": 14
+    },
+    {
+      "id": "txn-505",
+      "date": "2026-02-22T16:14:00",
+      "amount": -12.92,
+      "merchant": "Wingstop",
+      "category": "dining",
+      "dayOfWeek": 0,
+      "hour": 16
+    },
+    {
+      "id": "txn-506",
+      "date": "2026-02-23T08:15:00",
+      "amount": -5.73,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 1,
+      "hour": 8
+    },
+    {
+      "id": "txn-507",
+      "date": "2026-02-24T09:03:00",
+      "amount": -5.71,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 2,
+      "hour": 9
+    },
+    {
+      "id": "txn-508",
+      "date": "2026-02-24T18:51:00",
+      "amount": -33.13,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 2,
+      "hour": 18
+    },
+    {
+      "id": "txn-509",
+      "date": "2026-02-26T08:38:00",
+      "amount": -6.96,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 4,
+      "hour": 8
+    },
+    {
+      "id": "txn-510",
+      "date": "2026-02-26T12:37:00",
+      "amount": -14.73,
+      "merchant": "Olive Garden",
+      "category": "dining",
+      "dayOfWeek": 4,
+      "hour": 12
+    },
+    {
+      "id": "txn-511",
+      "date": "2026-02-27T09:44:00",
+      "amount": -5.52,
+      "merchant": "Starbucks",
+      "category": "coffee",
+      "dayOfWeek": 5,
+      "hour": 9
+    },
+    {
+      "id": "txn-512",
+      "date": "2026-02-27T12:13:00",
+      "amount": -15.51,
+      "merchant": "Shake Shack",
+      "category": "dining",
+      "dayOfWeek": 5,
+      "hour": 12
+    },
+    {
+      "id": "txn-513",
+      "date": "2026-02-27T15:23:00",
+      "amount": -38.49,
+      "merchant": "Trader Joe's",
+      "category": "groceries",
+      "dayOfWeek": 5,
+      "hour": 15
+    },
+    {
+      "id": "txn-514",
+      "date": "2026-02-28T11:17:00",
+      "amount": -12.94,
+      "merchant": "Lyft",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 11
+    },
+    {
+      "id": "txn-515",
+      "date": "2026-02-28T16:41:00",
+      "amount": -40.75,
+      "merchant": "Shell",
+      "category": "transportation",
+      "dayOfWeek": 6,
+      "hour": 16
+    },
+    {
+      "id": "txn-516",
+      "date": "2026-02-28T20:22:00",
+      "amount": -31.99,
+      "merchant": "Panera Bread",
+      "category": "dining",
+      "dayOfWeek": 6,
+      "hour": 20
+    }
+  ]
+}
