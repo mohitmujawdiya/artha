@@ -20,9 +20,13 @@
 
 ## What is artha?
 
-artha is an AI-powered financial wellness app that turns raw bank transactions into a personal spending story. Instead of showing tables and pie charts, artha detects invisible behavioral patterns in your spending, visualizes your financial DNA, and coaches you with a conversational AI that knows your habits, goals, and psychology.
+artha is an AI-powered financial wellness app built for young adults who want to build financial confidence but don't know where to start.
 
-Built for Gen Z users who grew up on Stories and TikTok, artha makes personal finance feel like scrolling through a feed — not staring at a spreadsheet.
+Most fintech apps — Credit Karma, Rocket Money, Mint — dump bank data into dashboards, charts, and tables. That works if you're already financially literate. But if you can read a chart and draw conclusions from it, you probably don't need the app in the first place.
+
+artha takes a different approach. It connects to your bank via Plaid, detects invisible behavioral patterns in your spending, and delivers **personalized, bite-sized insights** through UX patterns Gen Z already knows — swipe cards like Tinder, scrollable stories like Instagram. No dashboards. No pie charts. Just your financial story, told in a way you'll actually read.
+
+The innovation isn't displaying bank data. It's going one step further: **proactively surfacing nudges, behavioral patterns, and actionable goals** — then keeping you in the loop through an AI coach and the messaging channels you already use.
 
 ---
 
@@ -31,11 +35,37 @@ Built for Gen Z users who grew up on Stories and TikTok, artha makes personal fi
 | Pillar | What it does |
 |---|---|
 | **Behavioral Fingerprinting** | Detects 7+ spending patterns invisible to users (Sunday night ordering, payday splurges, subscription creep, etc.) |
-| **Consequence Visualization** | Shows the 42-year compound effect of small daily changes |
+| **Consequence Visualization** | Calculates the compound effect of small changes from your current age to retirement (65) |
 | **Proactive AI Coach** | GPT-4o-powered guidance via text and OpenAI Realtime voice — meets users where they are |
-| **Story-First UX** | Tappable, swipeable insight cards that make finance feel like an Instagram Story |
+| **Story-First UX** | Swipeable insight cards (Tinder) and scrollable stories (Instagram) — bite-sized for the shrinking attention spans of young adults |
 | **Engagement Layer** | Streaks, challenges, agent nudges, and daily coaching — Duolingo for finance |
 | **Animated Landing** | Spending DNA reveal creates an instant "this is different" moment |
+
+---
+
+## Why This UX?
+
+Our target user is a young adult who wants to build financial confidence but has bad spending habits and low financial literacy. That creates a core design constraint:
+
+**If your user can read a dashboard and draw conclusions from a chart, they're already financially literate — they don't need you.**
+
+Existing apps (Credit Karma, Rocket Money, Mint) display the data banks already provide. They assume the user knows what to do with it. artha assumes they don't.
+
+So we use UX patterns young adults already understand:
+- **Swipe cards (Tinder-style)** — one insight per card, tap or swipe to advance. Designed for increasingly shorter attention spans.
+- **Scrollable stories (Instagram-style)** — the Future timeline uses scroll-linked animations to reveal your financial trajectory one act at a time.
+- **Conversational AI (chat + voice)** — instead of making users interpret data, artha explains it to them in plain language and suggests what to do next.
+
+The result: **personalized, bite-sized, proactive financial guidance** — not a data dump the user has to interpret on their own.
+
+Where existing apps stop at *displaying* bank data, artha goes one step further:
+- **Proactive nudges** — we tell you about your spending patterns before you notice them
+- **Behavioral pattern detection** — no other consumer fintech app on the market does this
+- **Actionable levers** — we don't just say "you spend too much on coffee," we show you exactly how cutting back changes your 5-year trajectory and retirement number
+- **Channel delivery** — insights reach you through Telegram, WhatsApp, or iMessage — the apps you already live in
+- **Daily nudge + weekly story** — automated cron jobs that keep users engaged without them having to open the app
+
+Storytelling, proactive insights, and meeting users where they are — that's the differentiator.
 
 ---
 
@@ -43,13 +73,14 @@ Built for Gen Z users who grew up on Stories and TikTok, artha makes personal fi
 
 ### Landing & Onboarding
 - **Animated 3-phase landing** — brand reveal, hook, and interactive Spending DNA visualization with particle background
-- **5-step onboarding** — age, income, savings, financial goals (with emoji picker), and optional Plaid bank connection
+- **5-step onboarding** — age, income, savings, financial goals (with emoji picker), and Plaid bank connection
+- **Plaid bank connection** — the core data source that powers all insights, patterns, and projections; users can skip during onboarding but the app prompts them to connect throughout the experience
 - **Progress persistence** — onboarding state saved to localStorage, resumable across sessions
 - **Smart redirects** — returning users skip onboarding automatically
 
 ### Moments (Spending Insights Feed)
-- **Swipeable card stack** — Stories-style interface with progress bars, tap/swipe navigation, and peek cards
-- **9 AI-generated insight cards** per session:
+- **Swipeable card stack** — Stories-style interface with progress bars, tap/swipe navigation, and peek cards; designed so users who can't read traditional financial charts still get personalized, actionable insights
+- **9 personalized insight cards** per session, generated from the user's actual bank data:
   - **WIN** — celebrates savings streaks with Spending DNA visualization
   - **RHYTHM** — spending heatmap (7-day x 24-hour grid) showing when money leaves your account
   - **DISCOVERY** — reveals hidden patterns (Sunday night ordering, payday effect)
@@ -58,14 +89,14 @@ Built for Gen Z users who grew up on Stories and TikTok, artha makes personal fi
   - **CHALLENGE** — actionable weekly challenges (meal prep Sundays, no-spend evenings)
   - **GOAL** — acceleration projections showing months saved from habit changes
 - **Peer comparisons** — contextual stats like "83% of users with this pattern cut it in half within 2 months"
-- **Challenge acceptance** — users commit to challenges, tracked in engagement state
+- **Challenge acceptance** — users commit to challenges, which are tracked as commitment signals in the engagement state (persisted to both localStorage and database)
 
 ### Future (Financial Projections)
 - **Three-act scrollable timeline**:
   1. **"Where You Are"** — animated current savings, income, and saving rate
   2. **"Two Paths Diverge"** — dual-path SVG chart showing current vs. optimized trajectory with interactive savings levers
-  3. **"The Reveal"** — compound growth calculation showing the 42-year effect of enabled levers
-- **Interactive savings levers** — toggle meal prep, coffee at home, subscription cuts, payday budgeting — chart updates in real time
+  3. **"The Reveal"** — compound growth calculation showing the effect of enabled levers from the user's current age to retirement (65), dynamically computed per user
+- **Personalized savings levers** — built from the user's actual detected spending patterns with real dollar amounts (e.g., if you spend $80/mo on Sunday delivery, the lever shows $60/mo savings at 75% reduction) — chart updates in real time as you toggle
 - **Emergency fund race** — months-to-safety countdown at current vs. optimized pace
 - **Scroll-linked animations** — path drawing, section snapping, and progress dots
 
@@ -82,7 +113,7 @@ Built for Gen Z users who grew up on Stories and TikTok, artha makes personal fi
 ### You (Profile & Goals)
 - **Editable financial profile** — inline editing for income, savings, and age
 - **Goal management** — create up to 3 goals with emoji picker, circular progress rings, and target tracking
-- **Bank connection** — Plaid Link integration for real transaction data
+- **Bank connection** — Plaid Link integration; essential for powering all insights, patterns, and projections
 - **Spending summary** — top 5 categories by spend amount
 
 ### Settings
@@ -262,7 +293,7 @@ Each pattern calculates monthly impact, annual impact, and goal delay in days.
 - PostgreSQL database ([Neon](https://neon.tech) recommended)
 - [Clerk](https://clerk.com) account
 - [OpenAI](https://platform.openai.com) API key
-- [Plaid](https://plaid.com) account (optional, for bank connection)
+- [Plaid](https://plaid.com) account (required — bank data powers all insights and projections)
 
 ### Environment Variables
 
@@ -286,7 +317,7 @@ OPENAI_API_KEY=sk-proj-...
 # Encryption (256-bit hex key for Plaid token storage)
 ENCRYPTION_KEY=your_64_char_hex_string
 
-# Plaid (optional — for real bank data)
+# Plaid (required — bank data powers all features)
 PLAID_CLIENT_ID=...
 PLAID_SECRET=...
 PLAID_ENV=sandbox
@@ -343,7 +374,7 @@ Onboarding (/onboarding)
   │  Phase 2: Monthly income
   │  Phase 3: Current savings
   │  Phase 4: Financial goals (up to 3, with emojis)
-  │  Phase 5: Bank connection (Plaid, optional)
+  │  Phase 5: Bank connection (Plaid — essential for full experience)
   ▼
 Moments (/moments)  ←  Main entry point after onboarding
   │  Swipeable insight cards with behavioral analysis
