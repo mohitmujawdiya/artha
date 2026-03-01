@@ -292,8 +292,9 @@ export async function POST(request: Request) {
     try {
       const { userId: clerkId } = await auth();
       userId = clerkId;
+      console.log("[chat] userId:", userId ? "authenticated" : "anonymous");
     } catch {
-      // Not authenticated — use static prompt
+      console.log("[chat] auth() failed, using anonymous mode");
     }
 
     // Build dynamic system prompt from DB data
@@ -335,45 +336,50 @@ export async function POST(request: Request) {
           messages.map((m) => ({ role: m.role, content: m.content })),
           agentTools,
           async (name, args) => {
-            switch (name) {
-              case "create_goal": {
-                const goalName = typeof args.name === "string" ? args.name.slice(0, 100) : "";
-                const targetAmount = typeof args.targetAmount === "number" ? args.targetAmount : 0;
-                const emoji = typeof args.emoji === "string" ? args.emoji.slice(0, 4) : "🎯";
-                if (!goalName || targetAmount <= 0) return JSON.stringify({ error: "Invalid goal data" });
-                const goal = await createGoal({ userId: toolUserId, name: goalName, targetAmount, emoji });
-                return JSON.stringify({ success: true, goal: { id: goal.id, name: goal.name, targetAmount: goal.targetAmount, emoji: goal.emoji } });
+            try {
+              switch (name) {
+                case "create_goal": {
+                  const goalName = typeof args.name === "string" ? args.name.slice(0, 100) : "";
+                  const targetAmount = typeof args.targetAmount === "number" ? args.targetAmount : 0;
+                  const emoji = typeof args.emoji === "string" ? args.emoji.slice(0, 4) : "🎯";
+                  if (!goalName || targetAmount <= 0) return JSON.stringify({ error: "Invalid goal data" });
+                  const goal = await createGoal({ userId: toolUserId, name: goalName, targetAmount, emoji });
+                  return JSON.stringify({ success: true, goal: { id: goal.id, name: goal.name, targetAmount: goal.targetAmount, emoji: goal.emoji } });
+                }
+                case "update_goal": {
+                  const goalId = typeof args.goalId === "number" ? args.goalId : 0;
+                  if (!goalId) return JSON.stringify({ error: "Goal ID required" });
+                  const data: Record<string, unknown> = {};
+                  if (typeof args.name === "string") data.name = args.name.slice(0, 100);
+                  if (typeof args.targetAmount === "number") data.targetAmount = args.targetAmount;
+                  if (typeof args.currentAmount === "number") data.currentAmount = args.currentAmount;
+                  if (typeof args.emoji === "string") data.emoji = args.emoji.slice(0, 4);
+                  const updated = await updateGoal(goalId, toolUserId, data);
+                  if (!updated) return JSON.stringify({ error: "Goal not found" });
+                  return JSON.stringify({ success: true, goal: updated });
+                }
+                case "update_profile": {
+                  const user = await getDbUser(toolUserId);
+                  if (!user) return JSON.stringify({ error: "User not found" });
+                  await upsertUser({
+                    id: toolUserId,
+                    name: user.name,
+                    age: typeof args.age === "number" ? args.age : user.age ?? undefined,
+                    monthlyIncome: typeof args.monthlyIncome === "number" ? args.monthlyIncome : user.monthlyIncome ?? undefined,
+                    currentSavings: typeof args.currentSavings === "number" ? args.currentSavings : user.currentSavings ?? undefined,
+                  });
+                  return JSON.stringify({ success: true });
+                }
+                case "get_goals": {
+                  const goals = await getUserGoals(toolUserId);
+                  return JSON.stringify(goals.map((g) => ({ id: g.id, name: g.name, targetAmount: g.targetAmount, currentAmount: g.currentAmount, emoji: g.emoji })));
+                }
+                default:
+                  return JSON.stringify({ error: "Unknown tool" });
               }
-              case "update_goal": {
-                const goalId = typeof args.goalId === "number" ? args.goalId : 0;
-                if (!goalId) return JSON.stringify({ error: "Goal ID required" });
-                const data: Record<string, unknown> = {};
-                if (typeof args.name === "string") data.name = args.name.slice(0, 100);
-                if (typeof args.targetAmount === "number") data.targetAmount = args.targetAmount;
-                if (typeof args.currentAmount === "number") data.currentAmount = args.currentAmount;
-                if (typeof args.emoji === "string") data.emoji = args.emoji.slice(0, 4);
-                const updated = await updateGoal(goalId, toolUserId, data);
-                if (!updated) return JSON.stringify({ error: "Goal not found" });
-                return JSON.stringify({ success: true, goal: updated });
-              }
-              case "update_profile": {
-                const user = await getDbUser(toolUserId);
-                if (!user) return JSON.stringify({ error: "User not found" });
-                await upsertUser({
-                  id: toolUserId,
-                  name: user.name,
-                  age: typeof args.age === "number" ? args.age : user.age ?? undefined,
-                  monthlyIncome: typeof args.monthlyIncome === "number" ? args.monthlyIncome : user.monthlyIncome ?? undefined,
-                  currentSavings: typeof args.currentSavings === "number" ? args.currentSavings : user.currentSavings ?? undefined,
-                });
-                return JSON.stringify({ success: true });
-              }
-              case "get_goals": {
-                const goals = await getUserGoals(toolUserId);
-                return JSON.stringify(goals.map((g) => ({ id: g.id, name: g.name, targetAmount: g.targetAmount, currentAmount: g.currentAmount, emoji: g.emoji })));
-              }
-              default:
-                return JSON.stringify({ error: "Unknown tool" });
+            } catch (toolErr) {
+              console.error(`[chat] Tool "${name}" failed:`, toolErr instanceof Error ? toolErr.message : toolErr);
+              return JSON.stringify({ error: `Tool failed: ${toolErr instanceof Error ? toolErr.message : "unknown error"}` });
             }
           }
         );
