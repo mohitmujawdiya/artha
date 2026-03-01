@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { PaperPlaneRight, Phone, GearSix } from "@phosphor-icons/react";
+import { PaperPlaneRight, Phone } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { ChatMessage as ChatMessageType } from "@/types";
@@ -10,7 +10,6 @@ import { QuickReplyChip } from "./QuickReplyChip";
 import { AnalyzingIndicator } from "./AnalyzingIndicator";
 import { AgentMessageBubble } from "./AgentMessageBubble";
 import { ArthaAvatar } from "./ArthaAvatar";
-import { ChannelPreferences } from "./ChannelPreferences";
 import { VoiceMode } from "./VoiceMode";
 import { useEngagement } from "./EngagementProvider";
 import { getOnboardingData } from "@/lib/onboarding";
@@ -53,7 +52,6 @@ export function ChatInterface() {
     welcomeMessage.quickReplies || []
   );
   const [voiceModeActive, setVoiceModeActive] = useState(false);
-  const [channelPrefsOpen, setChannelPrefsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const historyLoaded = useRef(false);
   const agentMsgsLoaded = useRef(false);
@@ -194,13 +192,6 @@ export function ChatInterface() {
         >
           <Phone size={20} weight="fill" />
         </motion.button>
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setChannelPrefsOpen(true)}
-          className="text-artha-muted hover:text-artha-text p-1"
-        >
-          <GearSix size={20} />
-        </motion.button>
       </div>
 
       {/* Messages */}
@@ -261,7 +252,6 @@ export function ChatInterface() {
 
       {/* Overlays */}
       <VoiceMode isActive={voiceModeActive} onClose={handleVoiceClose} />
-      <ChannelPreferences isOpen={channelPrefsOpen} onClose={() => setChannelPrefsOpen(false)} />
     </div>
   );
 }
