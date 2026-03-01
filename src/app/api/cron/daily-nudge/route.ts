@@ -35,7 +35,7 @@ export async function GET(request: Request) {
       const nudge = await callClaude(
         "You write short proactive spending nudges (1-2 sentences). Friendly, not preachy. Use the user's name.",
         `Write a brief nudge for ${user.name}. It's ${["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][today]}. They typically spend $${avgSpend.toFixed(0)} on this day. Give a pattern-aware tip.`,
-        "claude-sonnet-4-6",
+        "gpt-4o",
         128
       );
 

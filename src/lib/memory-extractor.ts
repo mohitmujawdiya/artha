@@ -23,7 +23,7 @@ export async function extractAndStoreMemory(
 ) {
   try {
     const conversation = `User: ${userMessage}\nAssistant: ${assistantResponse}`;
-    const result = await callClaude(EXTRACTION_PROMPT, conversation, "claude-sonnet-4-6", 512);
+    const result = await callClaude(EXTRACTION_PROMPT, conversation, "gpt-4o", 512);
 
     const facts = JSON.parse(result);
     if (!Array.isArray(facts)) return;

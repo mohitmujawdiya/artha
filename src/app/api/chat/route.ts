@@ -150,7 +150,7 @@ export async function POST(request: Request) {
       return NextResponse.json(cached);
     }
 
-    if (!process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({
         content:
           "I'm having a bit of trouble connecting right now. Try asking about your spending patterns, savings goals, or whether you can afford something specific!",

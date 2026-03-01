@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       const story = await callClaude(
         "You write short, engaging weekly money narratives (under 100 words). Casual, warm tone. Start with a hook.",
         `Write a weekly money story for ${user.name}. They spent $${totalSpent.toFixed(0)} across ${recentTxns.length} transactions this week. Top categories: ${getTopCategories(recentTxns)}`,
-        "claude-sonnet-4-6",
+        "gpt-4o",
         256
       );
 
