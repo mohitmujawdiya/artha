@@ -125,8 +125,8 @@ export function useRealtimeVoice(): UseRealtimeVoiceResult {
         break;
       }
 
-      // Assistant speech transcript complete
-      case "response.audio_transcript.done": {
+      // Assistant speech transcript complete (GA event name)
+      case "response.output_audio_transcript.done": {
         const transcript = (msg as { transcript?: string }).transcript;
         if (transcript) {
           transcriptsRef.current.push({ role: "assistant", content: transcript });
