@@ -19,11 +19,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Voice not configured" }, { status: 503 });
     }
 
-    const user = await currentUser();
-    const userName = user?.firstName || "there";
+    let userName = "there";
+    try {
+      const user = await currentUser();
+      userName = user?.firstName || "there";
+    } catch (clerkErr) {
+      console.error("[voice/session] Clerk currentUser() failed:", clerkErr instanceof Error ? clerkErr.message : clerkErr);
+    }
 
-    // Build the same system prompt used in text chat
-    const basePrompt = await buildSystemPrompt(userId, userName);
+    // Build the same system prompt used in text chat (with fallback)
+    let basePrompt: string;
+    try {
+      basePrompt = await buildSystemPrompt(userId, userName);
+    } catch (promptErr) {
+      console.error("[voice/session] buildSystemPrompt failed:", promptErr instanceof Error ? promptErr.message : promptErr);
+      basePrompt = `You are artha — a smart, real financial friend. Be direct about spending, supportive about wins. Keep responses under 3 sentences.`;
+    }
 
     // Append voice-specific instructions
     const voiceInstructions = `${basePrompt}
@@ -88,9 +99,12 @@ VOICE MODE INSTRUCTIONS:
       expiresAt: data.expires_at,
     });
   } catch (err) {
-    console.error("[voice/session] Error:", err instanceof Error ? err.message : err);
+    const message = err instanceof Error ? err.message : String(err);
+    const stack = err instanceof Error ? err.stack : undefined;
+    console.error("[voice/session] Unhandled error:", message);
+    if (stack) console.error("[voice/session] Stack:", stack);
     return NextResponse.json(
-      { error: "Failed to create voice session" },
+      { error: `Failed to create voice session: ${message}` },
       { status: 500 }
     );
   }
