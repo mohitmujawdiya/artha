@@ -46,19 +46,24 @@ VOICE MODE INSTRUCTIONS:
 
     const voice = process.env.OPENAI_REALTIME_VOICE || "ash";
 
-    const response = await fetch("https://api.openai.com/v1/realtime/sessions", {
+    // Use GA endpoint /v1/realtime/client_secrets (not beta /v1/realtime/sessions)
+    const response = await fetch("https://api.openai.com/v1/realtime/client_secrets", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4o-realtime-preview-2025-06-03",
-        voice,
-        instructions: voiceInstructions,
-        input_audio_transcription: { model: "whisper-1" },
-        tools: realtimeTools,
-        modalities: ["audio", "text"],
+        session: {
+          type: "realtime",
+          model: "gpt-realtime",
+          instructions: voiceInstructions,
+          tools: realtimeTools,
+          audio: {
+            output: { voice },
+            input: { transcription: { model: "whisper-1" } },
+          },
+        },
       }),
     });
 
@@ -76,11 +81,11 @@ VOICE MODE INSTRUCTIONS:
       );
     }
 
-    const session = await response.json();
+    const data = await response.json();
 
     return NextResponse.json({
-      clientSecret: session.client_secret?.value,
-      expiresAt: session.client_secret?.expires_at,
+      clientSecret: data.value,
+      expiresAt: data.expires_at,
     });
   } catch (err) {
     console.error("[voice/session] Error:", err instanceof Error ? err.message : err);
