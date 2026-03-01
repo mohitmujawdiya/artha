@@ -236,7 +236,7 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
       </div>
 
       {/* Navigation hint — right under the card */}
-      <div className="text-center text-artha-muted/50 text-xs pt-3">
+      <div className="text-center text-artha-muted/50 text-sm pt-3">
         {isLast ? "Swipe to see your future" : "Swipe or tap to continue"}
       </div>
     </div>

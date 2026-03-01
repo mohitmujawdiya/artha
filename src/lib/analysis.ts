@@ -103,6 +103,7 @@ function detectSubscriptionCreep(
   const subscriptions = transactions.filter((t) => t.isSubscription);
   if (subscriptions.length === 0) return null;
 
+  // Get unique subscriptions with their latest charge
   const uniqueSubs = new Map<string, Transaction>();
   for (const t of subscriptions) {
     if (
@@ -113,36 +114,28 @@ function detectSubscriptionCreep(
     }
   }
 
-  const now = "2026-02-28";
-  const unusedSubs = Array.from(uniqueSubs.values()).filter((t) => {
-    if (!t.lastUsed) return false;
-    const monthsSinceUse =
-      (new Date(now).getTime() - new Date(t.lastUsed).getTime()) /
-      (1000 * 60 * 60 * 24 * 30);
-    return monthsSinceUse > 2;
-  });
+  const allSubs = Array.from(uniqueSubs.values());
+  if (allSubs.length < 2) return null;
 
-  if (unusedSubs.length === 0) return null;
-
-  const monthlyWaste = Math.abs(
-    unusedSubs.reduce((s, t) => s + t.amount, 0)
+  const monthlyTotal = Math.abs(
+    allSubs.reduce((s, t) => s + t.amount, 0)
   );
 
   return {
     id: "subscription-creep",
-    name: "Subscription Creep",
+    name: "Subscription Stack",
     type: "subscription",
-    description: `${unusedSubs.length} subscriptions you haven't used in 2+ months`,
+    description: `${allSubs.length} active subscriptions totaling $${Math.round(monthlyTotal)}/mo`,
     frequency: "Monthly recurring",
-    monthlyImpact: Math.round(monthlyWaste),
-    annualImpact: Math.round(monthlyWaste * 12),
-    goalImpactDays: Math.round((monthlyWaste / 200) * 30),
+    monthlyImpact: Math.round(monthlyTotal),
+    annualImpact: Math.round(monthlyTotal * 12),
+    goalImpactDays: Math.round((monthlyTotal / 200) * 30),
     severity: "moderate",
     emoji: "📦",
-    details: unusedSubs
+    details: allSubs
       .map(
         (t) =>
-          `${t.merchant}: $${Math.abs(t.amount).toFixed(2)}/mo (last used ${t.lastUsed?.slice(0, 7)})`
+          `${t.merchant}: $${Math.abs(t.amount).toFixed(2)}/mo`
       )
       .join(", "),
   };

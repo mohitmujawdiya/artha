@@ -45,7 +45,7 @@ export function FutureTimeline() {
     const observer = new IntersectionObserver(
       (entries) => {
         let maxRatio = 0;
-        let maxIndex = activeSection;
+        let maxIndex = -1;
         entries.forEach((entry) => {
           const idx = sections.indexOf(entry.target as HTMLElement);
           if (idx !== -1 && entry.intersectionRatio > maxRatio) {
@@ -53,7 +53,7 @@ export function FutureTimeline() {
             maxIndex = idx;
           }
         });
-        if (maxRatio > 0) setActiveSection(maxIndex);
+        if (maxRatio > 0 && maxIndex >= 0) setActiveSection(maxIndex);
       },
       { root: container, threshold: [0, 0.3, 0.6, 1] }
     );
@@ -62,7 +62,7 @@ export function FutureTimeline() {
     return () => observer.disconnect();
   }, []);
 
-  const { user, patterns, isDemo, isLoading } = useTransactions();
+  const { user, patterns, isDemo } = useTransactions();
 
   const hasRealPatterns = !isDemo && patterns.length > 0;
 
@@ -72,14 +72,12 @@ export function FutureTimeline() {
     [patterns]
   );
 
-  // Sync pattern-derived adjustments into state when they change
-  const prevPatternCount = useRef(0);
-  useEffect(() => {
-    if (patternAdjustments.length > 0 && patternAdjustments.length !== prevPatternCount.current) {
-      prevPatternCount.current = patternAdjustments.length;
-      setAdjustments(patternAdjustments);
-    }
-  }, [patternAdjustments]);
+  // Sync pattern-derived adjustments into state when patterns change (render-time sync)
+  const [syncedPatternCount, setSyncedPatternCount] = useState(0);
+  if (patternAdjustments.length > 0 && patternAdjustments.length !== syncedPatternCount) {
+    setSyncedPatternCount(patternAdjustments.length);
+    setAdjustments(patternAdjustments);
+  }
 
   const toggleAdjustment = (id: string) => {
     setAdjustments((prev) =>
@@ -170,7 +168,7 @@ export function FutureTimeline() {
         </motion.div>
 
         <motion.p
-          className="text-artha-muted text-sm mt-2"
+          className="text-artha-muted text-base mt-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
@@ -186,19 +184,19 @@ export function FutureTimeline() {
         >
           <div>
             <p className="font-display text-lg font-semibold">${(user.monthlyIncome ?? 0).toLocaleString()}</p>
-            <p className="text-xs text-artha-muted">monthly income</p>
+            <p className="text-sm text-artha-muted">monthly income</p>
           </div>
           <div className="w-px bg-artha-surface" />
           <div>
             <p className="font-display text-lg font-semibold text-artha-green">
               ${currentMonthlySavings}/mo
             </p>
-            <p className="text-xs text-artha-muted">saving rate</p>
+            <p className="text-sm text-artha-muted">saving rate</p>
           </div>
         </motion.div>
 
         <motion.p
-          className="text-artha-muted/50 text-xs mt-12"
+          className="text-artha-muted/50 text-sm mt-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
@@ -243,13 +241,13 @@ export function FutureTimeline() {
 
           <div className="flex justify-between mt-3 px-2 w-full max-w-sm mx-auto">
             <div className="text-center">
-              <p className="text-xs text-artha-muted">Current path</p>
+              <p className="text-sm text-artha-muted">Current path</p>
               <p className="font-display text-lg text-artha-muted">
                 ${projection.totalSaved.toLocaleString()}
               </p>
             </div>
             <div className="text-center">
-              <p className="text-xs text-artha-accent">Optimized path</p>
+              <p className="text-sm text-artha-accent">Optimized path</p>
               <p className="font-display text-lg text-artha-accent">
                 ${projection.totalOptimized.toLocaleString()}
               </p>
@@ -268,7 +266,7 @@ export function FutureTimeline() {
           {hasRealPatterns && adjustments.length > 0 ? (
             <>
               <motion.p
-                className="text-xs tracking-widest text-artha-accent/60 uppercase text-center"
+                className="text-sm tracking-widest text-artha-accent/60 uppercase text-center"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -313,7 +311,7 @@ export function FutureTimeline() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                 >
-                  <p className="text-sm text-artha-muted">Total additional savings</p>
+                  <p className="text-base text-artha-muted">Total additional savings</p>
                   <div className="flex items-center justify-center gap-2 mt-1">
                     <TrendUp size={20} weight="bold" className="text-artha-green" />
                     <p className="font-display text-2xl font-bold text-artha-green">
@@ -336,7 +334,7 @@ export function FutureTimeline() {
               <h3 className="font-display text-xl font-bold">
                 Connect your bank to unlock levers
               </h3>
-              <p className="text-sm text-artha-muted mt-2 mb-6">
+              <p className="text-base text-artha-muted mt-2 mb-6">
                 We&apos;ll analyze your real spending and show you exactly where you can save.
               </p>
               <PlaidLinkButton onSuccess={() => window.location.reload()} />
@@ -357,28 +355,28 @@ export function FutureTimeline() {
 
             <div className="flex justify-center gap-8 mt-6">
               <div>
-                <p className="text-artha-muted text-xs mb-2">Current pace</p>
+                <p className="text-artha-muted text-sm mb-2">Current pace</p>
                 <div className="font-display text-5xl font-bold text-artha-muted">
                   {projection.monthsToEmergencyFund}
                 </div>
-                <p className="text-xs text-artha-muted mt-1">months</p>
+                <p className="text-sm text-artha-muted mt-1">months</p>
               </div>
               <div className="self-center">
                 <ArrowRight size={20} className="text-artha-accent" />
               </div>
               <div>
-                <p className="text-artha-accent text-xs mb-2">Optimized</p>
+                <p className="text-artha-accent text-sm mb-2">Optimized</p>
                 <div className="font-display text-5xl font-bold text-artha-accent">
                   <AnimatedNumber
                     value={projection.monthsToEmergencyFundOptimized}
                     duration={800}
                   />
                 </div>
-                <p className="text-xs text-artha-accent mt-1">months</p>
+                <p className="text-sm text-artha-accent mt-1">months</p>
               </div>
             </div>
 
-            <p className="text-artha-muted text-sm mt-4">
+            <p className="text-artha-muted text-base mt-4">
               {projection.monthsToEmergencyFund -
                 projection.monthsToEmergencyFundOptimized >
               0
@@ -409,7 +407,7 @@ export function FutureTimeline() {
         </motion.h2>
 
         <motion.p
-          className="text-artha-muted text-sm mt-3 text-center max-w-xs"
+          className="text-artha-muted text-base mt-3 text-center max-w-xs"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -434,7 +432,7 @@ export function FutureTimeline() {
               <p className="font-display text-6xl font-bold text-artha-muted/30">
                 $???
               </p>
-              <p className="text-artha-muted text-sm mt-4">
+              <p className="text-artha-muted text-base mt-4">
                 Turn on all the levers to see the magic number.
               </p>
             </motion.div>
@@ -443,7 +441,7 @@ export function FutureTimeline() {
 
         {allEnabled && (
           <motion.p
-            className="text-artha-accent/80 text-sm text-center max-w-xs"
+            className="text-artha-accent/80 text-base text-center max-w-xs"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}

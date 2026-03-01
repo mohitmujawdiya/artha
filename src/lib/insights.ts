@@ -111,21 +111,31 @@ export function generateInsights(
   // 4. Nudge: Subscription check-in
   const subCreep = patterns.find((p) => p.id === "subscription-creep");
   if (subCreep) {
+    // Extract individual subscription names from the pattern details
+    // details format: "Netflix: $15.49/mo, Adobe CC: $22.99/mo, ..."
+    const subNames = subCreep.details
+      .split(", ")
+      .map((s) => s.split(":")[0].trim())
+      .filter(Boolean);
+    const subList = subNames.length > 0
+      ? subNames.join(", ")
+      : "your subscriptions";
+
     insights.push({
       id: "nudge-subs",
       type: "nudge",
       title: "Subscription Check-in",
-      subtitle: "Paying for things you're not using",
-      metric: "wasted monthly",
+      subtitle: `${subNames.length} subscriptions on autopilot`,
+      metric: "total monthly",
       metricValue: subCreep.monthlyImpact,
       metricPrefix: "$",
       metricSuffix: "/mo",
-      body: `You're paying $${subCreep.annualImpact}/year for services you don't even open. That money disappears on autopilot every month.`,
+      body: `You're paying for ${subList} — that's $${subCreep.annualImpact}/year on autopilot. Are you getting value from all of them?`,
       color: "#fbbf24",
       gradient: "from-amber-500/30 to-amber-900/40",
       patternId: "subscription-creep",
-      goalImpactLine: `That's ${subCreep.goalImpactDays} extra days to your ${user.goals[0]?.name || "goal"}`,
-      peerComparison: "Users who did a 5-min cancel session saved an average of $516/year",
+      goalImpactLine: `Cutting even one could shave ${Math.round(subCreep.goalImpactDays / subNames.length)} days off your ${user.goals[0]?.name || "goal"}`,
+      peerComparison: "Users who did a 5-min subscription audit saved an average of $516/year",
     });
 
     // Learn card: Status quo bias (after Subscriptions)
@@ -136,7 +146,7 @@ export function generateInsights(
       subtitle: "Status Quo Bias",
       metric: "",
       metricValue: 0,
-      body: `Humans have a powerful tendency to leave things as they are — even when changing would save money. It's called status quo bias, and subscription companies literally design around it. The cancel button is hard to find on purpose.`,
+      body: `Humans have a powerful tendency to leave things as they are — even when changing would save money. It's called status quo bias, and subscription companies design around it. You signed up once, and now the charges just keep coming.`,
       color: "#38bdf8",
       gradient: "from-sky-500/30 to-sky-900/40",
     });

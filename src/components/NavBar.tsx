@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 const tabs = [
   { href: "/moments", label: "Moments", icon: Sparkle },
   { href: "/future", label: "Future", icon: TrendUp },
-  { href: "/coach", label: "Coach", icon: ChatCircleDots },
+  { href: "/coach", label: "artha", icon: ChatCircleDots },
   { href: "/you", label: "You", icon: UserCircle },
 ];
 

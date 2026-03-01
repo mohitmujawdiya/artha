@@ -69,7 +69,7 @@ export function StoryCard({
 
       {/* Subtitle */}
       <motion.p
-        className="text-artha-muted text-center mt-2"
+        className="text-artha-muted text-center mt-2 text-lg"
         initial={initial ?? { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: animated ? 0.1 : 0 }}
@@ -113,7 +113,7 @@ export function StoryCard({
                 className="font-display text-5xl font-bold"
                 duration={animated ? 800 : 0}
               />
-              <p className="text-sm text-artha-muted mt-1">{insight.metric}</p>
+              <p className="text-base text-artha-muted mt-1">{insight.metric}</p>
             </motion.div>
           )}
 
@@ -127,15 +127,15 @@ export function StoryCard({
               <SpendingDNA patterns={patterns} size={140} mini />
               {insight.personalityLabel && (
                 <div className="text-center">
-                  <p className="text-[10px] tracking-widest uppercase text-artha-muted">Your money personality</p>
-                  <p className="text-sm font-semibold text-artha-accent mt-0.5">{insight.personalityLabel}</p>
+                  <p className="text-xs tracking-widest uppercase text-artha-muted">Your money personality</p>
+                  <p className="text-base font-semibold text-artha-accent mt-0.5">{insight.personalityLabel}</p>
                 </div>
               )}
             </motion.div>
           )}
 
           <motion.p
-            className="text-artha-text/80 text-center mt-6 max-w-xs leading-relaxed"
+            className="text-artha-text/80 text-center mt-6 max-w-xs text-base leading-relaxed"
             initial={initial ?? { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
@@ -155,7 +155,7 @@ export function StoryCard({
           {/* Goal impact line */}
           {insight.goalImpactLine && (
             <motion.p
-              className="text-sm italic text-artha-muted text-center mt-3 max-w-xs"
+              className="text-base italic text-artha-muted text-center mt-3 max-w-xs"
               initial={initial ?? { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: animated ? 0.4 : 0 }}
@@ -172,7 +172,7 @@ export function StoryCard({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: animated ? 0.45 : 0 }}
             >
-              <span className="text-xs text-artha-muted/80 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1.5 inline-block max-w-xs text-center">
+              <span className="text-sm text-artha-muted/80 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1.5 inline-block max-w-xs text-center">
                 {insight.peerComparison}
               </span>
             </motion.div>

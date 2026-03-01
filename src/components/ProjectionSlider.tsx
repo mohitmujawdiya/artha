@@ -43,15 +43,15 @@ export function ProjectionSlider({
             )}
           </div>
           <div className="min-w-0">
-            <p className="font-semibold text-sm">{adjustment.label}</p>
-            <p className="text-xs text-artha-muted mt-0.5">
+            <p className="font-semibold text-base">{adjustment.label}</p>
+            <p className="text-sm text-artha-muted mt-0.5">
               {adjustment.description}
             </p>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-xs text-artha-green font-medium">
+              <span className="text-sm text-artha-green font-medium">
                 +${adjustment.monthlySavings}/mo
               </span>
-              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
                 adjustment.difficulty === "Easy"
                   ? "bg-artha-green/10 text-artha-green"
                   : "bg-artha-accent/10 text-artha-accent"

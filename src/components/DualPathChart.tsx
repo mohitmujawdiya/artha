@@ -180,7 +180,7 @@ export function DualPathChart({
             y={t.y + 3}
             textAnchor="end"
             fill="#94a3b8"
-            fontSize={8}
+            fontSize={10}
           >
             ${(t.val / 1000).toFixed(0)}k
           </text>
@@ -194,7 +194,7 @@ export function DualPathChart({
             y={CHART_H - 5}
             textAnchor="middle"
             fill="#94a3b8"
-            fontSize={8}
+            fontSize={10}
           >
             {t.label}
           </text>

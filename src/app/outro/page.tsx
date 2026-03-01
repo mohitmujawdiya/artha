@@ -50,7 +50,7 @@ export default function OutroPage() {
           Credit Karma tells you{" "}
           <span className="text-artha-muted">what you spent</span>.
           <br />
-          Artha tells you{" "}
+          artha tells you{" "}
           <span className="text-artha-accent">who you&apos;re becoming</span>.
         </h1>
       </motion.div>
@@ -101,7 +101,7 @@ export default function OutroPage() {
           <p className="ml-2">├── Projection & Compound Math</p>
           <p className="ml-2">├── Framer Motion Animations</p>
           <p className="ml-2">├── XP & Engagement System</p>
-          <p className="ml-2">└── ElevenLabs Voice TTS</p>
+          <p className="ml-2">└── OpenAI Realtime Voice</p>
         </div>
       </motion.div>
 

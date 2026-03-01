@@ -91,7 +91,7 @@ export function useEngagement() {
 }
 
 export function EngagementProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<EngagementState>(getDefaultState);
+  const [state, setState] = useState<EngagementState>(loadState);
   const initialized = useRef(false);
   const { patterns, user } = useTransactions();
 
@@ -100,14 +100,12 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
     [patterns, user]
   );
 
-  // Load from localStorage on mount, then try API
+  // Fetch from API on mount — DB is source of truth for streak
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
       const localState = loadState();
-      setState(localState);
 
-      // Try to fetch from API — DB is source of truth for streak
       fetch("/api/engagement")
         .then((res) => (res.ok ? res.json() : null))
         .then((apiState) => {

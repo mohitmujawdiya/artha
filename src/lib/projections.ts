@@ -21,9 +21,9 @@ export const defaultAdjustments: ProjectionAdjustment[] = [
   },
   {
     id: "cancel-subs",
-    label: "Cancel unused subscriptions",
-    description: "Drop Netflix, Adobe CC, and Headspace",
-    monthlySavings: 43,
+    label: "Cut subscriptions you don't need",
+    description: "Review Netflix, Adobe CC, Headspace — are they all worth it?",
+    monthlySavings: 16,
     difficulty: "Easy",
     enabled: false,
     icon: "package",
@@ -55,9 +55,9 @@ const PATTERN_TO_ADJUSTMENT: Record<string, { label: string; descriptionTemplate
     icon: "coffee",
   },
   "subscription-creep": {
-    label: "Cancel unused subscriptions",
-    descriptionTemplate: "Drop subscriptions you haven't used in 2+ months",
-    savingsRatio: 1.0,
+    label: "Cut subscriptions you don't need",
+    descriptionTemplate: "Review $SUBS — are they all worth it?",
+    savingsRatio: 0.5,
     difficulty: "Easy",
     icon: "package",
   },
@@ -77,10 +77,20 @@ export function buildAdjustmentsFromPatterns(patterns: BehavioralPattern[]): Pro
     const config = PATTERN_TO_ADJUSTMENT[pattern.id];
     if (!config || pattern.monthlyImpact <= 0 || pattern.severity === "positive") continue;
 
+    let description = config.descriptionTemplate.replace("$IMPACT", `$${pattern.monthlyImpact}`);
+    // For subscriptions, inject the actual service names from pattern details
+    if (pattern.id === "subscription-creep" && pattern.details) {
+      const subNames = pattern.details
+        .split(", ")
+        .map((s) => s.split(":")[0].trim())
+        .filter(Boolean);
+      description = description.replace("$SUBS", subNames.join(", ") || "unused subscriptions");
+    }
+
     adjustments.push({
       id: pattern.id,
       label: config.label,
-      description: config.descriptionTemplate.replace("$IMPACT", `$${pattern.monthlyImpact}`),
+      description,
       monthlySavings: Math.round(pattern.monthlyImpact * config.savingsRatio),
       difficulty: config.difficulty,
       enabled: false,

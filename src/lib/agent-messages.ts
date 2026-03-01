@@ -103,15 +103,19 @@ export function generateAgentMessages(
   // Awareness: Subscription creep
   const subs = patterns.find((p) => p.id === "subscription-creep");
   if (subs) {
-    const numUnused = subs.description.match(/\d+/)?.[0] || "some";
+    const subNames = subs.details
+      .split(", ")
+      .map((s) => s.split(":")[0].trim())
+      .filter(Boolean);
+    const subList = subNames.length > 0 ? subNames.join(", ") : "your subscriptions";
     messages.push({
       id: "agent-subs",
       type: "awareness",
       emoji: "\u{1F514}",
-      content: `You have ${numUnused} subscriptions you haven't used in 2+ months, draining $${subs.monthlyImpact}/mo. That's $${subs.annualImpact}/year on autopilot. Worth reconsidering?`,
+      content: `You're spending $${subs.monthlyImpact}/mo on subscriptions (${subList}). That's $${subs.annualImpact}/year on autopilot. Worth a quick audit to see which ones you actually use?`,
       timestamp: now - 24 * HOUR_MS,
       read: false,
-      quickReplies: ["Show all subscriptions", "Cancel unused ones", "Keep everything"],
+      quickReplies: ["Review my subscriptions", "Which should I cut?", "Keep everything"],
     });
   }
 

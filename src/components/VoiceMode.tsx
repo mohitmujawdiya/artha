@@ -3,81 +3,57 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhoneDisconnect } from "@phosphor-icons/react";
-import { useConversation } from "@elevenlabs/react";
+import { useRealtimeVoice } from "@/hooks/useRealtimeVoice";
 
 interface VoiceModeProps {
   isActive: boolean;
   onClose: () => void;
+  onSessionEnd?: () => void;
 }
 
-export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
-  const [error, setError] = useState<string | null>(null);
+export function VoiceMode({ isActive, onClose, onSessionEnd }: VoiceModeProps) {
+  const [localError, setLocalError] = useState<string | null>(null);
+  const { status, isSpeaking, error, startSession, endSession } = useRealtimeVoice();
 
-  const conversation = useConversation({
-    onError: (err: string) => {
-      console.error("Voice error:", err);
-      setError("Connection error. Please try again.");
-    },
-    onConnect: () => {
-      setError(null);
-    },
-    onDisconnect: () => {
-      onClose();
-    },
-  });
-
-  const { status, isSpeaking } = conversation;
-
-  const startSession = useCallback(async () => {
+  const handleStart = useCallback(async () => {
     try {
-      setError(null);
-      const res = await fetch("/api/voice/conversation");
-      const data = await res.json();
-
-      if (!res.ok || !data.signedUrl) {
-        setError(data.error || "Voice is not configured.");
-        return;
-      }
-
-      if (!navigator?.mediaDevices?.getUserMedia) {
-        setError("Microphone is not available.");
-        return;
-      }
-
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-      await conversation.startSession({ signedUrl: data.signedUrl });
+      setLocalError(null);
+      await startSession();
     } catch (err) {
       console.error("Failed to start voice session:", err);
-      setError(err instanceof Error ? err.message : "Failed to connect.");
+      setLocalError(err instanceof Error ? err.message : "Failed to connect.");
     }
-  }, [conversation]);
+  }, [startSession]);
 
-  const endSession = useCallback(async () => {
+  const handleEnd = useCallback(async () => {
     try {
-      await conversation.endSession();
+      await endSession();
     } catch {
       // Already disconnected
     }
+    onSessionEnd?.();
     onClose();
-  }, [conversation, onClose]);
+  }, [endSession, onClose, onSessionEnd]);
 
   useEffect(() => {
     if (isActive) {
-      startSession();
+      handleStart();
     }
     return () => {
       if (status === "connected") {
-        conversation.endSession().catch(() => {});
+        endSession().catch(() => {});
       }
     };
     // Only run on mount/unmount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive]);
 
+  const displayError = localError || error;
+
   const statusText =
-    error ? error :
+    displayError ? displayError :
     status === "connecting" ? "Connecting..." :
-    status === "connected" && isSpeaking ? "Artha is speaking..." :
+    status === "connected" && isSpeaking ? "artha is speaking..." :
     status === "connected" ? "Listening..." :
     "Starting...";
 
@@ -107,8 +83,8 @@ export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
           {/* Status text */}
           <motion.p
             className="text-artha-muted text-sm mb-8"
-            animate={{ opacity: error ? 1 : [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: error ? 0 : Infinity }}
+            animate={{ opacity: displayError ? 1 : [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: displayError ? 0 : Infinity }}
           >
             {statusText}
           </motion.p>
@@ -145,7 +121,7 @@ export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
           <motion.button
             className="mt-16 w-16 h-16 rounded-full bg-red-500 flex items-center justify-center shadow-lg shadow-red-500/30"
             whileTap={{ scale: 0.95 }}
-            onClick={endSession}
+            onClick={handleEnd}
           >
             <PhoneDisconnect size={28} weight="fill" className="text-white" />
           </motion.button>

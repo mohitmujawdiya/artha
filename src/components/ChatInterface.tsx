@@ -16,7 +16,7 @@ import { getOnboardingData } from "@/lib/onboarding";
 
 function getWelcomeMessage(context: string | null, userName: string): ChatMessageType {
   const greeting = userName === "there" ? "Hey there" : `Hey ${userName}`;
-  let content = `${greeting}! I'm Artha, your financial sidekick. Ask me anything — whether you can afford something, how to save more, or what your spending patterns look like.`;
+  let content = `${greeting}! I'm artha, your financial sidekick. Ask me anything — whether you can afford something, how to save more, or what your spending patterns look like.`;
 
   if (context === "moments") {
     content = `${greeting}! I saw you were checking out your spending patterns. Want to dig deeper into any of those, or ask about something specific?`;
@@ -91,30 +91,31 @@ export function ChatInterface() {
     setMessages((prev) => [...agentChatMessages, ...prev]);
   }, [agentMessages]);
 
-  // Load persisted chat history on mount
-  useEffect(() => {
-    if (historyLoaded.current) return;
-    historyLoaded.current = true;
-
+  const refreshHistory = useCallback(() => {
     fetch("/api/chat/history?limit=50")
       .then((res) => (res.ok ? res.json() : []))
       .then((dbMessages: { role: string; content: string; dataCard?: unknown; timestamp: string }[]) => {
         if (dbMessages.length > 0) {
           const restored: ChatMessageType[] = dbMessages.map((m, i) => ({
-            id: `db-${i}`,
+            id: `db-${i}-${Date.now()}`,
             role: m.role as "user" | "assistant",
             content: m.content,
             timestamp: new Date(m.timestamp).getTime(),
             dataCard: m.dataCard as ChatMessageType["dataCard"],
           }));
-          // Replace initial messages with DB history + welcome
           const userName = getOnboardingData()?.name || "there";
           setMessages([...restored, getWelcomeMessage(context, userName)]);
         }
       })
       .catch(() => {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [context]);
+
+  // Load persisted chat history on mount
+  useEffect(() => {
+    if (historyLoaded.current) return;
+    historyLoaded.current = true;
+    refreshHistory();
+  }, [refreshHistory]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -185,7 +186,6 @@ export function ChatInterface() {
         setIsTyping(false);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isTyping, isAnalyzing]
   );
 
@@ -198,13 +198,17 @@ export function ChatInterface() {
     setVoiceModeActive(false);
   }, []);
 
+  const handleVoiceSessionEnd = useCallback(() => {
+    refreshHistory();
+  }, [refreshHistory]);
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="glass px-4 py-3 flex items-center gap-3">
         <ArthaAvatar size="md" pulse={isAnalyzing || isTyping} />
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-sm">Artha</p>
+          <p className="font-semibold text-sm">artha</p>
           <p className="text-xs text-artha-green">
             {isAnalyzing ? "Analyzing..." : isTyping ? "Typing..." : "Online"}
           </p>
@@ -275,7 +279,7 @@ export function ChatInterface() {
       </form>
 
       {/* Overlays */}
-      <VoiceMode isActive={voiceModeActive} onClose={handleVoiceClose} />
+      <VoiceMode isActive={voiceModeActive} onClose={handleVoiceClose} onSessionEnd={handleVoiceSessionEnd} />
     </div>
   );
 }

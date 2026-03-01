@@ -16,27 +16,19 @@ export default function AppLayout({
   const router = useRouter();
   const { isSignedIn, isLoaded } = useAuth();
   const isCoach = pathname === "/coach";
-  const [checkingOnboarding, setCheckingOnboarding] = useState(true);
+  // Eagerly check localStorage cache to avoid unnecessary fetches
+  const [onboardingVerified, setOnboardingVerified] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("artha-onboarding-complete") === "true";
+  });
 
   useEffect(() => {
-    if (!isLoaded) return;
-    if (!isSignedIn) {
-      setCheckingOnboarding(false);
-      return;
-    }
-
-    // Check localStorage cache first
-    const cached = localStorage.getItem("artha-onboarding-complete");
-    if (cached === "true") {
-      setCheckingOnboarding(false);
-      return;
-    }
+    if (!isLoaded || !isSignedIn || onboardingVerified) return;
 
     // Fetch user to check onboarding status
     fetch("/api/user")
       .then((res) => {
         if (!res.ok) {
-          // 404 = user not in DB, needs onboarding
           router.push("/onboarding");
           return null;
         }
@@ -48,13 +40,15 @@ export default function AppLayout({
           router.push("/onboarding");
         } else {
           localStorage.setItem("artha-onboarding-complete", "true");
-          setCheckingOnboarding(false);
+          setOnboardingVerified(true);
         }
       })
       .catch(() => {
-        setCheckingOnboarding(false);
+        setOnboardingVerified(true);
       });
-  }, [isLoaded, isSignedIn, router]);
+  }, [isLoaded, isSignedIn, onboardingVerified, router]);
+
+  const checkingOnboarding = isLoaded && isSignedIn && !onboardingVerified;
 
   if (checkingOnboarding && isSignedIn) {
     return (

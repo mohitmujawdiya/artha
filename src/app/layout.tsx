@@ -17,7 +17,7 @@ const spaceGrotesk = Space_Grotesk({
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Artha — Your Financial Story, Told Forward",
+  title: "artha — your financial story, told forward",
   description:
     "Personalized financial coaching powered by behavioral intelligence",
 };

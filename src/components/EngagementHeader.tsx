@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Bell } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,11 +12,9 @@ import { useUser } from "@clerk/nextjs";
 export function EngagementHeader() {
   const { state, unreadAgentCount } = useEngagement();
   const { user } = useUser();
-  const [localName, setLocalName] = useState<string | null>(null);
-
-  useEffect(() => {
-    setLocalName(getOnboardingData()?.name || null);
-  }, []);
+  const [localName] = useState<string | null>(() =>
+    typeof window === "undefined" ? null : getOnboardingData()?.name || null
+  );
 
   const name = user?.firstName || localName || "there";
 
