@@ -36,11 +36,12 @@ export function useRealtimeVoice(): UseRealtimeVoiceResult {
 
       // 2. Get ephemeral token from our backend
       const tokenRes = await fetch("/api/voice/session", { method: "POST" });
+      const tokenData = await tokenRes.json().catch(() => ({}));
       if (!tokenRes.ok) {
-        const data = await tokenRes.json().catch(() => ({}));
-        throw new Error(data.error || "Failed to create voice session");
+        console.error("[voice] Session endpoint error:", tokenRes.status, tokenData);
+        throw new Error(tokenData.error || `Voice session failed (${tokenRes.status})`);
       }
-      const { clientSecret } = await tokenRes.json();
+      const { clientSecret } = tokenData;
       if (!clientSecret) throw new Error("No client secret received");
 
       // 3. Create RTCPeerConnection
@@ -85,7 +86,7 @@ export function useRealtimeVoice(): UseRealtimeVoiceResult {
       await pc.setLocalDescription(offer);
 
       const sdpRes = await fetch(
-        "https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2025-06-03",
+        "https://api.openai.com/v1/realtime/calls",
         {
           method: "POST",
           headers: {
@@ -97,7 +98,9 @@ export function useRealtimeVoice(): UseRealtimeVoiceResult {
       );
 
       if (!sdpRes.ok) {
-        throw new Error("Failed to establish WebRTC connection");
+        const sdpError = await sdpRes.text().catch(() => "");
+        console.error("[voice] WebRTC SDP error:", sdpRes.status, sdpError);
+        throw new Error(`WebRTC connection failed (${sdpRes.status})`);
       }
 
       const answerSdp = await sdpRes.text();

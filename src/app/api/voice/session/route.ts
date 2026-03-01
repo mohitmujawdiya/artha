@@ -65,8 +65,13 @@ VOICE MODE INSTRUCTIONS:
     if (!response.ok) {
       const errorText = await response.text();
       console.error("[voice/session] OpenAI error:", response.status, errorText);
+      let detail = "Failed to create voice session";
+      try {
+        const parsed = JSON.parse(errorText);
+        detail = parsed.error?.message || detail;
+      } catch { /* use default */ }
       return NextResponse.json(
-        { error: "Failed to create voice session" },
+        { error: detail },
         { status: 502 }
       );
     }

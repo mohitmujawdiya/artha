@@ -36,12 +36,9 @@ export default function AppLayout({
       })
       .then((data) => {
         if (!data) return;
-        if (!data.monthlyIncome) {
-          router.push("/onboarding");
-        } else {
-          localStorage.setItem("artha-onboarding-complete", "true");
-          setOnboardingVerified(true);
-        }
+        // User exists in DB — onboarding is done (income is optional)
+        localStorage.setItem("artha-onboarding-complete", "true");
+        setOnboardingVerified(true);
       })
       .catch(() => {
         setOnboardingVerified(true);
