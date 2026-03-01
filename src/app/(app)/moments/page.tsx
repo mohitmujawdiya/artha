@@ -7,7 +7,7 @@ import { useEngagement } from "@/components/EngagementProvider";
 
 export default function MomentsPage() {
   const { insights, patterns, transactions } = useTransactions();
-  const { recordCardView, acceptChallenge } = useEngagement();
+  const { acceptChallenge } = useEngagement();
 
   return (
     <main className="h-full overflow-hidden">
@@ -21,7 +21,6 @@ export default function MomentsPage() {
           insights={insights}
           patterns={patterns}
           transactions={transactions}
-          onCardView={recordCardView}
           onChallengeAccept={(id) => {
             const insight = insights.find((i) => i.id === id);
             if (insight) acceptChallenge(id, insight.title);

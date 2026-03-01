@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { PaperPlaneRight, Phone, GearSix } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
-import { ChatMessage as ChatMessageType, CoachTone } from "@/types";
+import { ChatMessage as ChatMessageType } from "@/types";
 import { ChatMessage, TypingIndicator } from "./ChatMessage";
 import { QuickReplyChip } from "./QuickReplyChip";
 import { AnalyzingIndicator } from "./AnalyzingIndicator";
@@ -14,8 +14,6 @@ import { ChannelPreferences } from "./ChannelPreferences";
 import { VoiceMode } from "./VoiceMode";
 import { getAgentMessages } from "@/lib/agent-messages";
 import { getOnboardingData } from "@/lib/onboarding";
-import { useEngagement } from "./EngagementProvider";
-import { XP_REWARDS, getLevelForXP } from "@/lib/engagement";
 
 function getWelcomeMessage(context: string | null): ChatMessageType {
   const userName = getOnboardingData()?.name || "Maya";
@@ -41,30 +39,10 @@ function getWelcomeMessage(context: string | null): ChatMessageType {
   };
 }
 
-interface ChatInterfaceProps {
-  onCoachMessage?: () => void;
-}
-
-export function ChatInterface({ onCoachMessage }: ChatInterfaceProps) {
+export function ChatInterface() {
   const searchParams = useSearchParams();
   const context = searchParams.get("from");
   const welcomeMessage = getWelcomeMessage(context);
-  const { state, awardXP } = useEngagement();
-  const level = getLevelForXP(state.xp);
-
-  // Coach tone with localStorage persistence
-  const [tone, setTone] = useState<CoachTone>(() => {
-    if (typeof window === "undefined") return "hype";
-    return (localStorage.getItem("artha-coach-tone") as CoachTone) || "hype";
-  });
-
-  const toggleTone = useCallback(() => {
-    setTone((prev) => {
-      const next = prev === "hype" ? "real-talk" : "hype";
-      localStorage.setItem("artha-coach-tone", next);
-      return next;
-    });
-  }, []);
 
   // Build initial messages: agent messages (oldest first) + welcome
   const initialMessages = useMemo(() => {
@@ -114,8 +92,6 @@ export function ChatInterface({ onCoachMessage }: ChatInterfaceProps) {
       setMessages((prev) => [...prev, userMessage]);
       setInput("");
       setQuickReplies([]);
-      onCoachMessage?.();
-
       // Phase 1: Analyzing animation (0.8s)
       setIsAnalyzing(true);
       await new Promise((resolve) => setTimeout(resolve, 800));
@@ -131,7 +107,6 @@ export function ChatInterface({ onCoachMessage }: ChatInterfaceProps) {
           body: JSON.stringify({
             message: text.trim(),
             userName: getOnboardingData()?.name,
-            tone,
             history: messages
               .filter((m) => !m.agentMessage) // exclude agent messages from chat history
               .map((m) => ({
@@ -167,7 +142,7 @@ export function ChatInterface({ onCoachMessage }: ChatInterfaceProps) {
         setIsTyping(false);
       }
     },
-    [isTyping, isAnalyzing, messages, onCoachMessage, tone]
+    [isTyping, isAnalyzing, messages]
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -177,12 +152,7 @@ export function ChatInterface({ onCoachMessage }: ChatInterfaceProps) {
 
   const handleVoiceClose = useCallback(() => {
     setVoiceModeActive(false);
-    awardXP({
-      amount: XP_REWARDS.voice_session,
-      source: "voice_session",
-      label: "Voice session",
-    });
-  }, [awardXP]);
+  }, []);
 
   return (
     <div className="flex flex-col h-full">
@@ -191,23 +161,10 @@ export function ChatInterface({ onCoachMessage }: ChatInterfaceProps) {
         <ArthaAvatar size="md" pulse={isAnalyzing || isTyping} />
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm">Artha</p>
-          <p className="text-xs text-artha-muted">
-            {isAnalyzing ? "Analyzing..." : isTyping ? "Typing..." : level.title}
+          <p className="text-xs text-artha-green">
+            {isAnalyzing ? "Analyzing..." : isTyping ? "Typing..." : "Online"}
           </p>
         </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleTone();
-          }}
-          className={`text-[10px] font-semibold tracking-wide px-2.5 py-1 rounded-full border transition-colors flex-shrink-0 ${
-            tone === "real-talk"
-              ? "border-rose-500/40 bg-rose-500/10 text-rose-400"
-              : "border-artha-accent/30 bg-artha-accent/10 text-artha-accent"
-          }`}
-        >
-          {tone === "real-talk" ? "Real Talk" : "Hype"}
-        </button>
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={() => setVoiceModeActive(true)}

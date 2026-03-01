@@ -46,8 +46,6 @@ export interface BehavioralPattern {
 
 export type InsightType = "win" | "discovery" | "nudge" | "goal" | "challenge" | "rhythm" | "learn";
 
-export type CoachTone = "hype" | "real-talk";
-
 export interface Insight {
   id: string;
   type: InsightType;
@@ -124,7 +122,6 @@ export interface AgentMessage {
   emoji: string;
   timestamp: number;
   read: boolean;
-  xpAwarded: boolean;
   quickReplies?: string[];
 }
 
@@ -139,52 +136,16 @@ export interface ChannelPreferences {
 // Voice session status
 export type VoiceSessionStatus = "idle" | "connecting" | "listening" | "speaking" | "error";
 
-// Engagement / XP System
-
-export type XPSource =
-  | "card_viewed"
-  | "full_story"
-  | "challenge_accepted"
-  | "lever_toggled"
-  | "all_levers"
-  | "coach_message"
-  | "daily_complete"
-  | "agent_message_read"
-  | "voice_session";
-
-export interface XPEvent {
-  amount: number;
-  source: XPSource;
-  label: string;
-}
-
+// Engagement state — streak only
 export interface ActiveChallenge {
   insightId: string;
   title: string;
   acceptedAt: number;
 }
 
-export interface LevelConfig {
-  level: number;
-  title: string;
-  xpRequired: number;
-  icon: string;
-}
-
-export interface TabProgress {
-  moments: number;
-  future: number;
-  coach: number;
-}
-
 export interface EngagementState {
-  xp: number;
-  level: number;
   streak: number;
   lastCheckIn: string;
-  cardsViewed: string[];
-  leversToggled: string[];
-  coachMessaged: boolean;
   activeChallenges: ActiveChallenge[];
   agentMessagesRead: string[];
 }
