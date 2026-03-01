@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkle, TrendUp, ChatCircleDots } from "@phosphor-icons/react";
+import { Sparkle, TrendUp, ChatCircleDots, UserCircle } from "@phosphor-icons/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEngagement } from "./EngagementProvider";
 
@@ -10,6 +10,7 @@ const tabs = [
   { href: "/moments", label: "Moments", icon: Sparkle },
   { href: "/future", label: "Future", icon: TrendUp },
   { href: "/coach", label: "Coach", icon: ChatCircleDots },
+  { href: "/you", label: "You", icon: UserCircle },
 ];
 
 export function NavBar() {

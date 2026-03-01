@@ -4,6 +4,7 @@ export default function SignInPage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
       <SignIn
+        afterSignInUrl="/moments"
         appearance={{
           elements: {
             rootBox: "w-full max-w-sm",

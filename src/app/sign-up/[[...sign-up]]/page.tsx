@@ -4,6 +4,7 @@ export default function SignUpPage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
       <SignUp
+        afterSignUpUrl="/onboarding"
         appearance={{
           elements: {
             rootBox: "w-full max-w-sm",
