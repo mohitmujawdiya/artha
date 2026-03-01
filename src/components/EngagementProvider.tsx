@@ -6,11 +6,13 @@ import {
   useState,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   type ReactNode,
 } from "react";
-import { EngagementState, ActiveChallenge } from "@/types";
-import { getAgentMessages } from "@/lib/agent-messages";
+import { EngagementState, ActiveChallenge, AgentMessage } from "@/types";
+import { generateAgentMessages } from "@/lib/agent-messages";
+import { useTransactions } from "@/hooks/useTransactions";
 
 const STORAGE_KEY = "artha-engagement";
 
@@ -76,6 +78,7 @@ interface EngagementContextValue {
   acceptChallenge: (insightId: string, title: string) => void;
   recordAgentMessageRead: (messageId: string) => void;
   unreadAgentCount: number;
+  agentMessages: AgentMessage[];
 }
 
 const EngagementContext = createContext<EngagementContextValue | null>(null);
@@ -90,6 +93,12 @@ export function useEngagement() {
 export function EngagementProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<EngagementState>(getDefaultState);
   const initialized = useRef(false);
+  const { patterns, user } = useTransactions();
+
+  const agentMessages = useMemo(
+    () => generateAgentMessages(patterns, user),
+    [patterns, user]
+  );
 
   // Load from localStorage on mount, then try API
   useEffect(() => {
@@ -153,10 +162,9 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
     []
   );
 
-  const visibleAgentMessages = getAgentMessages(3);
-  const unreadAgentCount = visibleAgentMessages.filter(
-    (m) => !state.agentMessagesRead.includes(m.id)
-  ).length;
+  const unreadAgentCount = agentMessages
+    .slice(0, 3)
+    .filter((m) => !state.agentMessagesRead.includes(m.id)).length;
 
   return (
     <EngagementContext.Provider
@@ -165,6 +173,7 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
         acceptChallenge,
         recordAgentMessageRead,
         unreadAgentCount,
+        agentMessages,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ import {
   calculateCompoundGrowth,
   defaultAdjustments,
 } from "@/lib/projections";
+import { buildAdjustmentsFromPatterns } from "@/lib/projections";
 import { ArrowRight, TrendUp } from "@phosphor-icons/react";
 import { ProjectionSlider } from "./ProjectionSlider";
 import { DualPathChart } from "./DualPathChart";
@@ -60,7 +61,22 @@ export function FutureTimeline() {
     return () => observer.disconnect();
   }, []);
 
-  const { user } = useTransactions();
+  const { user, patterns } = useTransactions();
+
+  // Derive adjustments from real detected patterns (fall back to defaults)
+  const patternAdjustments = useMemo(
+    () => buildAdjustmentsFromPatterns(patterns),
+    [patterns]
+  );
+
+  // Sync pattern-derived adjustments into state when they change
+  const prevPatternCount = useRef(0);
+  useEffect(() => {
+    if (patternAdjustments.length > 0 && patternAdjustments.length !== prevPatternCount.current) {
+      prevPatternCount.current = patternAdjustments.length;
+      setAdjustments(patternAdjustments);
+    }
+  }, [patternAdjustments]);
 
   const toggleAdjustment = (id: string) => {
     setAdjustments((prev) =>
@@ -71,12 +87,16 @@ export function FutureTimeline() {
   };
 
   const currentSavings = user.currentSavings ?? 1840;
-  const currentMonthlySavings = Math.round((user.currentSavings ?? 1840) / 9.2); // approximate from savings history
+  // Derive monthly savings from the savings trend pattern, or estimate from income
+  const savingsTrend = patterns.find((p) => p.id === "savings-trend");
+  const currentMonthlySavings = savingsTrend
+    ? savingsTrend.monthlyImpact
+    : Math.round((user.monthlyIncome ?? 3200) * 0.0625); // ~6.25% savings rate fallback
 
   const projection = useMemo(
     () =>
       calculateProjection(currentSavings, currentMonthlySavings, adjustments, 60),
-    [adjustments]
+    [currentSavings, currentMonthlySavings, adjustments]
   );
 
   const additionalMonthly = adjustments

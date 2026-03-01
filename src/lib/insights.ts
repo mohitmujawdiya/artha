@@ -12,16 +12,23 @@ export function generateInsights(
   // 1. Win: Savings streak
   const savingsTrend = patterns.find((p) => p.id === "savings-trend");
   if (savingsTrend) {
+    // Extract growth % from description (e.g. "grew 140% over 6 months")
+    const growthMatch = savingsTrend.description.match(/(\d+)%/);
+    const growthPct = growthMatch ? parseInt(growthMatch[1]) : 100;
+    // Extract month count
+    const monthMatch = savingsTrend.description.match(/(\d+)\s*months?/);
+    const monthCount = monthMatch ? parseInt(monthMatch[1]) : 6;
+
     insights.push({
       id: "win-savings",
       type: "win",
       title: "You're on fire",
-      subtitle: "6-month savings streak",
+      subtitle: `${monthCount}-month savings streak`,
       metric: "savings growth",
-      metricValue: 140,
+      metricValue: growthPct,
       metricSuffix: "%",
       metricPrefix: "+",
-      body: `Your savings grew from $100/mo to $240/mo. That's the kind of momentum that changes everything.`,
+      body: `${savingsTrend.details}. That's the kind of momentum that changes everything.`,
       color: "#4ade80",
       gradient: "from-emerald-500/30 to-emerald-900/40",
       patternId: "savings-trend",
@@ -81,21 +88,25 @@ export function generateInsights(
   // 3. Discovery: Payday Effect
   const paydaySplurger = patterns.find((p) => p.id === "payday-splurger");
   if (paydaySplurger) {
+    // Extract multiplier from description (e.g. "You spend 2.3x more")
+    const ratioMatch = paydaySplurger.description.match(/([\d.]+)x/);
+    const ratio = ratioMatch ? parseFloat(ratioMatch[1]) : 2.0;
+
     insights.push({
       id: "discovery-payday",
       type: "discovery",
       title: "The Payday Effect",
       subtitle: "Your spending spikes after each paycheck",
       metric: "spending multiplier",
-      metricValue: 2.3,
+      metricValue: ratio,
       metricSuffix: "x",
-      body: `In the 3 days after payday, you burn through 2.3x your normal spending. That's money you already earned — gone before you even notice.`,
+      body: `In the 3 days after payday, you burn through ${ratio}x your normal spending. That's money you already earned \u2014 gone before you even notice.`,
       color: "#60a5fa",
       gradient: "from-blue-500/30 to-blue-900/40",
       patternId: "payday-splurger",
       goalImpactLine: `That's ${paydaySplurger.goalImpactDays} extra days to your ${user.goals[0]?.name || "goal"}`,
       peerComparison: "71% of users who smoothed their payday spike saved an extra $100/mo",
-      savingsRule: { trigger: "payday hits", amount: 50 },
+      savingsRule: { trigger: "payday hits", amount: Math.round(paydaySplurger.monthlyImpact * 0.3) },
     });
   }
 
@@ -150,19 +161,37 @@ export function generateInsights(
     peerComparison: "68% of users who tried this kept it going for 4+ weeks",
   });
 
-  // 6. Goal Connection: Japan fund acceleration (card 9 of 9 — last card leads to /future)
-  insights.push({
-    id: "goal-japan",
-    type: "goal",
-    title: "Japan, Sooner",
-    subtitle: "Small changes, big acceleration",
-    metric: "months sooner",
-    metricValue: 4,
-    metricSuffix: " months",
-    body: `By optimizing just your Sunday deliveries and unused subscriptions, you could reach your Japan trip fund 4 months earlier.`,
-    color: "#6c63ff",
-    gradient: "from-artha-accent/30 to-indigo-900/40",
-  });
+  // 6. Goal Connection: Accelerate top goal (last card leads to /future)
+  const topGoal = user.goals.length > 1 ? user.goals[1] : user.goals[0]; // prefer 2nd goal (often aspirational)
+  if (topGoal) {
+    const optimizablePatterns = patterns.filter(
+      (p) => p.monthlyImpact > 0 && p.severity !== "positive"
+    );
+    const potentialSavings = optimizablePatterns.reduce(
+      (sum, p) => sum + Math.round(p.monthlyImpact * 0.5),
+      0
+    );
+    const remaining = topGoal.targetAmount - topGoal.currentAmount;
+    const currentMonthly = savingsTrend?.monthlyImpact || 200;
+    const currentMonths = currentMonthly > 0 ? Math.ceil(remaining / currentMonthly) : 99;
+    const optimizedMonths = (currentMonthly + potentialSavings) > 0
+      ? Math.ceil(remaining / (currentMonthly + potentialSavings))
+      : 99;
+    const monthsSooner = Math.max(0, currentMonths - optimizedMonths);
+
+    insights.push({
+      id: "goal-accelerate",
+      type: "goal",
+      title: `${topGoal.name}, Sooner`,
+      subtitle: "Small changes, big acceleration",
+      metric: "months sooner",
+      metricValue: monthsSooner,
+      metricSuffix: " months",
+      body: `By optimizing your spending patterns, you could reach your ${topGoal.name} fund ${monthsSooner} months earlier. That's the power of small changes.`,
+      color: "#6c63ff",
+      gradient: "from-artha-accent/30 to-indigo-900/40",
+    });
+  }
 
   return insights;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { PaperPlaneRight, Phone, GearSix } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
@@ -12,7 +12,7 @@ import { AgentMessageBubble } from "./AgentMessageBubble";
 import { ArthaAvatar } from "./ArthaAvatar";
 import { ChannelPreferences } from "./ChannelPreferences";
 import { VoiceMode } from "./VoiceMode";
-import { getAgentMessages } from "@/lib/agent-messages";
+import { useEngagement } from "./EngagementProvider";
 import { getOnboardingData } from "@/lib/onboarding";
 
 function getWelcomeMessage(context: string | null): ChatMessageType {
@@ -43,25 +43,9 @@ export function ChatInterface() {
   const searchParams = useSearchParams();
   const context = searchParams.get("from");
   const welcomeMessage = getWelcomeMessage(context);
+  const { agentMessages } = useEngagement();
 
-  // Build initial messages: agent messages (oldest first) + welcome
-  const initialMessages = useMemo(() => {
-    const agentMsgs = getAgentMessages(3);
-    const agentChatMessages: ChatMessageType[] = agentMsgs
-      .slice()
-      .reverse() // oldest first
-      .map((am) => ({
-        id: am.id,
-        role: "assistant" as const,
-        content: am.content,
-        timestamp: am.timestamp,
-        agentMessage: am,
-      }));
-    return [...agentChatMessages, welcomeMessage];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const [messages, setMessages] = useState<ChatMessageType[]>(initialMessages);
+  const [messages, setMessages] = useState<ChatMessageType[]>([welcomeMessage]);
   const [input, setInput] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -72,6 +56,25 @@ export function ChatInterface() {
   const [channelPrefsOpen, setChannelPrefsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const historyLoaded = useRef(false);
+  const agentMsgsLoaded = useRef(false);
+
+  // Prepend agent messages once patterns are loaded
+  useEffect(() => {
+    if (agentMsgsLoaded.current || agentMessages.length === 0) return;
+    agentMsgsLoaded.current = true;
+
+    const agentChatMessages: ChatMessageType[] = agentMessages
+      .slice(0, 3)
+      .reverse()
+      .map((am) => ({
+        id: am.id,
+        role: "assistant" as const,
+        content: am.content,
+        timestamp: am.timestamp,
+        agentMessage: am,
+      }));
+    setMessages((prev) => [...agentChatMessages, ...prev]);
+  }, [agentMessages]);
 
   // Load persisted chat history on mount
   useEffect(() => {

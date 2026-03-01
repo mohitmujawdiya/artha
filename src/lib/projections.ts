@@ -1,4 +1,4 @@
-import { Projection, ProjectionAdjustment } from "@/types";
+import { BehavioralPattern, Projection, ProjectionAdjustment } from "@/types";
 
 export const defaultAdjustments: ProjectionAdjustment[] = [
   {
@@ -38,6 +38,59 @@ export const defaultAdjustments: ProjectionAdjustment[] = [
     icon: "wallet",
   },
 ];
+
+const PATTERN_TO_ADJUSTMENT: Record<string, { label: string; descriptionTemplate: string; savingsRatio: number; difficulty: "Easy" | "Moderate" | "Hard"; icon: string }> = {
+  "sunday-night-orderer": {
+    label: "Meal prep Sundays",
+    descriptionTemplate: "Cook instead of ordering delivery ($IMPACT/mo)",
+    savingsRatio: 0.75,
+    difficulty: "Easy",
+    icon: "cooking-pot",
+  },
+  "daily-coffee": {
+    label: "Coffee at home 3 days/week",
+    descriptionTemplate: "Brew at home instead of buying ($IMPACT/mo on coffee)",
+    savingsRatio: 0.5,
+    difficulty: "Moderate",
+    icon: "coffee",
+  },
+  "subscription-creep": {
+    label: "Cancel unused subscriptions",
+    descriptionTemplate: "Drop subscriptions you haven't used in 2+ months",
+    savingsRatio: 1.0,
+    difficulty: "Easy",
+    icon: "package",
+  },
+  "payday-splurger": {
+    label: "Reduce payday splurge 30%",
+    descriptionTemplate: "Set a 3-day post-payday budget ($IMPACT/mo excess)",
+    savingsRatio: 0.3,
+    difficulty: "Moderate",
+    icon: "wallet",
+  },
+};
+
+export function buildAdjustmentsFromPatterns(patterns: BehavioralPattern[]): ProjectionAdjustment[] {
+  const adjustments: ProjectionAdjustment[] = [];
+
+  for (const pattern of patterns) {
+    const config = PATTERN_TO_ADJUSTMENT[pattern.id];
+    if (!config || pattern.monthlyImpact <= 0 || pattern.severity === "positive") continue;
+
+    adjustments.push({
+      id: pattern.id,
+      label: config.label,
+      description: config.descriptionTemplate.replace("$IMPACT", `$${pattern.monthlyImpact}`),
+      monthlySavings: Math.round(pattern.monthlyImpact * config.savingsRatio),
+      difficulty: config.difficulty,
+      enabled: false,
+      icon: config.icon,
+    });
+  }
+
+  // Fall back to defaults if no patterns detected
+  return adjustments.length > 0 ? adjustments : defaultAdjustments;
+}
 
 export function calculateProjection(
   currentSavings: number,
