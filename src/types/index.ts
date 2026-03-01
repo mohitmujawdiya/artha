@@ -90,6 +90,7 @@ export interface ChatMessage {
   timestamp: number;
   dataCard?: InlineDataCard;
   quickReplies?: string[];
+  agentMessage?: AgentMessage;
 }
 
 export interface InlineDataCard {
@@ -105,4 +106,79 @@ export interface Subscription {
   lastUsed: string;
   category: string;
   isActive: boolean;
+}
+
+// Agent message types
+export type AgentMessageType = "nudge" | "win" | "discovery" | "goal_update" | "challenge" | "awareness" | "consequence";
+
+export interface AgentMessage {
+  id: string;
+  type: AgentMessageType;
+  content: string;
+  emoji: string;
+  timestamp: number;
+  read: boolean;
+  xpAwarded: boolean;
+  quickReplies?: string[];
+}
+
+// Channel preferences (UI-only for now)
+export type NotificationChannel = "telegram" | "whatsapp" | "imessage";
+export interface ChannelPreferences {
+  telegram: boolean;
+  whatsapp: boolean;
+  imessage: boolean;
+}
+
+// Voice session status
+export type VoiceSessionStatus = "idle" | "connecting" | "listening" | "speaking" | "error";
+
+// Engagement / XP System
+
+export type XPSource =
+  | "card_viewed"
+  | "full_story"
+  | "challenge_accepted"
+  | "lever_toggled"
+  | "all_levers"
+  | "coach_message"
+  | "daily_complete"
+  | "agent_message_read"
+  | "voice_session";
+
+export interface XPEvent {
+  amount: number;
+  source: XPSource;
+  label: string;
+}
+
+export interface ActiveChallenge {
+  insightId: string;
+  title: string;
+  acceptedAt: number;
+}
+
+export interface LevelConfig {
+  level: number;
+  title: string;
+  xpRequired: number;
+  emoji: string;
+}
+
+export interface TabProgress {
+  moments: number;
+  future: number;
+  coach: number;
+}
+
+export interface EngagementState {
+  xp: number;
+  level: number;
+  streak: number;
+  lastCheckIn: string;
+  cardsViewed: string[];
+  leversToggled: string[];
+  coachMessaged: boolean;
+  activeChallenges: ActiveChallenge[];
+  agentMessagesRead: string[];
 }

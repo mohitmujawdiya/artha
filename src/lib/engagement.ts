@@ -1,0 +1,48 @@
+import { LevelConfig, XPSource } from "@/types";
+
+export const LEVELS: LevelConfig[] = [
+  { level: 1, title: "Curious Spender", xpRequired: 0, emoji: "🌱" },
+  { level: 2, title: "Pattern Spotter", xpRequired: 100, emoji: "🔍" },
+  { level: 3, title: "Budget Apprentice", xpRequired: 300, emoji: "📊" },
+  { level: 4, title: "Savings Starter", xpRequired: 550, emoji: "💰" },
+  { level: 5, title: "Money Aware", xpRequired: 900, emoji: "🧠" },
+  { level: 6, title: "Financial Explorer", xpRequired: 1400, emoji: "🗺️" },
+  { level: 7, title: "Habit Hacker", xpRequired: 2000, emoji: "⚡" },
+  { level: 8, title: "Wealth Builder", xpRequired: 2800, emoji: "🏗️" },
+  { level: 9, title: "Money Master", xpRequired: 3800, emoji: "👑" },
+  { level: 10, title: "Financial Zen", xpRequired: 5000, emoji: "✨" },
+];
+
+export const XP_REWARDS: Record<XPSource, number> = {
+  card_viewed: 10,
+  full_story: 100,
+  challenge_accepted: 50,
+  lever_toggled: 25,
+  all_levers: 200,
+  coach_message: 15,
+  daily_complete: 500,
+  agent_message_read: 5,
+  voice_session: 20,
+};
+
+export function getLevelForXP(xp: number): LevelConfig {
+  let current = LEVELS[0];
+  for (const level of LEVELS) {
+    if (xp >= level.xpRequired) {
+      current = level;
+    } else {
+      break;
+    }
+  }
+  return current;
+}
+
+export function getNextLevel(currentLevel: number): LevelConfig | null {
+  const idx = LEVELS.findIndex((l) => l.level === currentLevel);
+  return idx < LEVELS.length - 1 ? LEVELS[idx + 1] : null;
+}
+
+// Total insight cards in the app
+export const TOTAL_CARDS = 7;
+// Total levers on the future page
+export const TOTAL_LEVERS = 4;

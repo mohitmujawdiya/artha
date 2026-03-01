@@ -15,8 +15,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === "user";
   const showSparkline =
     !isUser &&
-    message.content.toLowerCase().includes("saving") &&
-    !message.dataCard;
+    message.dataCard?.type === "tradeoff";
 
   return (
     <motion.div

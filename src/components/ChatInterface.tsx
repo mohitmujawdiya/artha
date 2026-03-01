@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
-import { Send } from "lucide-react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { PaperPlaneRight, Microphone, GearSix } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { ChatMessage as ChatMessageType } from "@/types";
 import { ChatMessage, TypingIndicator } from "./ChatMessage";
 import { QuickReplyChip } from "./QuickReplyChip";
 import { AnalyzingIndicator } from "./AnalyzingIndicator";
+import { AgentMessageBubble } from "./AgentMessageBubble";
+import { ChannelPreferences } from "./ChannelPreferences";
+import { VoiceMode } from "./VoiceMode";
+import { getAgentMessages } from "@/lib/agent-messages";
+import { useEngagement } from "./EngagementProvider";
+import { XP_REWARDS } from "@/lib/engagement";
 
 function getWelcomeMessage(context: string | null): ChatMessageType {
   let content =
@@ -34,18 +40,42 @@ function getWelcomeMessage(context: string | null): ChatMessageType {
   };
 }
 
-export function ChatInterface() {
+interface ChatInterfaceProps {
+  onCoachMessage?: () => void;
+}
+
+export function ChatInterface({ onCoachMessage }: ChatInterfaceProps) {
   const searchParams = useSearchParams();
   const context = searchParams.get("from");
   const welcomeMessage = getWelcomeMessage(context);
+  const { awardXP } = useEngagement();
 
-  const [messages, setMessages] = useState<ChatMessageType[]>([welcomeMessage]);
+  // Build initial messages: agent messages (oldest first) + welcome
+  const initialMessages = useMemo(() => {
+    const agentMsgs = getAgentMessages(3);
+    const agentChatMessages: ChatMessageType[] = agentMsgs
+      .slice()
+      .reverse() // oldest first
+      .map((am) => ({
+        id: am.id,
+        role: "assistant" as const,
+        content: am.content,
+        timestamp: am.timestamp,
+        agentMessage: am,
+      }));
+    return [...agentChatMessages, welcomeMessage];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [messages, setMessages] = useState<ChatMessageType[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [quickReplies, setQuickReplies] = useState<string[]>(
     welcomeMessage.quickReplies || []
   );
+  const [voiceModeActive, setVoiceModeActive] = useState(false);
+  const [channelPrefsOpen, setChannelPrefsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -68,6 +98,7 @@ export function ChatInterface() {
       setMessages((prev) => [...prev, userMessage]);
       setInput("");
       setQuickReplies([]);
+      onCoachMessage?.();
 
       // Phase 1: Analyzing animation (0.8s)
       setIsAnalyzing(true);
@@ -83,10 +114,12 @@ export function ChatInterface() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             message: text.trim(),
-            history: messages.map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
+            history: messages
+              .filter((m) => !m.agentMessage) // exclude agent messages from chat history
+              .map((m) => ({
+                role: m.role,
+                content: m.content,
+              })),
           }),
         });
 
@@ -116,7 +149,7 @@ export function ChatInterface() {
         setIsTyping(false);
       }
     },
-    [isTyping, isAnalyzing, messages]
+    [isTyping, isAnalyzing, messages, onCoachMessage]
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -124,19 +157,35 @@ export function ChatInterface() {
     sendMessage(input);
   };
 
+  const handleVoiceClose = useCallback(() => {
+    setVoiceModeActive(false);
+    awardXP({
+      amount: XP_REWARDS.voice_session,
+      source: "voice_session",
+      label: "Voice session",
+    });
+  }, [awardXP]);
+
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)]">
+    <div className="flex flex-col h-full">
       {/* Header */}
       <div className="glass px-4 py-3 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-artha-accent/20 flex items-center justify-center">
           <span className="font-display font-bold text-artha-accent">A</span>
         </div>
-        <div>
-          <p className="font-semibold text-sm">Artha Coach</p>
+        <div className="flex-1">
+          <p className="font-semibold text-sm">Artha</p>
           <p className="text-xs text-artha-green">
             {isAnalyzing ? "Analyzing..." : "Online"}
           </p>
         </div>
+        <motion.button
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setChannelPrefsOpen(true)}
+          className="text-artha-muted hover:text-artha-text p-1"
+        >
+          <GearSix size={20} />
+        </motion.button>
       </div>
 
       {/* Messages */}
@@ -144,9 +193,18 @@ export function ChatInterface() {
         ref={scrollRef}
         className="flex-1 overflow-y-auto px-4 py-4 no-scrollbar"
       >
-        {messages.map((msg) => (
-          <ChatMessage key={msg.id} message={msg} />
-        ))}
+        {messages.map((msg) =>
+          msg.agentMessage ? (
+            <AgentMessageBubble
+              key={msg.id}
+              message={msg.agentMessage}
+              scrollRoot={scrollRef}
+              onQuickReply={sendMessage}
+            />
+          ) : (
+            <ChatMessage key={msg.id} message={msg} />
+          )
+        )}
         {isAnalyzing && <AnalyzingIndicator />}
         {isTyping && <TypingIndicator />}
       </div>
@@ -176,15 +234,27 @@ export function ChatInterface() {
             className="flex-1 bg-transparent outline-none text-sm text-artha-text placeholder:text-artha-muted/50"
           />
           <motion.button
+            type="button"
+            className="ml-2 text-artha-muted hover:text-artha-accent transition-colors"
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setVoiceModeActive(true)}
+          >
+            <Microphone size={18} weight="fill" />
+          </motion.button>
+          <motion.button
             type="submit"
             className="ml-2 text-artha-accent disabled:text-artha-muted/30"
             disabled={!input.trim() || isTyping || isAnalyzing}
             whileTap={{ scale: 0.9 }}
           >
-            <Send size={18} />
+            <PaperPlaneRight size={18} weight="fill" />
           </motion.button>
         </div>
       </form>
+
+      {/* Overlays */}
+      <VoiceMode isActive={voiceModeActive} onClose={handleVoiceClose} />
+      <ChannelPreferences isOpen={channelPrefsOpen} onClose={() => setChannelPrefsOpen(false)} />
     </div>
   );
 }

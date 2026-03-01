@@ -11,6 +11,7 @@ interface StoryCardProps {
   patterns?: BehavioralPattern[];
   transactions?: Transaction[];
   animated?: boolean;
+  peek?: boolean;
   onAction?: () => void;
 }
 
@@ -28,12 +29,13 @@ export function StoryCard({
   patterns,
   transactions,
   animated = true,
+  peek = false,
   onAction,
 }: StoryCardProps) {
   const badge = typeBadge[insight.type] || typeBadge.discovery;
   const isRhythm = insight.visualization === "heatmap";
 
-  // When animated=false, skip all entrance animations (content is just visible)
+  // When animated=false (and not peek), skip all entrance animations
   const initial = animated ? undefined : false;
 
   return (
@@ -73,79 +75,79 @@ export function StoryCard({
         {insight.subtitle}
       </motion.p>
 
-      {/* Heatmap visualization for rhythm cards */}
-      {isRhythm && transactions ? (
-        <motion.div
-          className="mt-6 w-full"
-          initial={initial ?? { opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: animated ? 0.2 : 0 }}
-        >
-          <SpendingHeatmap transactions={transactions} />
-        </motion.div>
-      ) : (
-        /* Animated metric */
-        <motion.div
-          className="mt-8 text-center"
-          initial={initial ?? { opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: animated ? 0.2 : 0 }}
-        >
-          <AnimatedNumber
-            value={insight.metricValue}
-            prefix={insight.metricPrefix}
-            suffix={insight.metricSuffix}
-            decimals={insight.metricValue % 1 !== 0 ? 1 : 0}
-            className="font-display text-5xl font-bold"
-            duration={animated ? 800 : 0}
-          />
-          <p className="text-sm text-artha-muted mt-1">{insight.metric}</p>
-        </motion.div>
-      )}
+      {/* Heatmap / metric / body / action — hidden on peek cards */}
+      {!peek && (
+        <>
+          {isRhythm && transactions ? (
+            <motion.div
+              className="mt-6 w-full"
+              initial={initial ?? { opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: animated ? 0.2 : 0 }}
+            >
+              <SpendingHeatmap transactions={transactions} />
+            </motion.div>
+          ) : (
+            <motion.div
+              className="mt-8 text-center"
+              initial={initial ?? { opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: animated ? 0.2 : 0 }}
+            >
+              <AnimatedNumber
+                value={insight.metricValue}
+                prefix={insight.metricPrefix}
+                suffix={insight.metricSuffix}
+                decimals={insight.metricValue % 1 !== 0 ? 1 : 0}
+                className="font-display text-5xl font-bold"
+                duration={animated ? 800 : 0}
+              />
+              <p className="text-sm text-artha-muted mt-1">{insight.metric}</p>
+            </motion.div>
+          )}
 
-      {/* Mini DNA on win cards */}
-      {insight.type === "win" && patterns && patterns.length > 0 && (
-        <motion.div
-          className="mt-6 flex justify-center"
-          initial={initial ?? { opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: animated ? 0.3 : 0 }}
-        >
-          <SpendingDNA patterns={patterns} size={140} mini />
-        </motion.div>
-      )}
+          {insight.type === "win" && patterns && patterns.length > 0 && (
+            <motion.div
+              className="mt-6 flex justify-center"
+              initial={initial ?? { opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: animated ? 0.3 : 0 }}
+            >
+              <SpendingDNA patterns={patterns} size={140} mini />
+            </motion.div>
+          )}
 
-      {/* Body text */}
-      <motion.p
-        className="text-artha-text/80 text-center mt-6 max-w-xs leading-relaxed"
-        initial={initial ?? { opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.4,
-          delay: animated
-            ? isRhythm
-              ? 0.6
-              : insight.type === "win"
-                ? 0.5
-                : 0.3
-            : 0,
-        }}
-      >
-        {insight.body}
-      </motion.p>
+          <motion.p
+            className="text-artha-text/80 text-center mt-6 max-w-xs leading-relaxed"
+            initial={initial ?? { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.4,
+              delay: animated
+                ? isRhythm
+                  ? 0.6
+                  : insight.type === "win"
+                    ? 0.5
+                    : 0.3
+                : 0,
+            }}
+          >
+            {insight.body}
+          </motion.p>
 
-      {/* Action button (for challenges) */}
-      {insight.action && (
-        <motion.button
-          className="mt-8 px-6 py-3 bg-artha-accent rounded-full font-semibold text-white"
-          initial={initial ?? { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: animated ? 0.4 : 0 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={onAction}
-        >
-          {insight.action}
-        </motion.button>
+          {insight.action && (
+            <motion.button
+              className="mt-8 px-6 py-3 bg-artha-accent rounded-full font-semibold text-white"
+              initial={initial ?? { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: animated ? 0.4 : 0 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onAction}
+            >
+              {insight.action}
+            </motion.button>
+          )}
+        </>
       )}
     </div>
   );

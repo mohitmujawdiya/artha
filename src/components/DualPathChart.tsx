@@ -86,21 +86,23 @@ export function DualPathChart({
 
   const step = INNER_W / Math.max(data.current.length - 1, 1);
 
+  const { current: currentVals, optimized: optimizedVals } = data;
+
   const currentLine = useMemo(
-    () => buildLinePath(data.current, maxVal, step),
-    [data, maxVal, step]
+    () => buildLinePath(currentVals, maxVal, step),
+    [currentVals, maxVal, step]
   );
   const optimizedLine = useMemo(
-    () => buildLinePath(data.optimized, maxVal, step),
-    [data, maxVal, step]
+    () => buildLinePath(optimizedVals, maxVal, step),
+    [optimizedVals, maxVal, step]
   );
   const currentArea = useMemo(
-    () => buildAreaPath(data.current, maxVal, step),
-    [data, maxVal, step]
+    () => buildAreaPath(currentVals, maxVal, step),
+    [currentVals, maxVal, step]
   );
   const optimizedArea = useMemo(
-    () => buildAreaPath(data.optimized, maxVal, step),
-    [data, maxVal, step]
+    () => buildAreaPath(optimizedVals, maxVal, step),
+    [optimizedVals, maxVal, step]
   );
 
   // Y-axis ticks

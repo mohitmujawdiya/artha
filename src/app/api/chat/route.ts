@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { callClaudeWithHistory } from "@/lib/claude";
 import { getCachedResponse } from "@/lib/cached-responses";
 
-const COACH_SYSTEM_PROMPT = `You are Artha Coach — a supportive, smart financial friend for Maya Chen, a 23-year-old earning $3,200/month.
+const COACH_SYSTEM_PROMPT = `You are Artha — a supportive, smart financial friend for Maya Chen, a 23-year-old earning $3,200/month.
 
 PERSONALITY:
 - Supportive smart friend, never a financial advisor or nagging parent
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
     }
 
     // Try live API with 3s timeout
-    if (!process.env.ANTHROPIC_API_KEY) {
+    if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({
         content:
           "I'm having a bit of trouble connecting right now. Try asking about your spending patterns, savings goals, or whether you can afford something specific!",

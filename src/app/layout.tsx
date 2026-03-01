@@ -24,11 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark overflow-x-hidden">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-body antialiased bg-artha-bg text-artha-text`}
+        className={`${inter.variable} ${spaceGrotesk.variable} font-body antialiased bg-artha-bg text-artha-text overflow-x-hidden`}
       >
-        <div className="max-w-md mx-auto min-h-screen relative overflow-x-hidden">
+        <div className="max-w-md mx-auto min-h-screen relative" style={{ overflowX: "clip" }}>
           {children}
         </div>
       </body>

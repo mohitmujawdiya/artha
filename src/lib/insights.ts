@@ -96,21 +96,7 @@ export function generateInsights(
     });
   }
 
-  // 5. Goal Connection: Japan fund acceleration
-  insights.push({
-    id: "goal-japan",
-    type: "goal",
-    title: "Japan, Sooner",
-    subtitle: "Small changes, big acceleration",
-    metric: "months sooner",
-    metricValue: 4,
-    metricSuffix: " months",
-    body: `By optimizing just your Sunday deliveries and unused subscriptions, you could reach your Japan trip fund 4 months earlier.`,
-    color: "#6c63ff",
-    gradient: "from-artha-accent/30 to-indigo-900/40",
-  });
-
-  // 6. Challenge
+  // 5. Challenge (card 6 of 7)
   insights.push({
     id: "challenge-mealprep",
     type: "challenge",
@@ -123,6 +109,20 @@ export function generateInsights(
     color: "#6c63ff",
     gradient: "from-artha-accent/30 to-violet-900/40",
     action: "Accept Challenge",
+  });
+
+  // 6. Goal Connection: Japan fund acceleration (card 7 of 7 — last card leads to /future)
+  insights.push({
+    id: "goal-japan",
+    type: "goal",
+    title: "Japan, Sooner",
+    subtitle: "Small changes, big acceleration",
+    metric: "months sooner",
+    metricValue: 4,
+    metricSuffix: " months",
+    body: `By optimizing just your Sunday deliveries and unused subscriptions, you could reach your Japan trip fund 4 months earlier.`,
+    color: "#6c63ff",
+    gradient: "from-artha-accent/30 to-indigo-900/40",
   });
 
   return insights;

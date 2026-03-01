@@ -10,18 +10,20 @@ import {
 import { useRouter } from "next/navigation";
 import { Insight, BehavioralPattern, Transaction } from "@/types";
 import { StoryCard } from "./StoryCard";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 interface CardStackProps {
   insights: Insight[];
   patterns?: BehavioralPattern[];
   transactions?: Transaction[];
+  onCardView?: (insightId: string) => void;
+  onChallengeAccept?: (insightId: string) => void;
 }
 
 const SWIPE_THRESHOLD = 0.2;
 const VELOCITY_THRESHOLD = 300;
 
-export function CardStack({ insights, patterns, transactions }: CardStackProps) {
+export function CardStack({ insights, patterns, transactions, onCardView, onChallengeAccept }: CardStackProps) {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -99,6 +101,13 @@ export function CardStack({ insights, patterns, transactions }: CardStackProps) 
     [isAnimating, navigatingAway, isFirst, isLast, x, router]
   );
 
+  // Fire onCardView when currentIndex changes
+  useEffect(() => {
+    if (onCardView && insights[currentIndex]) {
+      onCardView(insights[currentIndex].id);
+    }
+  }, [currentIndex, onCardView, insights]);
+
   const handleTap = useCallback(() => {
     if (!dragStarted.current && !isAnimating && !navigatingAway) {
       if (isLast) {
@@ -130,9 +139,9 @@ export function CardStack({ insights, patterns, transactions }: CardStackProps) 
   );
 
   return (
-    <div className="relative h-[calc(100svh-5rem)] flex flex-col">
+    <div className="relative h-full px-5 pt-3 pb-2 flex flex-col">
       {/* Progress dots */}
-      <div className="flex justify-center gap-1.5 pt-3 pb-1.5 px-4">
+      <div className="flex justify-center gap-1.5 pb-2">
         {Array.from({ length: total }).map((_, i) => (
           <div
             key={i}
@@ -147,8 +156,8 @@ export function CardStack({ insights, patterns, transactions }: CardStackProps) 
         ))}
       </div>
 
-      {/* Card area */}
-      <div className="flex-1 px-3 pb-2 relative overflow-hidden">
+      {/* Card area — relative wrapper sizes to its content */}
+      <div className="relative overflow-hidden">
         {visibleIndices.map((i) => {
           const isCurrent = i === currentIndex;
           const insight = insights[i];
@@ -157,12 +166,13 @@ export function CardStack({ insights, patterns, transactions }: CardStackProps) 
             return (
               <motion.div
                 key={insight.id}
-                className="relative touch-pan-y"
+                className="touch-pan-y"
                 style={{
                   x,
                   rotate,
                   opacity: cardOpacity,
                   zIndex: 20,
+                  position: "relative",
                 }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
@@ -178,12 +188,13 @@ export function CardStack({ insights, patterns, transactions }: CardStackProps) 
                   insight={insight}
                   patterns={patterns}
                   transactions={transactions}
+                  onAction={insight.type === "challenge" && onChallengeAccept ? () => onChallengeAccept(insight.id) : undefined}
                 />
               </motion.div>
             );
           }
 
-          // Next card behind
+          // Next card behind — absolute, layered under the current card
           return (
             <motion.div
               key={insight.id}
@@ -199,14 +210,15 @@ export function CardStack({ insights, patterns, transactions }: CardStackProps) 
                 patterns={patterns}
                 transactions={transactions}
                 animated={false}
+                peek
               />
             </motion.div>
           );
         })}
       </div>
 
-      {/* Navigation hint */}
-      <div className="text-center text-artha-muted/50 text-xs py-2">
+      {/* Navigation hint — right under the card */}
+      <div className="text-center text-artha-muted/50 text-xs pt-3">
         {isLast ? "Swipe to see your future" : "Swipe or tap to continue"}
       </div>
     </div>

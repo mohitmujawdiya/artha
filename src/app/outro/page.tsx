@@ -23,6 +23,16 @@ const pillars = [
     description: "Tappable cards that make finance feel like a story",
     icon: "✨",
   },
+  {
+    title: "Engagement Layer",
+    description: "XP, levels, streaks & daily rings — Duolingo for finance",
+    icon: "🎯",
+  },
+  {
+    title: "Animated Landing",
+    description: "DNA reveal creates an instant 'this is different' moment",
+    icon: "🌟",
+  },
 ];
 
 export default function OutroPage() {
@@ -85,11 +95,12 @@ export default function OutroPage() {
           Architecture
         </p>
         <div className="glass rounded-2xl p-4 font-mono text-[10px] text-artha-muted leading-relaxed">
-          <p className="text-artha-accent">Next.js 14 + TypeScript</p>
+          <p className="text-artha-accent">Next.js 16 + TypeScript</p>
           <p className="ml-2">├── Behavioral Analysis Engine</p>
-          <p className="ml-2">├── Claude AI (Sonnet) Coach</p>
+          <p className="ml-2">├── GPT-4o AI Coach</p>
           <p className="ml-2">├── Projection & Compound Math</p>
           <p className="ml-2">├── Framer Motion Animations</p>
+          <p className="ml-2">├── XP & Engagement System</p>
           <p className="ml-2">└── ElevenLabs Voice TTS</p>
           <div className="border-t border-artha-surface mt-2 pt-2">
             <p className="text-artha-green">PNC Integration Vision:</p>
