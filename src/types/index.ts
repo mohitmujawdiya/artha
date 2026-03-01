@@ -80,7 +80,7 @@ export interface ProjectionAdjustment {
   monthlySavings: number;
   difficulty: "Easy" | "Moderate" | "Hard";
   enabled: boolean;
-  emoji: string;
+  icon: string;
 }
 
 export interface ChatMessage {
@@ -162,7 +162,7 @@ export interface LevelConfig {
   level: number;
   title: string;
   xpRequired: number;
-  emoji: string;
+  icon: string;
 }
 
 export interface TabProgress {

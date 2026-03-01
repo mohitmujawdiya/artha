@@ -108,7 +108,7 @@ export function ChannelPreferences({ isOpen, onClose }: ChannelPreferencesProps)
               </div>
 
               {/* Coming soon note */}
-              <p className="text-xs text-artha-muted text-center mt-6 pb-2">
+              <p className="text-xs text-artha-muted text-center mt-6 pb-16">
                 Coming soon — we&apos;ll notify you when channels are live
               </p>
             </div>

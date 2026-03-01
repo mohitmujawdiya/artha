@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Crosshair } from "@phosphor-icons/react";
 import { ConfettiCelebration } from "./ConfettiCelebration";
 import { XPEvent } from "@/types";
 import { XP_REWARDS } from "@/lib/engagement";
@@ -49,11 +50,13 @@ export function DailyCompleteModal({ complete, awardXP }: DailyCompleteModalProp
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
             >
               <motion.div
-                className="text-7xl mb-4"
+                className="mb-4 flex justify-center"
                 animate={{ scale: [1, 1.3, 1], rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                🎯
+                <div className="w-20 h-20 rounded-full bg-amber-500/20 flex items-center justify-center">
+                  <Crosshair size={48} weight="fill" className="text-amber-400" />
+                </div>
               </motion.div>
               <motion.p
                 className="text-amber-400 text-sm font-semibold tracking-widest uppercase"

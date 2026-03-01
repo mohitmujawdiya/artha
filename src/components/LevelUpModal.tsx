@@ -3,9 +3,10 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ConfettiCelebration } from "./ConfettiCelebration";
+import { LevelIcon } from "./LevelIcon";
 
 interface LevelUpModalProps {
-  levelUp: { level: number; title: string; emoji: string } | null;
+  levelUp: { level: number; title: string; icon: string } | null;
   onDismiss: () => void;
 }
 
@@ -37,11 +38,13 @@ export function LevelUpModal({ levelUp, onDismiss }: LevelUpModalProps) {
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
             >
               <motion.div
-                className="text-7xl mb-4"
+                className="mb-4 flex justify-center"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                {levelUp.emoji}
+                <div className="w-20 h-20 rounded-full bg-artha-accent/20 flex items-center justify-center">
+                  <LevelIcon icon={levelUp.icon} size={48} className="text-artha-accent" />
+                </div>
               </motion.div>
               <motion.p
                 className="text-artha-accent text-sm font-semibold tracking-widest uppercase"

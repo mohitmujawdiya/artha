@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { AgentMessage } from "@/types";
 import { AGENT_MESSAGE_STYLES, formatRelativeTime } from "@/lib/agent-messages";
+import { ArthaAvatar } from "./ArthaAvatar";
 import { useEngagement } from "./EngagementProvider";
 
 interface AgentMessageBubbleProps {
@@ -45,9 +46,8 @@ export function AgentMessageBubble({ message, scrollRoot, onQuickReply }: AgentM
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Emoji avatar */}
-      <div className="w-8 h-8 rounded-full bg-artha-surface flex items-center justify-center mr-2 mt-1 flex-shrink-0 text-lg">
-        {message.emoji}
+      <div className="mr-2 mt-1">
+        <ArthaAvatar size="sm" />
       </div>
 
       {/* Message bubble with colored left border */}

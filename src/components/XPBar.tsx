@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { getLevelForXP, getNextLevel } from "@/lib/engagement";
+import { LevelIcon } from "./LevelIcon";
 
 interface XPBarProps {
   xp: number;
@@ -16,8 +17,8 @@ export function XPBar({ xp }: XPBarProps) {
 
   return (
     <div className="flex items-center gap-2 flex-1 min-w-0">
-      <span className="text-sm flex-shrink-0">
-        {current.emoji}
+      <span className="flex-shrink-0">
+        <LevelIcon icon={current.icon} size={16} />
       </span>
       <div className="flex-1 min-w-0">
         <div className="h-1.5 bg-artha-surface rounded-full overflow-hidden">

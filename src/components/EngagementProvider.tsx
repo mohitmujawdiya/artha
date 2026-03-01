@@ -85,7 +85,7 @@ function loadState(): EngagementState {
 interface EngagementContextValue {
   state: EngagementState;
   xpEvents: XPEvent[];
-  levelUp: { level: number; title: string; emoji: string } | null;
+  levelUp: { level: number; title: string; icon: string } | null;
   dismissLevelUp: () => void;
   tabProgress: TabProgress;
   awardXP: (event: XPEvent) => void;
@@ -113,7 +113,7 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
   const [levelUp, setLevelUp] = useState<{
     level: number;
     title: string;
-    emoji: string;
+    icon: string;
   } | null>(null);
   const [dailyComplete, setDailyComplete] = useState(false);
   const initialized = useRef(false);
@@ -169,7 +169,7 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
           setLevelUp({
             level: newLevel.level,
             title: newLevel.title,
-            emoji: newLevel.emoji,
+            icon: newLevel.icon,
           });
         }
 

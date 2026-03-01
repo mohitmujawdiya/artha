@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { Lightning } from "@phosphor-icons/react";
 import { XPEvent } from "@/types";
 
 const BIG_SOURCES = new Set(["full_story", "all_levers", "daily_complete", "challenge_accepted"]);
@@ -14,7 +15,7 @@ export function XPToast({ events }: { events: XPEvent[] }) {
           return (
             <motion.div
               key={`${event.source}-${event.amount}-${i}`}
-              className={`px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md border ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold backdrop-blur-md border ${
                 isGold
                   ? "bg-amber-500/20 border-amber-400/30 text-amber-300"
                   : "bg-artha-surface/80 border-artha-accent/20 text-artha-text"
@@ -24,10 +25,11 @@ export function XPToast({ events }: { events: XPEvent[] }) {
               exit={{ opacity: 0, x: 40, scale: 0.8 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
+              <Lightning size={12} weight="fill" className={isGold ? "text-amber-400" : "text-artha-accent"} />
               <span className={isGold ? "text-amber-400" : "text-artha-accent"}>
                 +{event.amount} XP
               </span>
-              <span className="text-artha-muted ml-1.5">{event.label}</span>
+              <span className="text-artha-muted">{event.label}</span>
             </motion.div>
           );
         })}

@@ -105,6 +105,21 @@ export function DualPathChart({
     [optimizedVals, maxVal, step]
   );
 
+  // Endpoint positions for dots
+  const currentEndpoint = useMemo(() => {
+    const lastIdx = currentVals.length - 1;
+    const x = PAD.left + lastIdx * step;
+    const y = PAD.top + INNER_H - (currentVals[lastIdx] / maxVal) * INNER_H;
+    return { x, y };
+  }, [currentVals, maxVal, step]);
+
+  const optimizedEndpoint = useMemo(() => {
+    const lastIdx = optimizedVals.length - 1;
+    const x = PAD.left + lastIdx * step;
+    const y = PAD.top + INNER_H - (optimizedVals[lastIdx] / maxVal) * INNER_H;
+    return { x, y };
+  }, [optimizedVals, maxVal, step]);
+
   // Y-axis ticks
   const yTicks = useMemo(() => {
     const count = 4;
@@ -152,7 +167,7 @@ export function DualPathChart({
             y1={t.y}
             x2={CHART_W - PAD.right}
             y2={t.y}
-            stroke="rgba(148,163,184,0.1)"
+            stroke="rgba(148,163,184,0.06)"
             strokeWidth={0.5}
           />
         ))}
@@ -227,6 +242,28 @@ export function DualPathChart({
           animate={hasScrollProgress ? undefined : { pathLength: 1 }}
           style={hasScrollProgress ? { pathLength: drawProgress } : undefined}
           transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
+        />
+
+        {/* Current path endpoint dot */}
+        <motion.circle
+          cx={currentEndpoint.x}
+          cy={currentEndpoint.y}
+          r={3}
+          fill="#94a3b8"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.4, delay: 1.3, ease: "easeOut" }}
+        />
+
+        {/* Optimized path endpoint dot with pulse */}
+        <motion.circle
+          cx={optimizedEndpoint.x}
+          cy={optimizedEndpoint.y}
+          r={4}
+          fill="#6c63ff"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: [0, 1, 0.7, 1], scale: [0, 1.3, 1, 1] }}
+          transition={{ duration: 1.2, delay: 1.6, ease: "easeOut" }}
         />
       </svg>
     </div>

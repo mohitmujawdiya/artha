@@ -1,18 +1,20 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import { motion, useScroll } from "framer-motion";
 import { ProjectionAdjustment } from "@/types";
 import {
   calculateProjection,
   calculateCompoundGrowth,
   defaultAdjustments,
 } from "@/lib/projections";
+import { ArrowRight, TrendUp } from "@phosphor-icons/react";
 import { ProjectionSlider } from "./ProjectionSlider";
 import { DualPathChart } from "./DualPathChart";
 import { AnimatedNumber } from "./AnimatedNumber";
 import { RevealNumber } from "./RevealNumber";
-import { ConfettiCelebration } from "./ConfettiCelebration";
+
+const SECTION_COUNT = 3;
 
 interface FutureTimelineProps {
   onLeverToggle?: (id: string) => void;
@@ -22,20 +24,51 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
   const [adjustments, setAdjustments] = useState<ProjectionAdjustment[]>(
     defaultAdjustments
   );
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [activeSection, setActiveSection] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<(HTMLElement | null)[]>([]);
+  const chartSectionRef = useRef<HTMLElement>(null);
+
+  const setSectionRef = useCallback(
+    (index: number) => (el: HTMLElement | null) => {
+      sectionRefs.current[index] = el;
+      if (index === 1) chartSectionRef.current = el;
+    },
+    []
+  );
+
+  // IntersectionObserver to track active section for progress dots
+  useEffect(() => {
+    const container = containerRef.current;
+    const sections = sectionRefs.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let maxRatio = 0;
+        let maxIndex = activeSection;
+        entries.forEach((entry) => {
+          const idx = sections.indexOf(entry.target as HTMLElement);
+          if (idx !== -1 && entry.intersectionRatio > maxRatio) {
+            maxRatio = entry.intersectionRatio;
+            maxIndex = idx;
+          }
+        });
+        if (maxRatio > 0) setActiveSection(maxIndex);
+      },
+      { root: container, threshold: [0, 0.3, 0.6, 1] }
+    );
+
+    sections.forEach((s) => s && observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
   const toggleAdjustment = (id: string) => {
-    setAdjustments((prev) => {
-      const next = prev.map((a) =>
+    setAdjustments((prev) =>
+      prev.map((a) =>
         a.id === id ? { ...a, enabled: !a.enabled } : a
-      );
-      // Check if all enabled after toggle
-      if (next.every((a) => a.enabled)) {
-        setTimeout(() => setShowConfetti(true), 300);
-      }
-      return next;
-    });
+      )
+    );
     onLeverToggle?.(id);
   };
 
@@ -59,18 +92,35 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
 
   const allEnabled = adjustments.every((a) => a.enabled);
 
-  // Scroll-linked progress for chart draw animation
+  // Scroll-linked progress scoped to the chart+levers section
   const { scrollYProgress } = useScroll({
     container: containerRef,
+    target: chartSectionRef,
+    offset: ["start end", "end start"],
   });
 
   return (
-    <div ref={containerRef} className="relative h-full overflow-y-auto overflow-x-hidden pb-16">
-      <ConfettiCelebration trigger={showConfetti} />
+    <div ref={containerRef} className="relative h-full overflow-y-auto overflow-x-hidden snap-y snap-proximity no-scrollbar">
+      {/* Progress dots — vertical, right edge */}
+      <div className="fixed right-3 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-2">
+        {Array.from({ length: SECTION_COUNT }).map((_, i) => (
+          <div
+            key={i}
+            className={`w-1 rounded-full transition-all duration-300 ${
+              i === activeSection
+                ? "h-6 bg-artha-accent"
+                : i < activeSection
+                  ? "h-1.5 bg-artha-accent/50"
+                  : "h-1.5 bg-artha-surface"
+            }`}
+          />
+        ))}
+      </div>
 
       {/* Act 1: Where you are */}
       <motion.section
-        className="h-[100svh] flex flex-col items-center justify-center px-4"
+        ref={setSectionRef(0)}
+        className="snap-start h-[100svh] flex flex-col items-center justify-center px-4"
       >
         <motion.p
           className="text-xs tracking-widest text-artha-accent/60 uppercase"
@@ -136,17 +186,17 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
       </motion.section>
 
       {/* Act 2+3: Chart (sticky) + Levers */}
-      <section className="px-4">
+      <section ref={setSectionRef(1)} className="snap-start px-4">
         {/* Sticky chart header */}
         <motion.div
-          className="sticky top-0 z-10 pt-6 pb-4 bg-[#0a0a0f]/95 backdrop-blur-md"
+          className="sticky top-0 z-10 pt-6 pb-4 bg-artha-bg/95 backdrop-blur-md"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
           <motion.h2
-            className="font-display text-2xl font-bold text-center"
+            className="font-display text-3xl font-bold text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -193,8 +243,17 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
+          <motion.p
+            className="text-xs tracking-widest text-artha-accent/60 uppercase text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            Toggle to see the chart update
+          </motion.p>
           <motion.h3
-            className="font-display text-xl font-bold text-center"
+            className="font-display text-2xl font-bold text-center mt-1"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -202,28 +261,18 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
           >
             Your Levers
           </motion.h3>
-          <motion.p
-            className="text-artha-muted text-center mt-2 text-sm"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            Toggle to see the chart update in real-time
-          </motion.p>
 
           <div className="flex flex-col gap-3 mt-6 max-w-sm mx-auto">
             {adjustments.map((adj, i) => (
               <motion.div
                 key={adj.id}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 20,
-                  delay: i * 0.12,
+                  duration: 0.4,
+                  ease: "easeOut",
+                  delay: i * 0.15,
                 }}
               >
                 <ProjectionSlider
@@ -241,9 +290,12 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
               animate={{ opacity: 1, scale: 1 }}
             >
               <p className="text-sm text-artha-muted">Total additional savings</p>
-              <p className="font-display text-2xl font-bold text-artha-green mt-1">
-                +${additionalMonthly}/mo
-              </p>
+              <div className="flex items-center justify-center gap-2 mt-1">
+                <TrendUp size={20} weight="bold" className="text-artha-green" />
+                <p className="font-display text-2xl font-bold text-artha-green">
+                  +${additionalMonthly}/mo
+                </p>
+              </div>
             </motion.div>
           )}
 
@@ -255,22 +307,24 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="font-display text-xl font-bold">
+            <h3 className="font-display text-2xl font-bold">
               Emergency Fund Race
             </h3>
 
             <div className="flex justify-center gap-8 mt-6">
               <div>
                 <p className="text-artha-muted text-xs mb-2">Current pace</p>
-                <div className="font-display text-4xl font-bold text-artha-muted">
+                <div className="font-display text-5xl font-bold text-artha-muted">
                   {projection.monthsToEmergencyFund}
                 </div>
                 <p className="text-xs text-artha-muted mt-1">months</p>
               </div>
-              <div className="text-artha-accent text-2xl self-center">→</div>
+              <div className="self-center">
+                <ArrowRight size={20} className="text-artha-accent" />
+              </div>
               <div>
                 <p className="text-artha-accent text-xs mb-2">Optimized</p>
-                <div className="font-display text-4xl font-bold text-artha-accent">
+                <div className="font-display text-5xl font-bold text-artha-accent">
                   <AnimatedNumber
                     value={projection.monthsToEmergencyFundOptimized}
                     duration={800}
@@ -293,14 +347,15 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
 
       {/* Act 4: The Reveal */}
       <motion.section
-        className="flex flex-col items-center justify-center px-4 py-12"
+        ref={setSectionRef(2)}
+        className="snap-start min-h-[100svh] flex flex-col items-center justify-center px-4 py-12"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
         <motion.h2
-          className="font-display text-2xl font-bold text-center"
+          className="font-display text-3xl font-bold text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

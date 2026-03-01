@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { SpendingDNA } from "@/components/SpendingDNA";
 import { useTransactions } from "@/hooks/useTransactions";
+import { getOnboardingData, setOnboardingData } from "@/lib/onboarding";
 
 interface Particle {
   width: number;
@@ -29,19 +30,46 @@ function generateParticles(count: number): Particle[] {
 export default function LandingPage() {
   const router = useRouter();
   const { patterns } = useTransactions();
-  const [phase, setPhase] = useState<"hook" | "dna">("hook");
+  const [phase, setPhase] = useState<"name" | "hook" | "dna">("name");
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [name, setName] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Generate particles on client only to avoid hydration mismatch
   useEffect(() => {
     setParticles(generateParticles(40));
   }, []);
 
+  // Skip onboarding if already completed
+  useEffect(() => {
+    const data = getOnboardingData();
+    if (data) {
+      setName(data.name);
+      setPhase("hook");
+    }
+  }, []);
+
   // Auto-transition from hook to DNA after 3.5s
   useEffect(() => {
+    if (phase !== "hook") return;
     const timer = setTimeout(() => setPhase("dna"), 3500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [phase]);
+
+  // Auto-focus name input when entering name phase
+  useEffect(() => {
+    if (phase === "name") {
+      // Small delay to let AnimatePresence finish
+      const t = setTimeout(() => inputRef.current?.focus(), 900);
+      return () => clearTimeout(t);
+    }
+  }, [phase]);
+
+  function handleNameSubmit() {
+    if (!name.trim()) return;
+    setOnboardingData({ name: name.trim() });
+    setPhase("hook");
+  }
 
   return (
     <main
@@ -76,7 +104,70 @@ export default function LandingPage() {
       </div>
 
       <AnimatePresence mode="wait">
-        {phase === "hook" ? (
+        {/* ── Phase: Name ── */}
+        {phase === "name" && (
+          <motion.div
+            key="name"
+            className="text-center z-10 w-full max-w-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.h1
+              className="font-display text-3xl font-bold text-artha-text leading-tight"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              What should we call you?
+            </motion.h1>
+
+            <motion.p
+              className="mt-3 text-sm text-artha-muted"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              We&apos;ll personalize your experience
+            </motion.p>
+
+            <motion.div
+              className="mt-8 glass rounded-2xl px-4 py-3"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <input
+                ref={inputRef}
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleNameSubmit();
+                }}
+                placeholder="Your first name"
+                className="w-full bg-transparent outline-none text-center font-display text-2xl text-artha-text placeholder:text-artha-muted/40"
+              />
+            </motion.div>
+
+            <motion.button
+              className="mt-6 px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              disabled={!name.trim()}
+              onClick={handleNameSubmit}
+            >
+              Continue
+            </motion.button>
+          </motion.div>
+        )}
+
+        {/* ── Phase: Hook (personalized) ── */}
+        {phase === "hook" && (
           <motion.div
             key="hook"
             className="text-center z-10"
@@ -91,7 +182,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              Your money tells a story
+              Hey {name.trim() || "there"}, your money tells a story
             </motion.h1>
 
             <motion.p
@@ -106,7 +197,10 @@ export default function LandingPage() {
               Let&apos;s read yours
             </motion.p>
           </motion.div>
-        ) : (
+        )}
+
+        {/* ── Phase: DNA ── */}
+        {phase === "dna" && (
           <motion.div
             key="dna"
             className="flex flex-col items-center z-10"
@@ -158,15 +252,6 @@ export default function LandingPage() {
         )}
       </AnimatePresence>
 
-      {/* Subtle brand */}
-      <motion.p
-        className="absolute bottom-8 text-[10px] text-artha-muted/40"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3 }}
-      >
-        Built for the PNC Financial Challenge
-      </motion.p>
     </main>
   );
 }

@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { callClaudeWithHistory } from "@/lib/claude";
 import { getCachedResponse } from "@/lib/cached-responses";
 
-const COACH_SYSTEM_PROMPT = `You are Artha — a supportive, smart financial friend for Maya Chen, a 23-year-old earning $3,200/month.
+function getCoachSystemPrompt(userName: string) {
+  return `You are Artha — a supportive, smart financial friend for ${userName}, a 23-year-old earning $3,200/month.
 
 PERSONALITY:
 - Supportive smart friend, never a financial advisor or nagging parent
@@ -12,7 +13,7 @@ PERSONALITY:
 - Keep responses under 120 words
 - Ask one follow-up question when relevant
 
-MAYA'S CONTEXT:
+${userName.toUpperCase()}'S CONTEXT:
 - Saves ~$200/mo currently (growing from $100 6 months ago)
 - Savings: $1,840 | Goals: Emergency Fund ($5k), Japan Trip ($3k), Laptop ($1.5k)
 - Patterns: Sunday night delivery ($82/mo), daily Starbucks ($130/mo), unused subscriptions ($43/mo), payday splurge (2.3x spending)
@@ -30,6 +31,7 @@ FORMAT RULES:
   <data-card>{"type":"tradeoff","title":"...","items":[{"label":"...","value":"...","color":"#hex"}]}</data-card>
 - End with suggested follow-ups:
   <quick-replies>["option 1","option 2","option 3"]</quick-replies>`;
+}
 
 function parseResponse(text: string) {
   let content = text;
@@ -63,7 +65,8 @@ function parseResponse(text: string) {
 
 export async function POST(request: Request) {
   try {
-    const { message, history } = await request.json();
+    const { message, history, userName: rawName } = await request.json();
+    const userName = rawName || "Maya";
 
     // Check cached responses first
     const cached = getCachedResponse(message);
@@ -94,7 +97,7 @@ export async function POST(request: Request) {
       ];
 
       const response = await callClaudeWithHistory(
-        COACH_SYSTEM_PROMPT,
+        getCoachSystemPrompt(userName),
         messages
       );
 

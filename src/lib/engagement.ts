@@ -1,16 +1,16 @@
 import { LevelConfig, XPSource } from "@/types";
 
 export const LEVELS: LevelConfig[] = [
-  { level: 1, title: "Curious Spender", xpRequired: 0, emoji: "🌱" },
-  { level: 2, title: "Pattern Spotter", xpRequired: 100, emoji: "🔍" },
-  { level: 3, title: "Budget Apprentice", xpRequired: 300, emoji: "📊" },
-  { level: 4, title: "Savings Starter", xpRequired: 550, emoji: "💰" },
-  { level: 5, title: "Money Aware", xpRequired: 900, emoji: "🧠" },
-  { level: 6, title: "Financial Explorer", xpRequired: 1400, emoji: "🗺️" },
-  { level: 7, title: "Habit Hacker", xpRequired: 2000, emoji: "⚡" },
-  { level: 8, title: "Wealth Builder", xpRequired: 2800, emoji: "🏗️" },
-  { level: 9, title: "Money Master", xpRequired: 3800, emoji: "👑" },
-  { level: 10, title: "Financial Zen", xpRequired: 5000, emoji: "✨" },
+  { level: 1, title: "Curious Spender", xpRequired: 0, icon: "plant" },
+  { level: 2, title: "Pattern Spotter", xpRequired: 100, icon: "magnifying-glass" },
+  { level: 3, title: "Budget Apprentice", xpRequired: 300, icon: "chart-bar" },
+  { level: 4, title: "Savings Starter", xpRequired: 550, icon: "coin" },
+  { level: 5, title: "Money Aware", xpRequired: 900, icon: "lightbulb" },
+  { level: 6, title: "Financial Explorer", xpRequired: 1400, icon: "compass" },
+  { level: 7, title: "Habit Hacker", xpRequired: 2000, icon: "lightning" },
+  { level: 8, title: "Wealth Builder", xpRequired: 2800, icon: "buildings" },
+  { level: 9, title: "Money Master", xpRequired: 3800, icon: "crown" },
+  { level: 10, title: "Financial Zen", xpRequired: 5000, icon: "star-four" },
 ];
 
 export const XP_REWARDS: Record<XPSource, number> = {

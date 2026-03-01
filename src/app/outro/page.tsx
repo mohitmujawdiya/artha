@@ -102,12 +102,6 @@ export default function OutroPage() {
           <p className="ml-2">├── Framer Motion Animations</p>
           <p className="ml-2">├── XP & Engagement System</p>
           <p className="ml-2">└── ElevenLabs Voice TTS</p>
-          <div className="border-t border-artha-surface mt-2 pt-2">
-            <p className="text-artha-green">PNC Integration Vision:</p>
-            <p className="ml-2">SDK embedded in PNC Mobile App</p>
-            <p className="ml-2">Real transaction data via PNC API</p>
-            <p className="ml-2">PNC product recommendations</p>
-          </div>
         </div>
       </motion.div>
 

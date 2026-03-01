@@ -8,7 +8,7 @@ export const defaultAdjustments: ProjectionAdjustment[] = [
     monthlySavings: 62,
     difficulty: "Easy",
     enabled: false,
-    emoji: "🍳",
+    icon: "cooking-pot",
   },
   {
     id: "coffee-home",
@@ -17,7 +17,7 @@ export const defaultAdjustments: ProjectionAdjustment[] = [
     monthlySavings: 55,
     difficulty: "Moderate",
     enabled: false,
-    emoji: "☕",
+    icon: "coffee",
   },
   {
     id: "cancel-subs",
@@ -26,7 +26,7 @@ export const defaultAdjustments: ProjectionAdjustment[] = [
     monthlySavings: 43,
     difficulty: "Easy",
     enabled: false,
-    emoji: "📦",
+    icon: "package",
   },
   {
     id: "payday-budget",
@@ -35,7 +35,7 @@ export const defaultAdjustments: ProjectionAdjustment[] = [
     monthlySavings: 45,
     difficulty: "Moderate",
     enabled: false,
-    emoji: "💰",
+    icon: "wallet",
   },
 ];
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ArthaAvatar } from "./ArthaAvatar";
 
 /**
  * "Scanning your data" animation — orbiting dots with label.
@@ -11,8 +12,8 @@ export function AnalyzingIndicator() {
 
   return (
     <div className="flex justify-start mb-3">
-      <div className="w-8 h-8 rounded-full bg-artha-accent/20 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
-        <span className="text-sm">A</span>
+      <div className="mr-2 mt-1">
+        <ArthaAvatar size="sm" pulse />
       </div>
       <div className="glass rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-3">
         {/* Orbiting dots ring */}
