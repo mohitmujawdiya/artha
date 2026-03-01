@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db/index";
 import { plaidItems } from "@/db/schema";
+import { syncPlaidItem } from "@/lib/plaid-sync";
+import { verifyBearerSecret } from "@/lib/auth-helpers";
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!verifyBearerSecret(request.headers.get("authorization"), process.env.CRON_SECRET)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -14,15 +15,8 @@ export async function GET(request: Request) {
 
     for (const item of items) {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/plaid/sync`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ itemId: item.itemId }),
-          }
-        );
-        if (res.ok) synced++;
+        await syncPlaidItem(item.itemId);
+        synced++;
       } catch {
         // Continue with other items
       }
@@ -30,7 +24,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ synced, total: items.length });
   } catch (error) {
-    console.error("Plaid cron sync error:", error);
+    console.error("Plaid cron sync error:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }

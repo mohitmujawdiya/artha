@@ -5,6 +5,8 @@ import { getCachedResponse } from "@/lib/cached-responses";
 import { getDbUser, getMemoryFacts, getUserTransactions, getChatMessages, saveChatMessage } from "@/db/queries";
 import { extractAndStoreMemory } from "@/lib/memory-extractor";
 import { detectPatterns } from "@/lib/analysis";
+import { sanitizeForPrompt } from "@/lib/auth-helpers";
+import { rateLimit } from "@/lib/rate-limit";
 import type { Transaction } from "@/types";
 
 async function buildSystemPrompt(userId: string | null, fallbackName: string) {
@@ -20,7 +22,7 @@ async function buildSystemPrompt(userId: string | null, fallbackName: string) {
 
     if (!user) return getStaticPrompt(fallbackName);
 
-    const name = user.name || fallbackName;
+    const name = sanitizeForPrompt(user.name || fallbackName, 50);
     const mappedTxns: Transaction[] = dbTransactions.map((t) => ({
       id: String(t.id),
       date: t.date,
@@ -77,8 +79,27 @@ FORMAT RULES:
   }
 }
 
+function sanitizeHistory(history: unknown): { role: "user" | "assistant"; content: string }[] {
+  if (!Array.isArray(history)) return [];
+  return history
+    .slice(-20) // Cap at 20 messages
+    .filter(
+      (m): m is { role: string; content: string } =>
+        m && typeof m === "object" &&
+        typeof m.role === "string" &&
+        typeof m.content === "string" &&
+        (m.role === "user" || m.role === "assistant") &&
+        m.content.length <= 2000
+    )
+    .map((m) => ({
+      role: m.role as "user" | "assistant",
+      content: m.content,
+    }));
+}
+
 function getStaticPrompt(userName: string) {
-  return `You are Artha — a smart, real financial friend for ${userName}, a 23-year-old earning $3,200/month.
+  const safeName = sanitizeForPrompt(userName, 50);
+  return `You are Artha — a smart, real financial friend for ${safeName}, a 23-year-old earning $3,200/month.
 
 PERSONALITY:
 - Be direct about spending problems — use loss-framing: "You're losing $X/year on this"
@@ -89,7 +110,7 @@ PERSONALITY:
 - Keep responses under 120 words
 - Ask one follow-up question when relevant
 
-${userName.toUpperCase()}'S CONTEXT:
+${safeName.toUpperCase()}'S CONTEXT:
 - Saves ~$200/mo currently (growing from $100 6 months ago)
 - Savings: $1,840 | Goals: Emergency Fund ($5k), Japan Trip ($3k), Laptop ($1.5k)
 - Patterns: Sunday night delivery ($82/mo), daily Starbucks ($130/mo), unused subscriptions ($43/mo), payday splurge (2.3x spending)
@@ -141,8 +162,20 @@ function parseResponse(text: string) {
 
 export async function POST(request: Request) {
   try {
+    // Rate limit by IP
+    const ip = request.headers.get("x-forwarded-for") || "unknown";
+    if (!rateLimit(ip, 30, 60_000)) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const { message, history, userName: rawName } = await request.json();
-    const userName = rawName || "Maya";
+
+    // Validate message
+    if (!message || typeof message !== "string" || message.length > 2000) {
+      return NextResponse.json({ error: "Invalid message" }, { status: 400 });
+    }
+
+    const userName = sanitizeForPrompt(rawName || "Maya", 50);
 
     // Check cached responses first
     const cached = getCachedResponse(message);
@@ -188,13 +221,13 @@ export async function POST(request: Request) {
         ];
       } catch {
         messages = [
-          ...(history || []),
+          ...sanitizeHistory(history),
           { role: "user" as const, content: message },
         ];
       }
     } else {
       messages = [
-        ...(history || []),
+        ...sanitizeHistory(history),
         { role: "user" as const, content: message },
       ];
     }

@@ -21,6 +21,12 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  await upsertChannelPrefs(userId, body);
+
+  // Explicit field extraction — prevent mass assignment
+  await upsertChannelPrefs(userId, {
+    ...(typeof body.telegram === "boolean" && { telegram: body.telegram }),
+    ...(typeof body.whatsapp === "boolean" && { whatsapp: body.whatsapp }),
+    ...(typeof body.imessage === "boolean" && { imessage: body.imessage }),
+  });
   return NextResponse.json({ success: true });
 }

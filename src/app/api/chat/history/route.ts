@@ -9,7 +9,8 @@ export async function GET(request: Request) {
   }
 
   const { searchParams } = new URL(request.url);
-  const limit = parseInt(searchParams.get("limit") || "50", 10);
+  const rawLimit = parseInt(searchParams.get("limit") || "50", 10);
+  const limit = Math.min(Math.max(1, rawLimit || 50), 200);
 
   const messages = await getChatMessages(userId, limit);
   // Return in chronological order

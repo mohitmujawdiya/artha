@@ -16,12 +16,12 @@ export async function POST() {
       products: [Products.Transactions],
       country_codes: [CountryCode.Us],
       language: "en",
-      webhook: `${process.env.NEXT_PUBLIC_APP_URL || "https://artha.vercel.app"}/api/plaid/webhook`,
+      webhook: `${process.env.APP_URL || "https://artha-ten.vercel.app"}/api/plaid/webhook`,
     });
 
     return NextResponse.json({ linkToken: response.data.link_token });
   } catch (error) {
-    console.error("Plaid link token error:", error);
+    console.error("Plaid link token error:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json(
       { error: "Failed to create link token" },
       { status: 500 }

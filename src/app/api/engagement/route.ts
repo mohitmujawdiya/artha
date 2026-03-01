@@ -26,6 +26,14 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  await upsertEngagement(userId, body);
+
+  // Explicit field extraction — prevent mass assignment
+  const data: Record<string, unknown> = {};
+  if (typeof body.streak === "number") data.streak = body.streak;
+  if (typeof body.lastCheckIn === "string") data.lastCheckIn = body.lastCheckIn.slice(0, 20);
+  if (Array.isArray(body.activeChallenges)) data.activeChallenges = body.activeChallenges;
+  if (Array.isArray(body.agentMessagesRead)) data.agentMessagesRead = body.agentMessagesRead;
+
+  await upsertEngagement(userId, data);
   return NextResponse.json({ success: true });
 }

@@ -1,59 +1,30 @@
 import { NextResponse } from "next/server";
-import { plaidClient } from "@/lib/plaid";
-import { mapPlaidTransaction } from "@/lib/plaid-mapper";
-import { getPlaidItems, updatePlaidCursor, insertTransactions } from "@/db/queries";
-import { eq } from "drizzle-orm";
-import { db } from "@/db/index";
-import { plaidItems } from "@/db/schema";
+import { auth } from "@clerk/nextjs/server";
+import { verifyBearerSecret } from "@/lib/auth-helpers";
+import { syncPlaidItem } from "@/lib/plaid-sync";
 
 export async function POST(request: Request) {
+  // Require either Clerk auth or internal secret
+  const { userId } = await auth().catch(() => ({ userId: null }));
+  const isInternalCall = verifyBearerSecret(
+    request.headers.get("authorization"),
+    process.env.CRON_SECRET
+  );
+
+  if (!userId && !isInternalCall) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const { itemId } = await request.json();
-
-    // Find the plaid item
-    const [item] = await db
-      .select()
-      .from(plaidItems)
-      .where(eq(plaidItems.itemId, itemId));
-
-    if (!item) {
-      return NextResponse.json({ error: "Item not found" }, { status: 404 });
+    if (!itemId || typeof itemId !== "string") {
+      return NextResponse.json({ error: "Invalid itemId" }, { status: 400 });
     }
 
-    let cursor = item.cursor || undefined;
-    let hasMore = true;
-    let totalAdded = 0;
-
-    while (hasMore) {
-      const response = await plaidClient.transactionsSync({
-        access_token: item.accessToken,
-        cursor,
-      });
-
-      const { added, next_cursor, has_more } = response.data;
-
-      if (added.length > 0) {
-        const mapped = added.map((t) =>
-          mapPlaidTransaction(t, item.userId)
-        );
-        await insertTransactions(mapped);
-        totalAdded += added.length;
-      }
-
-      cursor = next_cursor;
-      hasMore = has_more;
-    }
-
-    if (cursor) {
-      await updatePlaidCursor(itemId, cursor);
-    }
-
-    return NextResponse.json({ synced: totalAdded });
+    const synced = await syncPlaidItem(itemId);
+    return NextResponse.json({ synced });
   } catch (error) {
-    console.error("Plaid sync error:", error);
-    return NextResponse.json(
-      { error: "Sync failed" },
-      { status: 500 }
-    );
+    console.error("Plaid sync error:", error instanceof Error ? error.message : "Unknown error");
+    return NextResponse.json({ error: "Sync failed" }, { status: 500 });
   }
 }

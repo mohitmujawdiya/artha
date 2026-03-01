@@ -1,4 +1,4 @@
-import { eq, desc } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { db } from "./index";
 import {
   users,
@@ -10,6 +10,7 @@ import {
   plaidItems,
   channelPreferences,
 } from "./schema";
+import { encrypt } from "@/lib/encryption";
 
 // ── Users ──
 
@@ -62,6 +63,7 @@ export async function createGoal(data: {
 
 export async function updateGoal(
   goalId: number,
+  userId: string,
   data: Partial<{
     name: string;
     targetAmount: number;
@@ -73,13 +75,15 @@ export async function updateGoal(
   const [goal] = await db
     .update(financialGoals)
     .set(data)
-    .where(eq(financialGoals.id, goalId))
+    .where(and(eq(financialGoals.id, goalId), eq(financialGoals.userId, userId)))
     .returning();
-  return goal;
+  return goal ?? null;
 }
 
-export async function deleteGoal(goalId: number) {
-  await db.delete(financialGoals).where(eq(financialGoals.id, goalId));
+export async function deleteGoal(goalId: number, userId: string) {
+  await db
+    .delete(financialGoals)
+    .where(and(eq(financialGoals.id, goalId), eq(financialGoals.userId, userId)));
 }
 
 // ── Transactions ──
@@ -129,12 +133,14 @@ export async function upsertEngagement(
 // ── Chat History ──
 
 export async function getChatMessages(userId: string, limit = 20) {
+  // Cap limit to prevent DoS via large queries
+  const safeLimit = Math.min(Math.max(1, limit), 200);
   return db
     .select()
     .from(chatHistory)
     .where(eq(chatHistory.userId, userId))
     .orderBy(desc(chatHistory.timestamp))
-    .limit(limit);
+    .limit(safeLimit);
 }
 
 export async function saveChatMessage(data: {
@@ -172,7 +178,19 @@ export async function savePlaidItem(data: {
   itemId: string;
   institutionName?: string;
 }) {
-  await db.insert(plaidItems).values(data);
+  // Encrypt the access token before storing
+  let encryptedToken: string;
+  try {
+    encryptedToken = encrypt(data.accessToken);
+  } catch {
+    // If encryption key is not set, store as-is (dev fallback)
+    encryptedToken = data.accessToken;
+  }
+
+  await db.insert(plaidItems).values({
+    ...data,
+    accessToken: encryptedToken,
+  });
 }
 
 export async function updatePlaidCursor(itemId: string, cursor: string) {

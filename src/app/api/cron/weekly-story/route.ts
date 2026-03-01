@@ -4,10 +4,11 @@ import { users, transactions } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { callClaude } from "@/lib/claude";
 import { saveChatMessage } from "@/db/queries";
+import { verifyBearerSecret } from "@/lib/auth-helpers";
+import { sanitizeForPrompt } from "@/lib/auth-helpers";
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!verifyBearerSecret(request.headers.get("authorization"), process.env.CRON_SECRET)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -34,9 +35,11 @@ export async function GET(request: Request) {
         .filter((t) => t.amount < 0)
         .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
+      const safeName = sanitizeForPrompt(user.name, 50);
+
       const story = await callClaude(
         "You write short, engaging weekly money narratives (under 100 words). Casual, warm tone. Start with a hook.",
-        `Write a weekly money story for ${user.name}. They spent $${totalSpent.toFixed(0)} across ${recentTxns.length} transactions this week. Top categories: ${getTopCategories(recentTxns)}`,
+        `Write a weekly money story for ${safeName}. They spent $${totalSpent.toFixed(0)} across ${recentTxns.length} transactions this week. Top categories: ${getTopCategories(recentTxns)}`,
         "gpt-4o",
         256
       );
@@ -52,7 +55,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ generated });
   } catch (error) {
-    console.error("Weekly story error:", error);
+    console.error("Weekly story error:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: "Failed" }, { status: 500 });
   }
 }

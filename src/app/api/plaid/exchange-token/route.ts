@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { plaidClient } from "@/lib/plaid";
 import { savePlaidItem } from "@/db/queries";
+import { syncPlaidItem } from "@/lib/plaid-sync";
 
 export async function POST(request: Request) {
   const { userId } = await auth();
@@ -11,6 +12,10 @@ export async function POST(request: Request) {
 
   try {
     const { publicToken, institutionName } = await request.json();
+
+    if (!publicToken || typeof publicToken !== "string") {
+      return NextResponse.json({ error: "Invalid publicToken" }, { status: 400 });
+    }
 
     const response = await plaidClient.itemPublicTokenExchange({
       public_token: publicToken,
@@ -22,25 +27,15 @@ export async function POST(request: Request) {
       userId,
       accessToken: access_token,
       itemId: item_id,
-      institutionName,
+      institutionName: typeof institutionName === "string" ? institutionName : undefined,
     });
 
-    // Trigger initial sync
-    await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/plaid/sync`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ itemId: item_id }),
-      }
-    ).catch(() => {});
+    // Direct function call — no HTTP self-call
+    await syncPlaidItem(item_id).catch(() => {});
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Plaid exchange error:", error);
-    return NextResponse.json(
-      { error: "Failed to exchange token" },
-      { status: 500 }
-    );
+    console.error("Plaid exchange error:", error instanceof Error ? error.message : "Unknown error");
+    return NextResponse.json({ error: "Failed to exchange token" }, { status: 500 });
   }
 }
