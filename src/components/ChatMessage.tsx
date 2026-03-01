@@ -36,7 +36,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
 
         {/* Inline data card with staggered row animations */}
         {message.dataCard && (
-          <div className="mt-3 bg-artha-bg/50 rounded-xl p-3">
+          <div className="mt-3 bg-artha-bg/50 rounded-2xl p-3">
             <p className="text-xs font-semibold text-artha-accent mb-2">
               {message.dataCard.title}
             </p>

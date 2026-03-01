@@ -64,7 +64,7 @@ export function ChannelPreferences({ isOpen, onClose }: ChannelPreferencesProps)
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-display font-semibold">Notifications</h3>
                 <motion.button
-                  whileTap={{ scale: 0.9 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={onClose}
                   className="text-artha-muted hover:text-artha-text"
                 >

@@ -144,7 +144,7 @@ export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
           {/* End call button */}
           <motion.button
             className="mt-16 w-16 h-16 rounded-full bg-red-500 flex items-center justify-center shadow-lg shadow-red-500/30"
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
             onClick={endSession}
           >
             <PhoneDisconnect size={28} weight="fill" className="text-white" />

@@ -30,7 +30,7 @@ export function ProjectionSlider({
           ? "border-artha-accent/40 shadow-lg shadow-artha-accent/5"
           : ""
       }`}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.95 }}
       onClick={() => onToggle(adjustment.id)}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

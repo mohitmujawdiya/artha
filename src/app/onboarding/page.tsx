@@ -60,7 +60,7 @@ function PlaidLinkOnboarding({ onConnected }: { onConnected: () => void }) {
 
   return (
     <motion.button
-      whileTap={{ scale: 0.97 }}
+      whileTap={{ scale: 0.95 }}
       onClick={createLinkToken}
       disabled={isLoading}
       className="w-full glass rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-white/5 transition-colors disabled:opacity-50"
@@ -316,7 +316,7 @@ export default function OnboardingPage() {
               transition={{ delay: 0.5 }}
             >
               <motion.button
-                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 whileTap={{ scale: 0.95 }}
                 disabled={!canContinue()}
                 onClick={nextPhase}
@@ -409,7 +409,7 @@ export default function OnboardingPage() {
               transition={{ delay: 0.5 }}
             >
               <motion.button
-                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 whileTap={{ scale: 0.95 }}
                 disabled={!canContinue()}
                 onClick={nextPhase}
@@ -502,7 +502,7 @@ export default function OnboardingPage() {
               transition={{ delay: 0.5 }}
             >
               <motion.button
-                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 whileTap={{ scale: 0.95 }}
                 disabled={!canContinue()}
                 onClick={nextPhase}
@@ -621,7 +621,7 @@ export default function OnboardingPage() {
               transition={{ delay: 0.5 }}
             >
               <motion.button
-                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 whileTap={{ scale: 0.95 }}
                 disabled={!canContinue()}
                 onClick={nextPhase}
@@ -681,7 +681,7 @@ export default function OnboardingPage() {
               transition={{ delay: 0.5 }}
             >
               <motion.button
-                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 whileTap={{ scale: 0.95 }}
                 disabled={isSubmitting}
                 onClick={handleSubmit}

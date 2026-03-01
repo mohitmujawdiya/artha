@@ -50,7 +50,7 @@ export default function SettingsPage() {
             Notifications
           </p>
           <motion.button
-            whileTap={{ scale: 0.97 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setPrefsOpen(true)}
             className="w-full glass rounded-2xl p-4 text-left"
           >
@@ -67,7 +67,7 @@ export default function SettingsPage() {
         >
           <SignOutButton>
             <motion.button
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.95 }}
               className="w-full glass rounded-2xl p-4 flex items-center gap-3 hover:bg-red-500/10 transition-colors"
             >
               <SignOut size={20} className="text-red-400" />

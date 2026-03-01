@@ -171,7 +171,7 @@ export default function LandingPage() {
             </motion.div>
 
             <motion.button
-              className="mt-6 px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+              className="mt-6 px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.0 }}

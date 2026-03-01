@@ -186,7 +186,7 @@ export function ChatInterface() {
           </p>
         </div>
         <motion.button
-          whileTap={{ scale: 0.9 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => setVoiceModeActive(true)}
           className="text-artha-green hover:text-artha-green/80 p-1"
         >
@@ -243,7 +243,7 @@ export function ChatInterface() {
             type="submit"
             className="ml-2 text-artha-accent disabled:text-artha-muted/30"
             disabled={!input.trim() || isTyping || isAnalyzing}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
           >
             <PaperPlaneRight size={18} weight="fill" />
           </motion.button>

@@ -14,7 +14,11 @@ export default function MomentsPage() {
   if (isLoading) {
     return (
       <main className="h-full flex items-center justify-center">
-        <div className="w-8 h-8 rounded-full border-2 border-artha-accent border-t-transparent animate-spin" />
+        <motion.div
+          className="w-8 h-8 rounded-full border-2 border-artha-accent border-t-transparent"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        />
       </main>
     );
   }

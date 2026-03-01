@@ -136,7 +136,7 @@ export default function YouPage() {
         <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          whileTap={{ scale: 0.9 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => router.push("/settings")}
           className="p-2 rounded-full hover:bg-white/5 transition-colors"
         >
@@ -316,7 +316,7 @@ export default function YouPage() {
           <AnimatePresence>
             {showGoalForm && (
               <motion.div
-                className="mt-4 glass rounded-xl p-4 border border-artha-accent/20"
+                className="mt-4 glass rounded-2xl p-4 border border-artha-accent/20"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
@@ -361,7 +361,7 @@ export default function YouPage() {
                   <button
                     onClick={handleCreateGoal}
                     disabled={savingGoal || !newGoal.name.trim() || !newGoal.targetAmount}
-                    className="flex-1 py-2 bg-artha-accent rounded-full text-xs font-semibold text-white disabled:opacity-40"
+                    className="flex-1 py-2 bg-artha-accent rounded-full text-xs font-semibold text-white disabled:opacity-50"
                   >
                     {savingGoal ? "Saving..." : "Add Goal"}
                   </button>

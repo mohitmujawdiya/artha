@@ -80,7 +80,7 @@ export function PlaidLinkButton({ onSuccess }: PlaidLinkButtonProps) {
 
   return (
     <motion.button
-      whileTap={{ scale: 0.97 }}
+      whileTap={{ scale: 0.95 }}
       onClick={handleClick}
       disabled={isLoading}
       className="w-full glass rounded-2xl p-4 flex items-center gap-3 hover:bg-white/5 transition-colors disabled:opacity-50"
