@@ -8,7 +8,7 @@ import { ChannelPreferences as ChannelPrefsType } from "@/types";
 const STORAGE_KEY = "artha-channel-prefs";
 
 const channels = [
-  { key: "telegram" as const, label: "Telegram", icon: PaperPlaneTilt, description: "Instant nudges & wins" },
+  { key: "telegram" as const, label: "Telegram", icon: PaperPlaneTilt, description: "Instant nudges and wins" },
   { key: "whatsapp" as const, label: "WhatsApp", icon: Phone, description: "Daily summaries" },
   { key: "imessage" as const, label: "iMessage", icon: ChatCircle, description: "Important alerts only" },
 ];
@@ -109,7 +109,7 @@ export function ChannelPreferences({ isOpen, onClose }: ChannelPreferencesProps)
 
               {/* Coming soon note */}
               <p className="text-xs text-artha-muted text-center mt-6 pb-16">
-                Coming soon — we&apos;ll notify you when channels are live
+                Coming soon — we&apos;ll notify you when channels are live.
               </p>
             </div>
           </motion.div>

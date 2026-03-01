@@ -55,7 +55,7 @@ export default function SettingsPage() {
             className="w-full glass rounded-2xl p-4 text-left"
           >
             <p className="font-semibold text-sm">Channel Preferences</p>
-            <p className="text-xs text-artha-muted">Choose how Artha reaches you</p>
+            <p className="text-xs text-artha-muted">Choose how Artha reaches you.</p>
           </motion.button>
         </motion.div>
 

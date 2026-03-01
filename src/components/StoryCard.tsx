@@ -21,8 +21,8 @@ const typeBadge: Record<string, { label: string; bg: string }> = {
   nudge: { label: "NUDGE", bg: "bg-amber-500/20 text-amber-400" },
   goal: { label: "GOAL", bg: "bg-artha-accent/20 text-artha-accent" },
   challenge: { label: "CHALLENGE", bg: "bg-artha-accent/20 text-artha-accent" },
-  rhythm: { label: "YOUR RHYTHM", bg: "bg-violet-500/20 text-violet-400" },
-  learn: { label: "DID YOU KNOW?", bg: "bg-sky-500/20 text-sky-400" },
+  rhythm: { label: "RHYTHM", bg: "bg-violet-500/20 text-violet-400" },
+  learn: { label: "INSIGHT", bg: "bg-sky-500/20 text-sky-400" },
 };
 
 export function StoryCard({

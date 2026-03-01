@@ -93,7 +93,7 @@ export function PlaidLinkButton({ onSuccess }: PlaidLinkButtonProps) {
           {isLoading ? "Connecting..." : "Connect Your Bank"}
         </p>
         <p className="text-xs text-artha-muted">
-          See real spending patterns
+          See your real spending patterns.
         </p>
       </div>
     </motion.button>

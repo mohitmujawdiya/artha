@@ -70,7 +70,7 @@ function PlaidLinkOnboarding({ onConnected }: { onConnected: () => void }) {
       </div>
       <p className="font-semibold">{isLoading ? "Connecting..." : "Connect Your Bank"}</p>
       <p className="text-xs text-artha-muted max-w-xs">
-        Securely link your account to see real spending patterns and personalized insights
+        Securely link your account to see real spending patterns and get personalized insights.
       </p>
     </motion.button>
   );
@@ -286,7 +286,7 @@ export default function OnboardingPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              We&apos;ll tailor advice to your life stage
+              We&apos;ll tailor advice to your life stage.
             </motion.p>
 
             <motion.div
@@ -357,7 +357,7 @@ export default function OnboardingPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              After taxes — approximate is fine
+              After taxes — approximate is fine.
             </motion.p>
 
             <motion.div
@@ -450,7 +450,7 @@ export default function OnboardingPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              Total across all accounts
+              Total across all accounts.
             </motion.p>
 
             <motion.div
@@ -543,7 +543,7 @@ export default function OnboardingPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              Add up to 3 goals
+              Add up to 3 goals.
             </motion.p>
 
             <motion.div
@@ -654,7 +654,7 @@ export default function OnboardingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
-              Connect your bank
+              Connect Your Bank
             </motion.h1>
             <motion.p
               className="mt-2 text-sm text-artha-muted"
@@ -662,7 +662,7 @@ export default function OnboardingPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              See real spending patterns and personalized insights
+              See your real spending patterns and get personalized insights.
             </motion.p>
 
             <motion.div

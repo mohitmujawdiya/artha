@@ -74,7 +74,7 @@ export function generateInsights(
     insights.push({
       id: "learn-mental-accounting",
       type: "learn",
-      title: "Did you know?",
+      title: "Did You Know?",
       subtitle: "Mental Accounting Bias",
       metric: "",
       metricValue: 0,
@@ -132,7 +132,7 @@ export function generateInsights(
     insights.push({
       id: "learn-status-quo",
       type: "learn",
-      title: "Did you know?",
+      title: "Did You Know?",
       subtitle: "Status Quo Bias",
       metric: "",
       metricValue: 0,

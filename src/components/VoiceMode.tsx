@@ -16,7 +16,7 @@ export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
   const conversation = useConversation({
     onError: (err: string) => {
       console.error("Voice error:", err);
-      setError("Connection error — try again");
+      setError("Connection error. Please try again.");
     },
     onConnect: () => {
       setError(null);
@@ -35,12 +35,12 @@ export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
       const data = await res.json();
 
       if (!res.ok || !data.signedUrl) {
-        setError(data.error || "Voice not configured");
+        setError(data.error || "Voice is not configured.");
         return;
       }
 
       if (!navigator?.mediaDevices?.getUserMedia) {
-        setError("Microphone not available");
+        setError("Microphone is not available.");
         return;
       }
 
@@ -48,7 +48,7 @@ export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
       await conversation.startSession({ signedUrl: data.signedUrl });
     } catch (err) {
       console.error("Failed to start voice session:", err);
-      setError(err instanceof Error ? err.message : "Failed to connect");
+      setError(err instanceof Error ? err.message : "Failed to connect.");
     }
   }, [conversation]);
 

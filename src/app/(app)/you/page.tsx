@@ -155,7 +155,7 @@ export default function YouPage() {
           {!hasProfile ? (
             <div className="text-center py-4">
               <p className="text-sm text-artha-muted mb-3">
-                Complete your profile to get personalized insights
+                Complete your profile to get personalized insights.
               </p>
               <button
                 onClick={() => router.push("/onboarding")}

@@ -203,7 +203,7 @@ export function FutureTimeline() {
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
         >
-          Swipe up to see your future
+          Scroll up to see your future.
         </motion.p>
       </motion.section>
 
@@ -337,7 +337,7 @@ export function FutureTimeline() {
                 Connect your bank to unlock levers
               </h3>
               <p className="text-sm text-artha-muted mt-2 mb-6">
-                We&apos;ll analyze your real spending and show you exactly where you can save
+                We&apos;ll analyze your real spending and show you exactly where you can save.
               </p>
               <PlaidLinkButton onSuccess={() => window.location.reload()} />
             </motion.div>
@@ -435,7 +435,7 @@ export function FutureTimeline() {
                 $???
               </p>
               <p className="text-artha-muted text-sm mt-4">
-                Turn on all the levers to see the magic number
+                Turn on all the levers to see the magic number.
               </p>
             </motion.div>
           )}
