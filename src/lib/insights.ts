@@ -68,7 +68,6 @@ export function generateInsights(
       patternId: "sunday-night-orderer",
       goalImpactLine: `That's ${sundayOrderer.goalImpactDays} extra days to your ${user.goals[0]?.name || "goal"}`,
       peerComparison: "83% of users with this pattern cut it in half within 2 months",
-      savingsRule: { trigger: "you order Sunday delivery", amount: 20 },
     });
 
     // Learn card: Mental accounting bias (after Sunday)
@@ -106,7 +105,6 @@ export function generateInsights(
       patternId: "payday-splurger",
       goalImpactLine: `That's ${paydaySplurger.goalImpactDays} extra days to your ${user.goals[0]?.name || "goal"}`,
       peerComparison: "71% of users who smoothed their payday spike saved an extra $100/mo",
-      savingsRule: { trigger: "payday hits", amount: Math.round(paydaySplurger.monthlyImpact * 0.3) },
     });
   }
 
@@ -128,7 +126,6 @@ export function generateInsights(
       patternId: "subscription-creep",
       goalImpactLine: `That's ${subCreep.goalImpactDays} extra days to your ${user.goals[0]?.name || "goal"}`,
       peerComparison: "Users who did a 5-min cancel session saved an average of $516/year",
-      savingsRule: { trigger: "you cancel a subscription", amount: 43 },
     });
 
     // Learn card: Status quo bias (after Subscriptions)

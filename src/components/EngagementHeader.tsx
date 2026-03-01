@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Bell } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,8 +12,13 @@ import { useUser } from "@clerk/nextjs";
 export function EngagementHeader() {
   const { state, unreadAgentCount } = useEngagement();
   const { user } = useUser();
-  const name =
-    user?.firstName || getOnboardingData()?.name || "there";
+  const [localName, setLocalName] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLocalName(getOnboardingData()?.name || null);
+  }, []);
+
+  const name = user?.firstName || localName || "there";
 
   return (
     <div className="z-30 absolute top-0 left-0 right-0 flex items-center justify-between px-4 py-3">

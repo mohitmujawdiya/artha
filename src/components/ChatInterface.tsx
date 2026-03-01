@@ -14,15 +14,14 @@ import { VoiceMode } from "./VoiceMode";
 import { useEngagement } from "./EngagementProvider";
 import { getOnboardingData } from "@/lib/onboarding";
 
-function getWelcomeMessage(context: string | null): ChatMessageType {
-  const userName = getOnboardingData()?.name || "Maya";
-
-  let content = `Hey ${userName}! I've been looking at your spending patterns and I'm honestly impressed — 6 months of growing savings is no joke. Want to explore what's working, or dive into something specific?`;
+function getWelcomeMessage(context: string | null, userName: string): ChatMessageType {
+  const greeting = userName === "there" ? "Hey there" : `Hey ${userName}`;
+  let content = `${greeting}! I'm Artha, your financial sidekick. Ask me anything — whether you can afford something, how to save more, or what your spending patterns look like.`;
 
   if (context === "moments") {
-    content = `Hey ${userName}! I just saw those patterns we found — the Sunday deliveries, the savings streak, all of it. Pretty fascinating stuff. Want to dig deeper into any of those, or explore something new?`;
+    content = `${greeting}! I saw you were checking out your spending patterns. Want to dig deeper into any of those, or ask about something specific?`;
   } else if (context === "future") {
-    content = `Hey ${userName}! Those projections are looking interesting — small tweaks, big future difference. Want to talk through the levers, or ask about something specific?`;
+    content = `${greeting}! Those projections are interesting, right? Want to talk through the levers, or ask about something specific?`;
   }
 
   return {
@@ -41,20 +40,38 @@ function getWelcomeMessage(context: string | null): ChatMessageType {
 export function ChatInterface() {
   const searchParams = useSearchParams();
   const context = searchParams.get("from");
-  const welcomeMessage = getWelcomeMessage(context);
   const { agentMessages } = useEngagement();
 
-  const [messages, setMessages] = useState<ChatMessageType[]>([welcomeMessage]);
+  const [messages, setMessages] = useState<ChatMessageType[]>(() => [
+    getWelcomeMessage(context, "there"),
+  ]);
   const [input, setInput] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [quickReplies, setQuickReplies] = useState<string[]>(
-    welcomeMessage.quickReplies || []
-  );
+  const [quickReplies, setQuickReplies] = useState<string[]>([
+    "Can I afford AirPods?",
+    "How am I doing?",
+    "Help me save more",
+  ]);
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const historyLoaded = useRef(false);
   const agentMsgsLoaded = useRef(false);
+
+  // Update welcome message with real name from localStorage on mount
+  useEffect(() => {
+    const userName = getOnboardingData()?.name;
+    if (userName) {
+      setMessages((prev) => {
+        const first = prev[0];
+        if (first?.id === "welcome") {
+          return [getWelcomeMessage(context, userName), ...prev.slice(1)];
+        }
+        return prev;
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Prepend agent messages once patterns are loaded
   useEffect(() => {
@@ -91,7 +108,8 @@ export function ChatInterface() {
             dataCard: m.dataCard as ChatMessageType["dataCard"],
           }));
           // Replace initial messages with DB history + welcome
-          setMessages([...restored, welcomeMessage]);
+          const userName = getOnboardingData()?.name || "there";
+          setMessages([...restored, getWelcomeMessage(context, userName)]);
         }
       })
       .catch(() => {});

@@ -64,7 +64,6 @@ export interface Insight {
   goalImpactLine?: string;
   peerComparison?: string;
   personalityLabel?: string;
-  savingsRule?: { trigger: string; amount: number };
 }
 
 export interface Projection {

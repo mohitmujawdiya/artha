@@ -71,7 +71,7 @@ const agentTools: ChatCompletionTool[] = [
 ];
 
 async function buildSystemPrompt(userId: string | null, fallbackName: string) {
-  // If no userId (unauthenticated), use hardcoded Maya context
+  // If no userId (unauthenticated), use static context
   if (!userId) return getStaticPrompt(fallbackName);
 
   try {
@@ -267,13 +267,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid message" }, { status: 400 });
     }
 
-    const userName = sanitizeForPrompt(rawName || "Maya", 50);
-
-    // Check cached responses first
-    const cached = getCachedResponse(message);
-    if (cached) {
-      return NextResponse.json(cached);
-    }
+    const userName = sanitizeForPrompt(rawName || "there", 50);
 
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({
@@ -323,6 +317,20 @@ export async function POST(request: Request) {
         ...sanitizeHistory(history),
         { role: "user" as const, content: message },
       ];
+    }
+
+    // Use cached responses only for the first message (no prior history)
+    const isFirstMessage = messages.length === 1;
+    if (isFirstMessage) {
+      const cached = getCachedResponse(message);
+      if (cached) {
+        // Still persist to DB so follow-ups have context
+        if (userId) {
+          saveChatMessage({ userId, role: "user", content: message }).catch(() => {});
+          saveChatMessage({ userId, role: "assistant", content: cached.content, dataCard: cached.dataCard }).catch(() => {});
+        }
+        return NextResponse.json(cached);
+      }
     }
 
     try {

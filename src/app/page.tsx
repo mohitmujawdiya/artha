@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { SpendingDNA } from "@/components/SpendingDNA";
 import { useTransactions } from "@/hooks/useTransactions";
-import { getOnboardingData, setOnboardingData } from "@/lib/onboarding";
+import { setOnboardingData } from "@/lib/onboarding";
 
 interface Particle {
   width: number;
@@ -30,7 +30,7 @@ function generateParticles(count: number): Particle[] {
 
 export default function LandingPage() {
   const router = useRouter();
-  const { user: clerkUser, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const { patterns } = useTransactions();
   const [phase, setPhase] = useState<"name" | "hook" | "dna">("name");
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -53,20 +53,6 @@ export default function LandingPage() {
     }
   }, [isSignedIn, router]);
 
-  // Use Clerk user name if signed in, otherwise check localStorage
-  useEffect(() => {
-    if (isSignedIn && clerkUser?.firstName) {
-      setName(clerkUser.firstName);
-      setPhase("hook");
-      return;
-    }
-    const data = getOnboardingData();
-    if (data) {
-      setName(data.name);
-      setPhase("hook");
-    }
-  }, [isSignedIn, clerkUser]);
-
   // Auto-transition from hook to DNA after 3.5s
   useEffect(() => {
     if (phase !== "hook") return;
@@ -74,10 +60,9 @@ export default function LandingPage() {
     return () => clearTimeout(timer);
   }, [phase]);
 
-  // Auto-focus name input when entering name phase
+  // Auto-focus name input
   useEffect(() => {
     if (phase === "name") {
-      // Small delay to let AnimatePresence finish
       const t = setTimeout(() => inputRef.current?.focus(), 900);
       return () => clearTimeout(t);
     }
@@ -96,7 +81,7 @@ export default function LandingPage() {
         if (phase === "hook") setPhase("dna");
       }}
     >
-      {/* Particle/star background — rendered client-only */}
+      {/* Particle/star background */}
       <div className="absolute inset-0 pointer-events-none">
         {particles.map((p, i) => (
           <motion.div
@@ -184,7 +169,7 @@ export default function LandingPage() {
           </motion.div>
         )}
 
-        {/* ── Phase: Hook (personalized) ── */}
+        {/* ── Phase: Hook ── */}
         {phase === "hook" && (
           <motion.div
             key="hook"
@@ -200,7 +185,7 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              Hey {name.trim() || "there"}, your money tells a story
+              Hey there, your money tells a story
             </motion.h1>
 
             <motion.p

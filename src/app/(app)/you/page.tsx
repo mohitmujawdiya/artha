@@ -113,11 +113,7 @@ export default function YouPage() {
   if (isLoading) {
     return (
       <main className="h-full flex items-center justify-center">
-        <motion.div
-          className="w-8 h-8 rounded-full border-2 border-artha-accent border-t-transparent"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-        />
+        <div className="w-8 h-8 rounded-full border-2 border-artha-accent border-t-transparent animate-spin" />
       </main>
     );
   }

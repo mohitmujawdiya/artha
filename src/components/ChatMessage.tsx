@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ReactMarkdown from "react-markdown";
 import { ChatMessage as ChatMessageType } from "@/types";
 import { ArthaAvatar } from "./ArthaAvatar";
 
@@ -30,9 +31,15 @@ export function ChatMessage({ message }: ChatMessageProps) {
             : "glass rounded-bl-sm"
         }`}
       >
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">
-          {message.content}
-        </p>
+        {isUser ? (
+          <p className="text-sm leading-relaxed whitespace-pre-wrap">
+            {message.content}
+          </p>
+        ) : (
+          <div className="text-sm leading-relaxed prose-chat">
+            <ReactMarkdown>{message.content}</ReactMarkdown>
+          </div>
+        )}
 
         {/* Inline data card with staggered row animations */}
         {message.dataCard && (
