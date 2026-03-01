@@ -44,7 +44,9 @@ export interface BehavioralPattern {
   details: string;
 }
 
-export type InsightType = "win" | "discovery" | "nudge" | "goal" | "challenge" | "rhythm";
+export type InsightType = "win" | "discovery" | "nudge" | "goal" | "challenge" | "rhythm" | "learn";
+
+export type CoachTone = "hype" | "real-talk";
 
 export interface Insight {
   id: string;
@@ -61,6 +63,10 @@ export interface Insight {
   patternId?: string;
   action?: string;
   visualization?: "heatmap";
+  goalImpactLine?: string;
+  peerComparison?: string;
+  personalityLabel?: string;
+  savingsRule?: { trigger: string; amount: number };
 }
 
 export interface Projection {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Insight, BehavioralPattern, Transaction } from "@/types";
 import { AnimatedNumber } from "./AnimatedNumber";
@@ -22,7 +23,47 @@ const typeBadge: Record<string, { label: string; bg: string }> = {
   goal: { label: "GOAL", bg: "bg-artha-accent/20 text-artha-accent" },
   challenge: { label: "CHALLENGE", bg: "bg-artha-accent/20 text-artha-accent" },
   rhythm: { label: "YOUR RHYTHM", bg: "bg-violet-500/20 text-violet-400" },
+  learn: { label: "DID YOU KNOW?", bg: "bg-sky-500/20 text-sky-400" },
 };
+
+function SavingsRuleButton({ trigger, amount }: { trigger: string; amount: number }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <motion.div
+      className="mt-4 text-center"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: 0.5 }}
+    >
+      {!expanded ? (
+        <button
+          className="text-sm text-artha-accent underline underline-offset-2"
+          onClick={(e) => {
+            e.stopPropagation();
+            setExpanded(true);
+          }}
+        >
+          Turn into a savings rule
+        </button>
+      ) : (
+        <motion.div
+          className="glass rounded-2xl px-4 py-3 inline-flex flex-col items-center gap-2"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <p className="text-sm text-artha-text">
+            Auto-save <span className="font-bold text-artha-accent">${amount}</span> every time {trigger}
+          </p>
+          <span className="text-[10px] tracking-wider uppercase text-artha-muted bg-artha-muted/10 px-2 py-0.5 rounded-full">
+            Coming soon
+          </span>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+}
 
 export function StoryCard({
   insight,
@@ -34,6 +75,7 @@ export function StoryCard({
 }: StoryCardProps) {
   const badge = typeBadge[insight.type] || typeBadge.discovery;
   const isRhythm = insight.visualization === "heatmap";
+  const isLearn = insight.type === "learn";
 
   // When animated=false (and not peek), skip all entrance animations
   const initial = animated ? undefined : false;
@@ -87,6 +129,15 @@ export function StoryCard({
             >
               <SpendingHeatmap transactions={transactions} />
             </motion.div>
+          ) : isLearn && insight.metricValue === 0 ? (
+            <motion.div
+              className="mt-8 text-center"
+              initial={initial ?? { opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: animated ? 0.2 : 0 }}
+            >
+              <span className="text-5xl">💡</span>
+            </motion.div>
           ) : (
             <motion.div
               className="mt-8 text-center"
@@ -108,12 +159,18 @@ export function StoryCard({
 
           {insight.type === "win" && patterns && patterns.length > 0 && (
             <motion.div
-              className="mt-6 flex justify-center"
+              className="mt-6 flex flex-col items-center gap-3"
               initial={initial ?? { opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: animated ? 0.3 : 0 }}
             >
               <SpendingDNA patterns={patterns} size={140} mini />
+              {insight.personalityLabel && (
+                <div className="text-center">
+                  <p className="text-[10px] tracking-widest uppercase text-artha-muted">Your money personality</p>
+                  <p className="text-sm font-semibold text-artha-accent mt-0.5">{insight.personalityLabel}</p>
+                </div>
+              )}
             </motion.div>
           )}
 
@@ -134,6 +191,40 @@ export function StoryCard({
           >
             {insight.body}
           </motion.p>
+
+          {/* Goal impact line */}
+          {insight.goalImpactLine && (
+            <motion.p
+              className="text-sm italic text-artha-muted text-center mt-3 max-w-xs"
+              initial={initial ?? { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: animated ? 0.4 : 0 }}
+            >
+              {insight.goalImpactLine}
+            </motion.p>
+          )}
+
+          {/* Peer comparison */}
+          {insight.peerComparison && (
+            <motion.div
+              className="mt-3"
+              initial={initial ?? { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: animated ? 0.45 : 0 }}
+            >
+              <span className="text-xs text-artha-muted/80 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-3 py-1.5 inline-block max-w-xs text-center">
+                {insight.peerComparison}
+              </span>
+            </motion.div>
+          )}
+
+          {/* Savings rule CTA */}
+          {insight.savingsRule && (
+            <SavingsRuleButton
+              trigger={insight.savingsRule.trigger}
+              amount={insight.savingsRule.amount}
+            />
+          )}
 
           {insight.action && (
             <motion.button

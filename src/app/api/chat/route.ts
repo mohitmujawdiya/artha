@@ -1,19 +1,10 @@
 import { NextResponse } from "next/server";
 import { callClaudeWithHistory } from "@/lib/claude";
 import { getCachedResponse } from "@/lib/cached-responses";
+import { CoachTone } from "@/types";
 
-function getCoachSystemPrompt(userName: string) {
-  return `You are Artha — a supportive, smart financial friend for ${userName}, a 23-year-old earning $3,200/month.
-
-PERSONALITY:
-- Supportive smart friend, never a financial advisor or nagging parent
-- Celebrate wins genuinely, never shame spending choices
-- Casual language, direct, occasionally witty
-- Use at most 1 emoji per response
-- Keep responses under 120 words
-- Ask one follow-up question when relevant
-
-${userName.toUpperCase()}'S CONTEXT:
+function getCoachSystemPrompt(userName: string, tone: CoachTone = "hype") {
+  const base = `${userName.toUpperCase()}'S CONTEXT:
 - Saves ~$200/mo currently (growing from $100 6 months ago)
 - Savings: $1,840 | Goals: Emergency Fund ($5k), Japan Trip ($3k), Laptop ($1.5k)
 - Patterns: Sunday night delivery ($82/mo), daily Starbucks ($130/mo), unused subscriptions ($43/mo), payday splurge (2.3x spending)
@@ -31,6 +22,34 @@ FORMAT RULES:
   <data-card>{"type":"tradeoff","title":"...","items":[{"label":"...","value":"...","color":"#hex"}]}</data-card>
 - End with suggested follow-ups:
   <quick-replies>["option 1","option 2","option 3"]</quick-replies>`;
+
+  if (tone === "real-talk") {
+    return `You are Artha — a direct, no-BS financial coach for ${userName}, a 23-year-old earning $3,200/month.
+
+PERSONALITY:
+- Blunt but kind — say what needs to be said without sugarcoating
+- Use loss-framing: show what bad habits actually cost in real dollars
+- Call out patterns directly: "You're bleeding $X/month on this"
+- Still encouraging when they make progress — but keep it real
+- Casual language, zero fluff, occasionally sharp wit
+- Use at most 1 emoji per response
+- Keep responses under 120 words
+- Ask one pointed follow-up question
+
+${base}`;
+  }
+
+  return `You are Artha — a supportive, smart financial friend for ${userName}, a 23-year-old earning $3,200/month.
+
+PERSONALITY:
+- Supportive smart friend, never a financial advisor or nagging parent
+- Celebrate wins genuinely, never shame spending choices
+- Casual language, direct, occasionally witty
+- Use at most 1 emoji per response
+- Keep responses under 120 words
+- Ask one follow-up question when relevant
+
+${base}`;
 }
 
 function parseResponse(text: string) {
@@ -65,8 +84,9 @@ function parseResponse(text: string) {
 
 export async function POST(request: Request) {
   try {
-    const { message, history, userName: rawName } = await request.json();
+    const { message, history, userName: rawName, tone } = await request.json();
     const userName = rawName || "Maya";
+    const coachTone: CoachTone = tone === "real-talk" ? "real-talk" : "hype";
 
     // Check cached responses first
     const cached = getCachedResponse(message);
@@ -97,7 +117,7 @@ export async function POST(request: Request) {
       ];
 
       const response = await callClaudeWithHistory(
-        getCoachSystemPrompt(userName),
+        getCoachSystemPrompt(userName, coachTone),
         messages
       );
 

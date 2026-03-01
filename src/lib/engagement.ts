@@ -43,6 +43,6 @@ export function getNextLevel(currentLevel: number): LevelConfig | null {
 }
 
 // Total insight cards in the app
-export const TOTAL_CARDS = 7;
+export const TOTAL_CARDS = 9;
 // Total levers on the future page
 export const TOTAL_LEVERS = 4;

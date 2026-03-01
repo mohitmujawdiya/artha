@@ -12,9 +12,9 @@ export default function AppLayout({
 }) {
   return (
     <EngagementProvider>
-      <div className="flex flex-col h-[100svh]">
+      <div className="flex flex-col h-[100svh] relative">
         <EngagementHeader />
-        <div className="flex-1 min-h-0 pb-16">
+        <div className="flex-1 min-h-0 pt-12 pb-16">
           {children}
         </div>
         <NavBar />

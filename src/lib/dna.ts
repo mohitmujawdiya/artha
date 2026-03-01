@@ -1,5 +1,21 @@
 import { BehavioralPattern } from "@/types";
 
+/**
+ * Derives a money personality label from behavioral patterns.
+ */
+export function derivePersonality(patterns: BehavioralPattern[]): string {
+  const hasSavings = patterns.some((p) => p.type === "saving");
+  const hasTiming = patterns.some((p) => p.type === "timing");
+  const hasSubs = patterns.some((p) => p.type === "subscription");
+
+  if (hasSavings && !hasTiming && !hasSubs) return "The Strategist";
+  if (hasSavings && hasTiming) return "The Balanced Realist";
+  if (hasSavings && hasSubs) return "The Comfort Optimizer";
+  if (!hasSavings && hasTiming) return "The Momentum Spender";
+
+  return "The Balanced Realist";
+}
+
 export interface DNAAxis {
   label: string;
   emoji: string;

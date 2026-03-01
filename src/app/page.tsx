@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { SpendingDNA } from "@/components/SpendingDNA";
 import { useTransactions } from "@/hooks/useTransactions";
 import { getOnboardingData, setOnboardingData } from "@/lib/onboarding";
+import { derivePersonality } from "@/lib/dna";
 
 interface Particle {
   width: number;
@@ -228,14 +229,18 @@ export default function LandingPage() {
 
             <SpendingDNA patterns={patterns} size={280} />
 
-            <motion.p
-              className="text-artha-muted text-sm text-center mt-6 max-w-xs"
+            <motion.div
+              className="text-center mt-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2 }}
             >
-              {patterns.length} behavioral patterns detected
-            </motion.p>
+              <p className="text-[10px] tracking-widest uppercase text-artha-muted">Your money personality</p>
+              <p className="text-lg font-semibold text-artha-accent mt-1">{derivePersonality(patterns)}</p>
+              <p className="text-artha-muted text-sm mt-2 max-w-xs">
+                {patterns.length} behavioral patterns detected
+              </p>
+            </motion.div>
 
             <motion.button
               className="mt-8 px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm"

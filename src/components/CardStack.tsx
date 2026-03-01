@@ -157,7 +157,7 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
       </div>
 
       {/* Card area — relative wrapper sizes to its content */}
-      <div className="relative overflow-hidden">
+      <div className="relative">
         {visibleIndices.map((i) => {
           const isCurrent = i === currentIndex;
           const insight = insights[i];
@@ -166,7 +166,7 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
             return (
               <motion.div
                 key={insight.id}
-                className="touch-pan-y"
+                className="touch-pan-y rounded-3xl overflow-hidden"
                 style={{
                   x,
                   rotate,
@@ -198,7 +198,7 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
           return (
             <motion.div
               key={insight.id}
-              className="absolute inset-x-0 top-0 pointer-events-none"
+              className="absolute inset-x-0 top-0 pointer-events-none rounded-3xl overflow-hidden"
               style={{
                 scale: peekScale,
                 y: peekY,
