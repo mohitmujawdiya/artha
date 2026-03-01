@@ -18,7 +18,7 @@ export async function GET() {
     ]);
 
     if (!user) {
-      return NextResponse.json(getMockUser());
+      return NextResponse.json({ notFound: true }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -37,7 +37,7 @@ export async function GET() {
       })),
     });
   } catch {
-    return NextResponse.json(getMockUser());
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 

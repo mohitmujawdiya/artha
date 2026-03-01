@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Gear, Plus, PencilSimple, Check, X } from "@phosphor-icons/react";
@@ -9,6 +9,8 @@ import { GoalProgress } from "@/components/GoalProgress";
 import { PlaidLinkButton } from "@/components/PlaidLink";
 import { useTransactions } from "@/hooks/useTransactions";
 import type { FinancialGoal } from "@/types";
+
+const EMOJI_OPTIONS = ["🎯", "🏠", "🚗", "✈️", "🎓", "💰", "📱", "🏋️", "🎸", "👶", "💍", "🏖️", "📚", "🩺"];
 
 interface ProfileData {
   name: string;
@@ -26,6 +28,9 @@ export default function YouPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [editingField, setEditingField] = useState<string | null>(null);
   const [editValue, setEditValue] = useState("");
+  const [showGoalForm, setShowGoalForm] = useState(false);
+  const [newGoal, setNewGoal] = useState({ name: "", targetAmount: "", emoji: "🎯" });
+  const [savingGoal, setSavingGoal] = useState(false);
 
   const fetchProfile = useCallback(async () => {
     try {
@@ -78,6 +83,28 @@ export default function YouPage() {
   function cancelEdit() {
     setEditingField(null);
     setEditValue("");
+  }
+
+  async function handleCreateGoal() {
+    if (!newGoal.name.trim() || !newGoal.targetAmount || Number(newGoal.targetAmount) <= 0) return;
+    setSavingGoal(true);
+    try {
+      const res = await fetch("/api/goals", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: newGoal.name.trim(),
+          targetAmount: Number(newGoal.targetAmount),
+          emoji: newGoal.emoji,
+        }),
+      });
+      if (res.ok) {
+        setShowGoalForm(false);
+        setNewGoal({ name: "", targetAmount: "", emoji: "🎯" });
+        fetchProfile();
+      }
+    } catch { /* ignore */ }
+    finally { setSavingGoal(false); }
   }
 
   const userName = clerkUser?.firstName || profile?.name || "You";
@@ -255,12 +282,14 @@ export default function YouPage() {
             <p className="text-xs text-artha-muted uppercase tracking-wider">
               Your Goals
             </p>
-            <button
-              onClick={() => router.push("/coach")}
-              className="p-1 rounded-full hover:bg-white/5 transition-colors"
-            >
-              <Plus size={16} className="text-artha-accent" />
-            </button>
+            {(!profile?.goals || profile.goals.length < 3) && (
+              <button
+                onClick={() => setShowGoalForm(true)}
+                className="p-1 rounded-full hover:bg-white/5 transition-colors"
+              >
+                <Plus size={16} className="text-artha-accent" />
+              </button>
+            )}
           </div>
 
           {profile?.goals && profile.goals.length > 0 ? (
@@ -278,10 +307,74 @@ export default function YouPage() {
           ) : (
             <div className="text-center py-4">
               <p className="text-sm text-artha-muted">
-                No goals yet. Add your first goal to track progress.
+                No goals yet. Tap + to add your first goal.
               </p>
             </div>
           )}
+
+          {/* Inline Goal Creation Form */}
+          <AnimatePresence>
+            {showGoalForm && (
+              <motion.div
+                className="mt-4 glass rounded-xl p-4 border border-artha-accent/20"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="flex flex-wrap gap-1.5 mb-3">
+                  {EMOJI_OPTIONS.map((emoji) => (
+                    <button
+                      key={emoji}
+                      onClick={() => setNewGoal((g) => ({ ...g, emoji }))}
+                      className={`w-7 h-7 rounded-lg text-sm flex items-center justify-center transition-colors ${
+                        newGoal.emoji === emoji
+                          ? "bg-artha-accent/30 ring-1 ring-artha-accent"
+                          : "hover:bg-white/5"
+                      }`}
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="text"
+                  value={newGoal.name}
+                  onChange={(e) => setNewGoal((g) => ({ ...g, name: e.target.value }))}
+                  placeholder="Goal name (e.g. Emergency fund)"
+                  maxLength={100}
+                  className="w-full bg-transparent outline-none text-sm text-artha-text placeholder:text-artha-muted/40 mb-2"
+                  autoFocus
+                />
+                <div className="flex items-center gap-1 mb-3">
+                  <span className="text-artha-muted text-sm">$</span>
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    value={newGoal.targetAmount}
+                    onChange={(e) => setNewGoal((g) => ({ ...g, targetAmount: e.target.value }))}
+                    placeholder="Target amount"
+                    className="w-full bg-transparent outline-none text-sm text-artha-text placeholder:text-artha-muted/40"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleCreateGoal}
+                    disabled={savingGoal || !newGoal.name.trim() || !newGoal.targetAmount}
+                    className="flex-1 py-2 bg-artha-accent rounded-full text-xs font-semibold text-white disabled:opacity-40"
+                  >
+                    {savingGoal ? "Saving..." : "Add Goal"}
+                  </button>
+                  <button
+                    onClick={() => { setShowGoalForm(false); setNewGoal({ name: "", targetAmount: "", emoji: "🎯" }); }}
+                    className="px-4 py-2 text-xs text-artha-muted hover:text-artha-text transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* Bank Connection */}

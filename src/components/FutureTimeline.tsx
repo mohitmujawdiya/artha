@@ -86,12 +86,12 @@ export function FutureTimeline() {
     );
   };
 
-  const currentSavings = user.currentSavings ?? 1840;
+  const currentSavings = user.currentSavings ?? 0;
   // Derive monthly savings from the savings trend pattern, or estimate from income
   const savingsTrend = patterns.find((p) => p.id === "savings-trend");
   const currentMonthlySavings = savingsTrend
     ? savingsTrend.monthlyImpact
-    : Math.round((user.monthlyIncome ?? 3200) * 0.0625); // ~6.25% savings rate fallback
+    : Math.round((user.monthlyIncome ?? 0) * 0.0625); // ~6.25% savings rate fallback
 
   const projection = useMemo(
     () =>
@@ -103,9 +103,10 @@ export function FutureTimeline() {
     .filter((a) => a.enabled)
     .reduce((sum, a) => sum + a.monthlySavings, 0);
 
+  const yearsToRetirement = Math.max(1, 65 - (user.age ?? 23));
   const compoundTotal = useMemo(
-    () => calculateCompoundGrowth(additionalMonthly, 0.07, 42),
-    [additionalMonthly]
+    () => calculateCompoundGrowth(additionalMonthly, 0.07, yearsToRetirement),
+    [additionalMonthly, yearsToRetirement]
   );
 
   const allEnabled = adjustments.every((a) => a.enabled);
@@ -181,7 +182,7 @@ export function FutureTimeline() {
           transition={{ delay: 1.2 }}
         >
           <div>
-            <p className="font-display text-lg font-semibold">${(user.monthlyIncome ?? 3200).toLocaleString()}</p>
+            <p className="font-display text-lg font-semibold">${(user.monthlyIncome ?? 0).toLocaleString()}</p>
             <p className="text-xs text-artha-muted">monthly income</p>
           </div>
           <div className="w-px bg-artha-surface" />
@@ -379,7 +380,7 @@ export function FutureTimeline() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          The 42-Year Effect
+          The {yearsToRetirement}-Year Effect
         </motion.h2>
 
         <motion.p
@@ -389,7 +390,7 @@ export function FutureTimeline() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          If you invested the extra ${additionalMonthly}/mo from age 23 to 65 at
+          If you invested the extra ${additionalMonthly}/mo from age {user.age ?? 23} to 65 at
           7% return...
         </motion.p>
 

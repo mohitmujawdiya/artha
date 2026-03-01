@@ -12,12 +12,14 @@ interface UseTransactionsResult {
   patterns: BehavioralPattern[];
   insights: Insight[];
   isLoading: boolean;
+  isDemo: boolean;
 }
 
 export function useTransactions(): UseTransactionsResult {
   const [user, setUser] = useState<UserProfile>(() => getMockUser());
   const [transactions, setTransactions] = useState<Transaction[]>(() => getMockTransactions());
   const [isLoading, setIsLoading] = useState(true);
+  const [isDemo, setIsDemo] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -33,14 +35,19 @@ export function useTransactions(): UseTransactionsResult {
 
         if (userRes.ok) {
           const userData = await userRes.json();
-          setUser(userData);
+          if (!userData.notFound) {
+            setUser(userData);
+          }
         }
 
         if (txnRes.ok) {
           const txnData = await txnRes.json();
           if (txnData.length > 0) {
             setTransactions(txnData);
+            setIsDemo(false);
           }
+          // If empty array from authenticated user, keep mock for
+          // the landing page DNA visualization, but mark as demo
         }
       } catch {
         // Keep mock data as fallback
@@ -63,5 +70,5 @@ export function useTransactions(): UseTransactionsResult {
     [patterns, transactions, user]
   );
 
-  return { user, transactions, patterns, insights, isLoading };
+  return { user, transactions, patterns, insights, isLoading, isDemo };
 }

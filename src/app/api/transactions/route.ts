@@ -7,12 +7,14 @@ export async function GET() {
   try {
     const { userId } = await auth();
     if (!userId) {
+      // Unauthenticated visitors get demo data
       return NextResponse.json(getMockTransactions());
     }
 
     const transactions = await getUserTransactions(userId);
     if (transactions.length === 0) {
-      return NextResponse.json(getMockTransactions());
+      // Authenticated but no transactions — return empty, not mock
+      return NextResponse.json([]);
     }
 
     return NextResponse.json(
@@ -30,6 +32,6 @@ export async function GET() {
       }))
     );
   } catch {
-    return NextResponse.json(getMockTransactions());
+    return NextResponse.json([]);
   }
 }

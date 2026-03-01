@@ -1,12 +1,80 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
+import { usePlaidLink } from "react-plaid-link";
+import { Bank, CheckCircle } from "@phosphor-icons/react";
 import { getOnboardingData } from "@/lib/onboarding";
 
-type Phase = "age" | "income" | "savings" | "goals";
+type Phase = "age" | "income" | "savings" | "goals" | "bank";
+
+function PlaidLinkOnboarding({ onConnected }: { onConnected: () => void }) {
+  const [linkToken, setLinkToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [connected, setConnected] = useState(false);
+
+  const createLinkToken = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/plaid/create-link-token", { method: "POST" });
+      const data = await res.json();
+      if (data.linkToken) setLinkToken(data.linkToken);
+    } catch { /* ignore */ }
+    finally { setIsLoading(false); }
+  }, []);
+
+  const { open, ready } = usePlaidLink({
+    token: linkToken,
+    onSuccess: async (publicToken, metadata) => {
+      try {
+        await fetch("/api/plaid/exchange-token", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            publicToken,
+            institutionName: metadata.institution?.name,
+          }),
+        });
+        setConnected(true);
+        onConnected();
+      } catch { /* ignore */ }
+    },
+  });
+
+  // Open Plaid Link once token is ready
+  useEffect(() => {
+    if (linkToken && ready) open();
+  }, [linkToken, ready, open]);
+
+  if (connected) {
+    return (
+      <div className="glass rounded-2xl p-6 flex flex-col items-center gap-3">
+        <CheckCircle size={48} weight="fill" className="text-artha-green" />
+        <p className="font-semibold text-artha-green">Bank Connected!</p>
+        <p className="text-xs text-artha-muted">Your transactions are syncing</p>
+      </div>
+    );
+  }
+
+  return (
+    <motion.button
+      whileTap={{ scale: 0.97 }}
+      onClick={createLinkToken}
+      disabled={isLoading}
+      className="w-full glass rounded-2xl p-6 flex flex-col items-center gap-3 hover:bg-white/5 transition-colors disabled:opacity-50"
+    >
+      <div className="w-14 h-14 rounded-full bg-artha-accent/20 flex items-center justify-center">
+        <Bank size={28} className="text-artha-accent" />
+      </div>
+      <p className="font-semibold">{isLoading ? "Connecting..." : "Connect Your Bank"}</p>
+      <p className="text-xs text-artha-muted max-w-xs">
+        Securely link your account to see real spending patterns and personalized insights
+      </p>
+    </motion.button>
+  );
+}
 
 interface GoalEntry {
   name: string;
@@ -81,7 +149,7 @@ export default function OnboardingPage() {
   }, [age, monthlyIncome, currentSavings, goals, phase]);
 
   function nextPhase() {
-    const order: Phase[] = ["age", "income", "savings", "goals"];
+    const order: Phase[] = ["age", "income", "savings", "goals", "bank"];
     const idx = order.indexOf(phase);
     if (idx < order.length - 1) {
       setPhase(order[idx + 1]);
@@ -94,6 +162,7 @@ export default function OnboardingPage() {
       case "income": return monthlyIncome !== "" && Number(monthlyIncome) > 0;
       case "savings": return currentSavings !== "" && Number(currentSavings) >= 0;
       case "goals": return goals.some((g) => g.name.trim() && Number(g.targetAmount) > 0);
+      case "bank": return true;
     }
   }
 
@@ -116,11 +185,16 @@ export default function OnboardingPage() {
         }));
       if (validGoals.length > 0) payload.goals = validGoals;
 
-      await fetch("/api/user", {
+      const res = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        setIsSubmitting(false);
+        return;
+      }
 
       // Mark onboarding complete
       localStorage.setItem("artha-onboarding-complete", "true");
@@ -134,11 +208,15 @@ export default function OnboardingPage() {
   async function handleSkipAll() {
     setIsSubmitting(true);
     try {
-      await fetch("/api/user", {
+      const res = await fetch("/api/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: userName }),
       });
+      if (!res.ok) {
+        setIsSubmitting(false);
+        return;
+      }
       localStorage.setItem("artha-onboarding-complete", "true");
       localStorage.removeItem(STORAGE_KEY);
       router.push("/moments");
@@ -167,13 +245,13 @@ export default function OnboardingPage() {
     }
   }
 
-  const phaseNumber = ["age", "income", "savings", "goals"].indexOf(phase) + 1;
+  const phaseNumber = ["age", "income", "savings", "goals", "bank"].indexOf(phase) + 1;
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
       {/* Progress dots */}
       <div className="absolute top-12 left-1/2 -translate-x-1/2 flex gap-2">
-        {[1, 2, 3, 4].map((n) => (
+        {[1, 2, 3, 4, 5].map((n) => (
           <div
             key={n}
             className={`w-2 h-2 rounded-full transition-colors duration-300 ${
@@ -545,17 +623,77 @@ export default function OnboardingPage() {
               <motion.button
                 className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
                 whileTap={{ scale: 0.95 }}
-                disabled={isSubmitting || !canContinue()}
+                disabled={!canContinue()}
+                onClick={nextPhase}
+              >
+                Continue
+              </motion.button>
+              <button
+                onClick={nextPhase}
+                className="text-xs text-artha-muted hover:text-artha-text transition-colors"
+              >
+                Skip for now
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* ── Phase 5: Bank Connection ── */}
+        {phase === "bank" && (
+          <motion.div
+            key="bank"
+            className="text-center z-10 w-full max-w-md"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.4 }}
+          >
+            <motion.h1
+              className="font-display text-2xl font-bold text-artha-text"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              Connect your bank
+            </motion.h1>
+            <motion.p
+              className="mt-2 text-sm text-artha-muted"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              See real spending patterns and personalized insights
+            </motion.p>
+
+            <motion.div
+              className="mt-8"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <PlaidLinkOnboarding onConnected={handleSubmit} />
+            </motion.div>
+
+            <motion.div
+              className="mt-6 flex flex-col items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <motion.button
+                className="px-8 py-3 bg-artha-accent rounded-full font-semibold text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+                whileTap={{ scale: 0.95 }}
+                disabled={isSubmitting}
                 onClick={handleSubmit}
               >
-                {isSubmitting ? "Setting up..." : "Let\u2019s go"}
+                {isSubmitting ? "Setting up..." : "Continue without bank"}
               </motion.button>
               <button
                 onClick={handleSkipAll}
                 disabled={isSubmitting}
                 className="text-xs text-artha-muted hover:text-artha-text transition-colors"
               >
-                Skip for now
+                Skip everything
               </button>
             </motion.div>
           </motion.div>

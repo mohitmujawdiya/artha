@@ -34,9 +34,17 @@ export default function AppLayout({
 
     // Fetch user to check onboarding status
     fetch("/api/user")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          // 404 = user not in DB, needs onboarding
+          router.push("/onboarding");
+          return null;
+        }
+        return res.json();
+      })
       .then((data) => {
-        if (!data || !data.monthlyIncome) {
+        if (!data) return;
+        if (!data.monthlyIncome) {
           router.push("/onboarding");
         } else {
           localStorage.setItem("artha-onboarding-complete", "true");

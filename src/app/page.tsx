@@ -43,6 +43,17 @@ export default function LandingPage() {
     setParticles(generateParticles(40));
   }, []);
 
+  // Redirect signed-in users away from landing
+  useEffect(() => {
+    if (!isSignedIn) return;
+    const onboarded = localStorage.getItem("artha-onboarding-complete");
+    if (onboarded === "true") {
+      router.replace("/moments");
+    } else {
+      router.replace("/onboarding");
+    }
+  }, [isSignedIn, router]);
+
   // Use Clerk user name if signed in, otherwise check localStorage
   useEffect(() => {
     if (isSignedIn && clerkUser?.firstName) {
