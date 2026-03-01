@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { getChatMessages } from "@/db/queries";
+import { getChatMessages, deleteChatHistory } from "@/db/queries";
 
 export async function GET(request: Request) {
   const { userId } = await auth();
@@ -15,4 +15,14 @@ export async function GET(request: Request) {
   const messages = await getChatMessages(userId, limit);
   // Return in chronological order
   return NextResponse.json(messages.reverse());
+}
+
+export async function DELETE() {
+  const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  await deleteChatHistory(userId);
+  return NextResponse.json({ ok: true });
 }

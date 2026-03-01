@@ -121,7 +121,31 @@ function saveProgress(data: {
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { user: clerkUser } = useUser();
+  const { user: clerkUser, isLoaded } = useUser();
+  const [checking, setChecking] = useState(true);
+
+  // Guard: skip onboarding for returning users who already exist in DB
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    if (localStorage.getItem("artha-onboarding-complete") === "true") {
+      router.replace("/moments");
+      return;
+    }
+
+    fetch("/api/user")
+      .then((res) => {
+        if (!res.ok) throw new Error("not found");
+        return res.json();
+      })
+      .then(() => {
+        localStorage.setItem("artha-onboarding-complete", "true");
+        router.replace("/moments");
+      })
+      .catch(() => {
+        setChecking(false);
+      });
+  }, [isLoaded, router]);
 
   const stored = loadProgress();
   const [phase, setPhase] = useState<Phase>(stored.phase);
@@ -246,6 +270,14 @@ export default function OnboardingPage() {
   }
 
   const phaseNumber = ["age", "income", "savings", "goals", "bank"].indexOf(phase) + 1;
+
+  if (checking) {
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full border-2 border-artha-accent border-t-transparent animate-spin" />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">

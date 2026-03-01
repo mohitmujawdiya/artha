@@ -143,6 +143,10 @@ export async function getChatMessages(userId: string, limit = 20) {
     .limit(safeLimit);
 }
 
+export async function deleteChatHistory(userId: string) {
+  await db.delete(chatHistory).where(eq(chatHistory.userId, userId));
+}
+
 export async function saveChatMessage(data: {
   userId: string;
   role: string;
