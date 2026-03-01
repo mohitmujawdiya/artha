@@ -198,7 +198,7 @@ export function FutureTimeline() {
         </motion.div>
 
         <motion.p
-          className="text-artha-muted/50 text-xs mt-12 animate-bounce"
+          className="text-artha-muted/50 text-xs mt-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
