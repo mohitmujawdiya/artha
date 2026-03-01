@@ -22,7 +22,7 @@ function todayStr() {
 
 function getDefaultState(): EngagementState {
   return {
-    streak: 5,
+    streak: 1,
     lastCheckIn: todayStr(),
     activeChallenges: [],
     agentMessagesRead: [],
@@ -107,14 +107,33 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
       const localState = loadState();
       setState(localState);
 
-      // Try to fetch from API (may fail if unauthenticated)
+      // Try to fetch from API — DB is source of truth for streak
       fetch("/api/engagement")
         .then((res) => (res.ok ? res.json() : null))
         .then((apiState) => {
           if (apiState && apiState.streak !== undefined) {
+            // Use API streak if it exists and has a lastCheckIn,
+            // then apply the same day-diff logic to keep it current
+            let dbStreak = apiState.streak;
+            const dbLastCheckIn = apiState.lastCheckIn;
+            const today = todayStr();
+
+            if (dbLastCheckIn && dbLastCheckIn !== today) {
+              const last = new Date(dbLastCheckIn);
+              const now = new Date(today);
+              const diffDays = Math.floor(
+                (now.getTime() - last.getTime()) / (1000 * 60 * 60 * 24)
+              );
+              if (diffDays === 1) {
+                dbStreak += 1;
+              } else if (diffDays > 1) {
+                dbStreak = 1;
+              }
+            }
+
             const merged: EngagementState = {
-              streak: Math.max(apiState.streak, localState.streak),
-              lastCheckIn: localState.lastCheckIn,
+              streak: dbStreak > 0 ? dbStreak : localState.streak,
+              lastCheckIn: today,
               activeChallenges: apiState.activeChallenges ?? localState.activeChallenges,
               agentMessagesRead: apiState.agentMessagesRead ?? localState.agentMessagesRead,
             };
