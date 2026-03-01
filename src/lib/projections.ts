@@ -88,8 +88,7 @@ export function buildAdjustmentsFromPatterns(patterns: BehavioralPattern[]): Pro
     });
   }
 
-  // Fall back to defaults if no patterns detected
-  return adjustments.length > 0 ? adjustments : defaultAdjustments;
+  return adjustments;
 }
 
 export function calculateProjection(

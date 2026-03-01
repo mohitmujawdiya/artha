@@ -9,11 +9,12 @@ import {
   defaultAdjustments,
 } from "@/lib/projections";
 import { buildAdjustmentsFromPatterns } from "@/lib/projections";
-import { ArrowRight, TrendUp } from "@phosphor-icons/react";
+import { ArrowRight, TrendUp, Bank } from "@phosphor-icons/react";
 import { ProjectionSlider } from "./ProjectionSlider";
 import { DualPathChart } from "./DualPathChart";
 import { AnimatedNumber } from "./AnimatedNumber";
 import { RevealNumber } from "./RevealNumber";
+import { PlaidLinkButton } from "./PlaidLink";
 import { useTransactions } from "@/hooks/useTransactions";
 
 const SECTION_COUNT = 3;
@@ -61,7 +62,9 @@ export function FutureTimeline() {
     return () => observer.disconnect();
   }, []);
 
-  const { user, patterns } = useTransactions();
+  const { user, patterns, isDemo, isLoading } = useTransactions();
+
+  const hasRealPatterns = !isDemo && patterns.length > 0;
 
   // Derive adjustments from real detected patterns (fall back to defaults)
   const patternAdjustments = useMemo(
@@ -262,59 +265,81 @@ export function FutureTimeline() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <motion.p
-            className="text-xs tracking-widest text-artha-accent/60 uppercase text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            Toggle to see the chart update
-          </motion.p>
-          <motion.h3
-            className="font-display text-2xl font-bold text-center mt-1"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Your Levers
-          </motion.h3>
-
-          <div className="flex flex-col gap-3 mt-6 max-w-sm mx-auto">
-            {adjustments.map((adj, i) => (
-              <motion.div
-                key={adj.id}
-                initial={{ opacity: 0, y: 20 }}
+          {hasRealPatterns && adjustments.length > 0 ? (
+            <>
+              <motion.p
+                className="text-xs tracking-widest text-artha-accent/60 uppercase text-center"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                Toggle to see the chart update
+              </motion.p>
+              <motion.h3
+                className="font-display text-2xl font-bold text-center mt-1"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{
-                  duration: 0.4,
-                  ease: "easeOut",
-                  delay: i * 0.15,
-                }}
+                transition={{ duration: 0.5 }}
               >
-                <ProjectionSlider
-                  adjustment={adj}
-                  onToggle={toggleAdjustment}
-                />
-              </motion.div>
-            ))}
-          </div>
+                Your Levers
+              </motion.h3>
 
-          {additionalMonthly > 0 && (
-            <motion.div
-              className="mt-6 glass rounded-2xl p-4 text-center max-w-sm mx-auto"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-            >
-              <p className="text-sm text-artha-muted">Total additional savings</p>
-              <div className="flex items-center justify-center gap-2 mt-1">
-                <TrendUp size={20} weight="bold" className="text-artha-green" />
-                <p className="font-display text-2xl font-bold text-artha-green">
-                  +${additionalMonthly}/mo
-                </p>
+              <div className="flex flex-col gap-3 mt-6 max-w-sm mx-auto">
+                {adjustments.map((adj, i) => (
+                  <motion.div
+                    key={adj.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.4,
+                      ease: "easeOut",
+                      delay: i * 0.15,
+                    }}
+                  >
+                    <ProjectionSlider
+                      adjustment={adj}
+                      onToggle={toggleAdjustment}
+                    />
+                  </motion.div>
+                ))}
               </div>
+
+              {additionalMonthly > 0 && (
+                <motion.div
+                  className="mt-6 glass rounded-2xl p-4 text-center max-w-sm mx-auto"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                >
+                  <p className="text-sm text-artha-muted">Total additional savings</p>
+                  <div className="flex items-center justify-center gap-2 mt-1">
+                    <TrendUp size={20} weight="bold" className="text-artha-green" />
+                    <p className="font-display text-2xl font-bold text-artha-green">
+                      +${additionalMonthly}/mo
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </>
+          ) : (
+            <motion.div
+              className="flex flex-col items-center text-center max-w-sm mx-auto py-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="w-14 h-14 rounded-full bg-artha-accent/20 flex items-center justify-center mb-4">
+                <Bank size={28} className="text-artha-accent" />
+              </div>
+              <h3 className="font-display text-xl font-bold">
+                Connect your bank to unlock levers
+              </h3>
+              <p className="text-sm text-artha-muted mt-2 mb-6">
+                We&apos;ll analyze your real spending and show you exactly where you can save
+              </p>
+              <PlaidLinkButton onSuccess={() => window.location.reload()} />
             </motion.div>
           )}
 
