@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useUser, SignOutButton } from "@clerk/nextjs";
-import { PlaidLinkButton } from "@/components/PlaidLink";
+
 import { ChannelPreferences } from "@/components/ChannelPreferences";
 import { SignOut } from "@phosphor-icons/react";
 import { useState } from "react";
@@ -40,23 +40,11 @@ export default function SettingsPage() {
           </motion.div>
         )}
 
-        {/* Bank Connection */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <p className="text-xs text-artha-muted uppercase tracking-wider mb-2">
-            Bank Connection
-          </p>
-          <PlaidLinkButton />
-        </motion.div>
-
         {/* Notifications */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.2 }}
         >
           <p className="text-xs text-artha-muted uppercase tracking-wider mb-2">
             Notifications
@@ -75,7 +63,7 @@ export default function SettingsPage() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.3 }}
         >
           <SignOutButton>
             <motion.button
