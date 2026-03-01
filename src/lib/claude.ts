@@ -1,41 +1,39 @@
-import OpenAI from "openai";
+import Anthropic from "@anthropic-ai/sdk";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
 export async function callClaude(
   systemPrompt: string,
   userMessage: string,
-  model: string = "gpt-4o",
+  model: string = "claude-sonnet-4-6",
   maxTokens: number = 1024
 ): Promise<string> {
-  const response = await client.chat.completions.create({
+  const response = await client.messages.create({
     model,
     max_tokens: maxTokens,
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userMessage },
-    ],
+    system: systemPrompt,
+    messages: [{ role: "user", content: userMessage }],
   });
 
-  return response.choices[0]?.message?.content || "";
+  const block = response.content[0];
+  return block.type === "text" ? block.text : "";
 }
 
 export async function callClaudeWithHistory(
   systemPrompt: string,
   messages: { role: "user" | "assistant"; content: string }[],
-  model: string = "gpt-4o",
+  model: string = "claude-sonnet-4-6",
   maxTokens: number = 1024
 ): Promise<string> {
-  const response = await client.chat.completions.create({
+  const response = await client.messages.create({
     model,
     max_tokens: maxTokens,
-    messages: [
-      { role: "system", content: systemPrompt },
-      ...messages,
-    ],
+    system: systemPrompt,
+    messages,
   });
 
-  return response.choices[0]?.message?.content || "";
+  const block = response.content[0];
+  return block.type === "text" ? block.text : "";
 }

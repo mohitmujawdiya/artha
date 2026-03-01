@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -12,6 +14,8 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
 });
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Artha — Your Financial Story, Told Forward",
   description:
@@ -24,14 +28,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark overflow-x-hidden">
-      <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-body antialiased bg-artha-bg text-artha-text overflow-x-hidden`}
-      >
-        <div className="max-w-md mx-auto min-h-screen relative" style={{ overflowX: "clip" }}>
-          {children}
-        </div>
-      </body>
-    </html>
+    <ClerkProvider appearance={{ baseTheme: dark }}>
+      <html lang="en" className="dark overflow-x-hidden">
+        <body
+          className={`${inter.variable} ${spaceGrotesk.variable} font-body antialiased bg-artha-bg text-artha-text overflow-x-hidden`}
+        >
+          <div className="max-w-md mx-auto min-h-screen relative" style={{ overflowX: "clip" }}>
+            {children}
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

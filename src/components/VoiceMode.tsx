@@ -39,6 +39,11 @@ export function VoiceMode({ isActive, onClose }: VoiceModeProps) {
         return;
       }
 
+      if (!navigator?.mediaDevices?.getUserMedia) {
+        setError("Microphone not available");
+        return;
+      }
+
       await navigator.mediaDevices.getUserMedia({ audio: true });
       await conversation.startSession({ signedUrl: data.signedUrl });
     } catch (err) {

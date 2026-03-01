@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   try {
     const { transactions, user } = await request.json();
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.ANTHROPIC_API_KEY) {
       return NextResponse.json({
         analysis: {
           patterns: [],
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     const response = await callClaude(
       ANALYSIS_SYSTEM_PROMPT,
       `Analyze these transactions for user ${user.name} (age ${user.age}, income $${user.monthlyIncome}/mo, savings $${user.currentSavings}):\n\n${JSON.stringify(transactions.slice(0, 100))}`,
-      "gpt-4o",
+      "claude-sonnet-4-6",
       2048
     );
 

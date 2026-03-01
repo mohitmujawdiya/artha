@@ -1,8 +1,83 @@
 import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
 import { callClaudeWithHistory } from "@/lib/claude";
 import { getCachedResponse } from "@/lib/cached-responses";
+import { getDbUser, getMemoryFacts, getUserTransactions, getChatMessages, saveChatMessage } from "@/db/queries";
+import { extractAndStoreMemory } from "@/lib/memory-extractor";
+import { detectPatterns } from "@/lib/analysis";
+import type { Transaction } from "@/types";
 
-function getCoachSystemPrompt(userName: string) {
+async function buildSystemPrompt(userId: string | null, fallbackName: string) {
+  // If no userId (unauthenticated), use hardcoded Maya context
+  if (!userId) return getStaticPrompt(fallbackName);
+
+  try {
+    const [user, memoryFacts, dbTransactions] = await Promise.all([
+      getDbUser(userId),
+      getMemoryFacts(userId),
+      getUserTransactions(userId),
+    ]);
+
+    if (!user) return getStaticPrompt(fallbackName);
+
+    const name = user.name || fallbackName;
+    const mappedTxns: Transaction[] = dbTransactions.map((t) => ({
+      id: String(t.id),
+      date: t.date,
+      amount: t.amount,
+      merchant: t.merchant,
+      category: t.category,
+      dayOfWeek: t.dayOfWeek,
+      hour: t.hour,
+      isRecurring: t.isRecurring ?? undefined,
+      isSubscription: t.isSubscription ?? undefined,
+      lastUsed: t.lastUsed ?? undefined,
+    }));
+    const patterns = detectPatterns(mappedTxns);
+    const patternSummary = patterns
+      .map((p) => `- ${p.name}: $${Math.abs(p.monthlyImpact)}/mo (${p.type})`)
+      .join("\n");
+
+    const memorySummary = memoryFacts.length > 0
+      ? memoryFacts.map((m) => `- [${m.category}] ${m.fact}`).join("\n")
+      : "No personal facts stored yet.";
+
+    return `You are Artha — a smart, real financial friend for ${name}${user.age ? `, age ${user.age}` : ""}${user.monthlyIncome ? `, earning $${user.monthlyIncome.toLocaleString()}/month` : ""}.
+
+PERSONALITY:
+- Be direct about spending problems — use loss-framing: "You're losing $X/year on this"
+- Be genuinely supportive about wins and progress — celebrate momentum
+- Never sugarcoat bad habits, but never shame either — be blunt and kind
+- Casual language, occasionally sharp wit
+- Use at most 1 emoji per response
+- Keep responses under 120 words
+- Ask one follow-up question when relevant
+
+${name.toUpperCase()}'S CONTEXT:
+- Savings: $${user.currentSavings?.toLocaleString() ?? "unknown"}
+${patternSummary ? `- Detected patterns:\n${patternSummary}` : ""}
+
+WHAT YOU REMEMBER ABOUT ${name.toUpperCase()}:
+${memorySummary}
+
+WHEN ASKED "CAN I AFFORD X":
+1. Check if cash is available
+2. Show the goal tradeoff (setback in months)
+3. Offer an alternative (save for it, find cheaper, wait for sale)
+4. Frame as empowerment, not restriction
+
+FORMAT RULES:
+- Keep paragraphs short (2-3 sentences max)
+- For data-heavy responses, include a JSON block like:
+  <data-card>{"type":"tradeoff","title":"...","items":[{"label":"...","value":"...","color":"#hex"}]}</data-card>
+- End with suggested follow-ups:
+  <quick-replies>["option 1","option 2","option 3"]</quick-replies>`;
+  } catch {
+    return getStaticPrompt(fallbackName);
+  }
+}
+
+function getStaticPrompt(userName: string) {
   return `You are Artha — a smart, real financial friend for ${userName}, a 23-year-old earning $3,200/month.
 
 PERSONALITY:
@@ -75,8 +150,7 @@ export async function POST(request: Request) {
       return NextResponse.json(cached);
     }
 
-    // Try live API with 3s timeout
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.ANTHROPIC_API_KEY) {
       return NextResponse.json({
         content:
           "I'm having a bit of trouble connecting right now. Try asking about your spending patterns, savings goals, or whether you can afford something specific!",
@@ -88,28 +162,61 @@ export async function POST(request: Request) {
       });
     }
 
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 3000);
-
+    // Get authenticated user ID (optional — works without auth too)
+    let userId: string | null = null;
     try {
-      const messages = [
+      const { userId: clerkId } = await auth();
+      userId = clerkId;
+    } catch {
+      // Not authenticated — use static prompt
+    }
+
+    // Build dynamic system prompt from DB data
+    const systemPrompt = await buildSystemPrompt(userId, userName);
+
+    // Load history from DB if authenticated, otherwise use client-sent history
+    let messages: { role: "user" | "assistant"; content: string }[];
+    if (userId) {
+      try {
+        const dbMessages = await getChatMessages(userId, 20);
+        messages = [
+          ...dbMessages.reverse().map((m) => ({
+            role: m.role as "user" | "assistant",
+            content: m.content,
+          })),
+          { role: "user" as const, content: message },
+        ];
+      } catch {
+        messages = [
+          ...(history || []),
+          { role: "user" as const, content: message },
+        ];
+      }
+    } else {
+      messages = [
         ...(history || []),
         { role: "user" as const, content: message },
       ];
+    }
 
-      const response = await callClaudeWithHistory(
-        getCoachSystemPrompt(userName),
-        messages
-      );
+    try {
+      const response = await callClaudeWithHistory(systemPrompt, messages);
+      const parsed = parseResponse(response);
 
-      clearTimeout(timeout);
-      return NextResponse.json(parseResponse(response));
-    } catch {
-      clearTimeout(timeout);
-      // Fallback to cached if API fails/times out
-      if (cached) {
-        return NextResponse.json(cached);
+      // Persist messages and extract memory (fire-and-forget)
+      if (userId) {
+        saveChatMessage({ userId, role: "user", content: message }).catch(() => {});
+        saveChatMessage({
+          userId,
+          role: "assistant",
+          content: parsed.content,
+          dataCard: parsed.dataCard,
+        }).catch(() => {});
+        extractAndStoreMemory(userId, message, parsed.content).catch(() => {});
       }
+
+      return NextResponse.json(parsed);
+    } catch {
       return NextResponse.json({
         content: `That's a great question! Based on your patterns, you're actually in a pretty solid spot. Your savings streak of 6 months is impressive, and you've got room to optimize about $200/mo if you want to accelerate your goals. What specifically would you like to explore?`,
         quickReplies: [

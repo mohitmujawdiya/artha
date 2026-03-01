@@ -13,14 +13,11 @@ import { ProjectionSlider } from "./ProjectionSlider";
 import { DualPathChart } from "./DualPathChart";
 import { AnimatedNumber } from "./AnimatedNumber";
 import { RevealNumber } from "./RevealNumber";
+import { useTransactions } from "@/hooks/useTransactions";
 
 const SECTION_COUNT = 3;
 
-interface FutureTimelineProps {
-  onLeverToggle?: (id: string) => void;
-}
-
-export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
+export function FutureTimeline() {
   const [adjustments, setAdjustments] = useState<ProjectionAdjustment[]>(
     defaultAdjustments
   );
@@ -63,17 +60,18 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
     return () => observer.disconnect();
   }, []);
 
+  const { user } = useTransactions();
+
   const toggleAdjustment = (id: string) => {
     setAdjustments((prev) =>
       prev.map((a) =>
         a.id === id ? { ...a, enabled: !a.enabled } : a
       )
     );
-    onLeverToggle?.(id);
   };
 
-  const currentMonthlySavings = 200;
-  const currentSavings = 1840;
+  const currentSavings = user.currentSavings ?? 1840;
+  const currentMonthlySavings = Math.round((user.currentSavings ?? 1840) / 9.2); // approximate from savings history
 
   const projection = useMemo(
     () =>
@@ -163,13 +161,13 @@ export function FutureTimeline({ onLeverToggle }: FutureTimelineProps) {
           transition={{ delay: 1.2 }}
         >
           <div>
-            <p className="font-display text-lg font-semibold">$3,200</p>
+            <p className="font-display text-lg font-semibold">${(user.monthlyIncome ?? 3200).toLocaleString()}</p>
             <p className="text-xs text-artha-muted">monthly income</p>
           </div>
           <div className="w-px bg-artha-surface" />
           <div>
             <p className="font-display text-lg font-semibold text-artha-green">
-              $200/mo
+              ${currentMonthlySavings}/mo
             </p>
             <p className="text-xs text-artha-muted">saving rate</p>
           </div>

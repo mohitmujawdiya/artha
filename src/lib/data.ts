@@ -3,13 +3,20 @@ import rawData from "../../data/transactions.json";
 
 const data = rawData as { user: UserProfile; transactions: Transaction[] };
 
-export function getUser(): UserProfile {
+// Static fallbacks for unauthenticated / offline use
+export function getMockUser(): UserProfile {
   return data.user;
 }
 
-export function getTransactions(): Transaction[] {
+export function getMockTransactions(): Transaction[] {
   return data.transactions;
 }
+
+// Keep old names as aliases for backward compatibility during migration
+export const getUser = getMockUser;
+export const getTransactions = getMockTransactions;
+
+// ── Utility functions (unchanged) ──
 
 export function getTransactionsByMonth(
   transactions: Transaction[]

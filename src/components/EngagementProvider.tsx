@@ -58,6 +58,19 @@ function loadState(): EngagementState {
   return getDefaultState();
 }
 
+function persistToApi(state: EngagementState) {
+  fetch("/api/engagement", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      streak: state.streak,
+      lastCheckIn: state.lastCheckIn,
+      activeChallenges: state.activeChallenges,
+      agentMessagesRead: state.agentMessagesRead,
+    }),
+  }).catch(() => {});
+}
+
 interface EngagementContextValue {
   state: EngagementState;
   acceptChallenge: (insightId: string, title: string) => void;
@@ -78,18 +91,36 @@ export function EngagementProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<EngagementState>(getDefaultState);
   const initialized = useRef(false);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount, then try API
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
-      setState(loadState());
+      const localState = loadState();
+      setState(localState);
+
+      // Try to fetch from API (may fail if unauthenticated)
+      fetch("/api/engagement")
+        .then((res) => (res.ok ? res.json() : null))
+        .then((apiState) => {
+          if (apiState && apiState.streak !== undefined) {
+            const merged: EngagementState = {
+              streak: Math.max(apiState.streak, localState.streak),
+              lastCheckIn: localState.lastCheckIn,
+              activeChallenges: apiState.activeChallenges ?? localState.activeChallenges,
+              agentMessagesRead: apiState.agentMessagesRead ?? localState.agentMessagesRead,
+            };
+            setState(merged);
+          }
+        })
+        .catch(() => {});
     }
   }, []);
 
-  // Persist to localStorage on state change
+  // Write-through: persist to both localStorage and API on state change
   useEffect(() => {
     if (initialized.current) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      persistToApi(state);
     }
   }, [state]);
 

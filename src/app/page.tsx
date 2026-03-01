@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 import { SpendingDNA } from "@/components/SpendingDNA";
 import { useTransactions } from "@/hooks/useTransactions";
 import { getOnboardingData, setOnboardingData } from "@/lib/onboarding";
@@ -30,6 +31,7 @@ function generateParticles(count: number): Particle[] {
 
 export default function LandingPage() {
   const router = useRouter();
+  const { user: clerkUser, isSignedIn } = useUser();
   const { patterns } = useTransactions();
   const [phase, setPhase] = useState<"name" | "hook" | "dna">("name");
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -41,14 +43,19 @@ export default function LandingPage() {
     setParticles(generateParticles(40));
   }, []);
 
-  // Skip onboarding if already completed
+  // Use Clerk user name if signed in, otherwise check localStorage
   useEffect(() => {
+    if (isSignedIn && clerkUser?.firstName) {
+      setName(clerkUser.firstName);
+      setPhase("hook");
+      return;
+    }
     const data = getOnboardingData();
     if (data) {
       setName(data.name);
       setPhase("hook");
     }
-  }, []);
+  }, [isSignedIn, clerkUser]);
 
   // Auto-transition from hook to DNA after 3.5s
   useEffect(() => {
@@ -249,7 +256,7 @@ export default function LandingPage() {
               transition={{ delay: 1.6 }}
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.02 }}
-              onClick={() => router.push("/moments")}
+              onClick={() => router.push(isSignedIn ? "/moments" : "/sign-up")}
             >
               Discover your story
             </motion.button>

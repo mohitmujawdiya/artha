@@ -6,27 +6,39 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "tsx src/lib/seed.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@clerk/nextjs": "^6.39.0",
+    "@clerk/themes": "^2.4.57",
     "@elevenlabs/react": "^0.14.1",
+    "@neondatabase/serverless": "^1.0.2",
     "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/postcss": "^4.2.1",
+    "drizzle-orm": "^0.45.1",
     "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
     "next": "^16.1.6",
-    "openai": "^6.25.0",
+    "plaid": "^41.3.0",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-plaid-link": "^4.1.1"
   },
   "devDependencies": {
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "drizzle-kit": "^0.31.9",
     "eslint": "^9.39.3",
     "eslint-config-next": "^16.1.6",
     "postcss": "^8",
     "tailwindcss": "^4.2.1",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

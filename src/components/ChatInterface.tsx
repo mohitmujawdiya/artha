@@ -71,6 +71,31 @@ export function ChatInterface() {
   const [voiceModeActive, setVoiceModeActive] = useState(false);
   const [channelPrefsOpen, setChannelPrefsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const historyLoaded = useRef(false);
+
+  // Load persisted chat history on mount
+  useEffect(() => {
+    if (historyLoaded.current) return;
+    historyLoaded.current = true;
+
+    fetch("/api/chat/history?limit=50")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((dbMessages: { role: string; content: string; dataCard?: unknown; timestamp: string }[]) => {
+        if (dbMessages.length > 0) {
+          const restored: ChatMessageType[] = dbMessages.map((m, i) => ({
+            id: `db-${i}`,
+            role: m.role as "user" | "assistant",
+            content: m.content,
+            timestamp: new Date(m.timestamp).getTime(),
+            dataCard: m.dataCard as ChatMessageType["dataCard"],
+          }));
+          // Replace initial messages with DB history + welcome
+          setMessages([...restored, welcomeMessage]);
+        }
+      })
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -107,12 +132,6 @@ export function ChatInterface() {
           body: JSON.stringify({
             message: text.trim(),
             userName: getOnboardingData()?.name,
-            history: messages
-              .filter((m) => !m.agentMessage) // exclude agent messages from chat history
-              .map((m) => ({
-                role: m.role,
-                content: m.content,
-              })),
           }),
         });
 

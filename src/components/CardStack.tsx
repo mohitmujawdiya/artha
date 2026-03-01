@@ -108,10 +108,25 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
     }
   }, [currentIndex, onCardView, insights]);
 
-  const handleTap = useCallback(() => {
-    if (!dragStarted.current && !isAnimating && !navigatingAway) {
+  const handleTap = useCallback(
+    (e: React.MouseEvent) => {
+      if (dragStarted.current || isAnimating || navigatingAway) return;
+
+      // Zone-aware tap: left third → prev, right third → next
+      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+      const tapX = e.clientX - rect.left;
+      const zone = tapX / rect.width;
+
+      if (zone < 0.33) {
+        // Left third — go back (unless first card)
+        if (!isFirst) {
+          setCurrentIndex((prev) => prev - 1);
+        }
+        return;
+      }
+
+      // Right two-thirds — go forward
       if (isLast) {
-        // Last card tap — fly off and navigate
         setIsAnimating(true);
         setNavigatingAway(true);
         animate(x, -window.innerWidth, {
@@ -125,8 +140,9 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
       } else {
         setCurrentIndex((prev) => prev + 1);
       }
-    }
-  }, [isAnimating, navigatingAway, isLast, x, router]);
+    },
+    [isAnimating, navigatingAway, isFirst, isLast, x, router]
+  );
 
   // Don't render anything if navigating away (card stays off-screen)
   if (navigatingAway) {
@@ -140,19 +156,23 @@ export function CardStack({ insights, patterns, transactions, onCardView, onChal
 
   return (
     <div className="relative h-full px-5 pt-3 pb-2 flex flex-col">
-      {/* Progress dots */}
-      <div className="flex justify-center gap-1.5 pb-2">
+      {/* Stories-style progress bars */}
+      <div className="flex gap-1 pb-2">
         {Array.from({ length: total }).map((_, i) => (
           <div
             key={i}
-            className={`h-1 rounded-full transition-all duration-300 ${
-              i === currentIndex
-                ? "w-6 bg-artha-accent"
-                : i < currentIndex
-                  ? "w-1.5 bg-artha-accent/50"
-                  : "w-1.5 bg-artha-surface"
-            }`}
-          />
+            className="flex-1 h-[3px] rounded-full bg-white/15 overflow-hidden"
+          >
+            <div
+              className={`h-full rounded-full transition-all duration-300 ${
+                i < currentIndex
+                  ? "w-full bg-artha-accent"
+                  : i === currentIndex
+                    ? "w-full bg-artha-accent/80"
+                    : "w-0 bg-artha-accent"
+              }`}
+            />
+          </div>
         ))}
       </div>
 
